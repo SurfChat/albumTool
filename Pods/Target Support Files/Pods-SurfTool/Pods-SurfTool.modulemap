@@ -1,0 +1,6 @@
+framework module Pods_SurfTool {
+  umbrella header "Pods-SurfTool-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module IMProgressHUD {
+  umbrella header "IMProgressHUD-umbrella.h"
+
+  export *
+  module * { export * }
+}

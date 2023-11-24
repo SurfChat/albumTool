@@ -1,0 +1,41 @@
+PODS:
+  - IMProgressHUD (1.0.0)
+  - JXPhotoBrowser (3.1.4)
+  - SnapKit (5.6.0)
+  - WCDB.swift (2.0.4):
+    - WCDB.swift/no-arc (= 2.0.4)
+    - WCDBOptimizedSQLCipher (~> 1.4.2)
+  - WCDB.swift/no-arc (2.0.4):
+    - WCDBOptimizedSQLCipher (~> 1.4.2)
+  - WCDBOptimizedSQLCipher (1.4.2)
+  - ZLPhotoBrowser (4.4.7):
+    - ZLPhotoBrowser/Core (= 4.4.7)
+  - ZLPhotoBrowser/Core (4.4.7)
+
+DEPENDENCIES:
+  - IMProgressHUD
+  - JXPhotoBrowser
+  - SnapKit
+  - WCDB.swift
+  - ZLPhotoBrowser
+
+SPEC REPOS:
+  https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git:
+    - IMProgressHUD
+    - JXPhotoBrowser
+    - SnapKit
+    - WCDB.swift
+    - WCDBOptimizedSQLCipher
+    - ZLPhotoBrowser
+
+SPEC CHECKSUMS:
+  IMProgressHUD: dfcb1c0894b82f17da5eb310b28ff88226e906f2
+  JXPhotoBrowser: 41ffa41252c8d5264f97ab3c1936a5cf935a58d7
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  WCDB.swift: 28dd96180d913abadb3ea9cf99bd6e942262379a
+  WCDBOptimizedSQLCipher: ef2be79fed278289a309ad0d4d707c55bf166d6d
+  ZLPhotoBrowser: 86d1e81ddb90adad6be36b46f9aa4e8f36d0c2ab
+
+PODFILE CHECKSUM: 3348423fc2410bba3176617d220e15709b2cae09
+
+COCOAPODS: 1.13.0

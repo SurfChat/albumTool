@@ -1,0 +1,59 @@
+//
+//  PhotoDBModel.swift
+//  SurfTool
+//
+//  Created by Phenou on 23/11/2023.
+//
+
+import Foundation
+import WCDBSwift
+import CoreImage
+import UIKit
+
+final class PhotoDBModel: TableCodable {
+    
+    var ID: Int64 = 0
+    var percent: Float = 1.0
+    var originalImage: Data = Data()
+    
+    enum CodingKeys: String, CodingTableKey {
+        typealias Root = PhotoDBModel
+        static let objectRelationalMapping = TableBinding(CodingKeys.self)
+
+        case ID
+        case percent
+        case originalImage
+    }
+    
+}
+
+extension PhotoDBModel {
+    func applyGaussianBlur() -> UIImage? {
+        let origImage = UIImage(data: self.originalImage) ?? UIImage()
+        guard let ciImage = CIImage(image: origImage) else {
+            return nil
+        }
+        
+        let filter = CIFilter(name: "CIGaussianBlur")
+        filter?.setValue(ciImage, forKey: kCIInputImageKey)
+        
+        // 根据百分比计算模糊半径
+        let w = (UIScreen.main.bounds.width-50)/3.0
+        let radius = self.percent * Float(w)
+        
+        filter?.setValue(radius, forKey: kCIInputRadiusKey)
+        
+        guard let outputCIImage = filter?.outputImage else {
+            return nil
+        }
+        
+        let rect =  CGRect (origin:  CGPoint .zero, size: origImage.size)
+        let context = CIContext(options: nil)
+        guard let outputCGImage = context.createCGImage(outputCIImage, from:rect) else {
+            return nil
+        }
+                
+        let outputImage = UIImage(cgImage: outputCGImage)
+        return outputImage
+    }
+}

@@ -3,27 +3,33 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0AE154CCAC3DAE7EF4069D7D /* Pods_SurfTool.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF3273B0BA11BAD2BC9EA2E3 /* Pods_SurfTool.framework */; };
 		B17190252B0DDCA800518623 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17190242B0DDCA800518623 /* AppDelegate.swift */; };
-		B17190272B0DDCA800518623 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17190262B0DDCA800518623 /* SceneDelegate.swift */; };
-		B17190292B0DDCA800518623 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17190282B0DDCA800518623 /* ViewController.swift */; };
-		B171902C2B0DDCA800518623 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B171902A2B0DDCA800518623 /* Main.storyboard */; };
 		B171902E2B0DDCA900518623 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B171902D2B0DDCA900518623 /* Assets.xcassets */; };
 		B17190312B0DDCA900518623 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B171902F2B0DDCA900518623 /* LaunchScreen.storyboard */; };
+		B171903A2B0DFF9200518623 /* PhotoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17190392B0DFF9200518623 /* PhotoListViewController.swift */; };
+		B171903C2B0F52E100518623 /* PhotoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B171903B2B0F52E100518623 /* PhotoItemCell.swift */; };
+		B171903E2B0F55F100518623 /* PhotoDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B171903D2B0F55F100518623 /* PhotoDBModel.swift */; };
+		B17190402B0F58FC00518623 /* PhotoDBHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B171903F2B0F58FC00518623 /* PhotoDBHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B17190212B0DDCA800518623 /* SurfTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SurfTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B17190242B0DDCA800518623 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B17190262B0DDCA800518623 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B17190282B0DDCA800518623 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B171902B2B0DDCA800518623 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B171902D2B0DDCA900518623 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B17190302B0DDCA900518623 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B17190322B0DDCA900518623 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B17190392B0DFF9200518623 /* PhotoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListViewController.swift; sourceTree = "<group>"; };
+		B171903B2B0F52E100518623 /* PhotoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoItemCell.swift; sourceTree = "<group>"; };
+		B171903D2B0F55F100518623 /* PhotoDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDBModel.swift; sourceTree = "<group>"; };
+		B171903F2B0F58FC00518623 /* PhotoDBHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDBHandler.swift; sourceTree = "<group>"; };
+		B50FC2F7C750545CDB2F66CD /* Pods-SurfTool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfTool.debug.xcconfig"; path = "Target Support Files/Pods-SurfTool/Pods-SurfTool.debug.xcconfig"; sourceTree = "<group>"; };
+		BF3273B0BA11BAD2BC9EA2E3 /* Pods_SurfTool.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurfTool.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C60C0B78843D8FEC13B9C6B3 /* Pods-SurfTool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfTool.release.xcconfig"; path = "Target Support Files/Pods-SurfTool/Pods-SurfTool.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +37,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AE154CCAC3DAE7EF4069D7D /* Pods_SurfTool.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		47783B9714FBB0150F685866 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B50FC2F7C750545CDB2F66CD /* Pods-SurfTool.debug.xcconfig */,
+				C60C0B78843D8FEC13B9C6B3 /* Pods-SurfTool.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		B17190182B0DDCA800518623 = {
 			isa = PBXGroup;
 			children = (
 				B17190232B0DDCA800518623 /* SurfTool */,
 				B17190222B0DDCA800518623 /* Products */,
+				47783B9714FBB0150F685866 /* Pods */,
+				F997C11ECC077DBB27B820C7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +74,32 @@
 		B17190232B0DDCA800518623 /* SurfTool */ = {
 			isa = PBXGroup;
 			children = (
+				B17190382B0DDD3300518623 /* 1.0 */,
 				B17190242B0DDCA800518623 /* AppDelegate.swift */,
-				B17190262B0DDCA800518623 /* SceneDelegate.swift */,
-				B17190282B0DDCA800518623 /* ViewController.swift */,
-				B171902A2B0DDCA800518623 /* Main.storyboard */,
 				B171902D2B0DDCA900518623 /* Assets.xcassets */,
 				B171902F2B0DDCA900518623 /* LaunchScreen.storyboard */,
 				B17190322B0DDCA900518623 /* Info.plist */,
 			);
 			path = SurfTool;
+			sourceTree = "<group>";
+		};
+		B17190382B0DDD3300518623 /* 1.0 */ = {
+			isa = PBXGroup;
+			children = (
+				B17190392B0DFF9200518623 /* PhotoListViewController.swift */,
+				B171903B2B0F52E100518623 /* PhotoItemCell.swift */,
+				B171903D2B0F55F100518623 /* PhotoDBModel.swift */,
+				B171903F2B0F58FC00518623 /* PhotoDBHandler.swift */,
+			);
+			path = 1.0;
+			sourceTree = "<group>";
+		};
+		F997C11ECC077DBB27B820C7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BF3273B0BA11BAD2BC9EA2E3 /* Pods_SurfTool.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +109,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B17190352B0DDCA900518623 /* Build configuration list for PBXNativeTarget "SurfTool" */;
 			buildPhases = (
+				28684E61D2C68744086EF7F5 /* [CP] Check Pods Manifest.lock */,
 				B171901D2B0DDCA800518623 /* Sources */,
 				B171901E2B0DDCA800518623 /* Frameworks */,
 				B171901F2B0DDCA800518623 /* Resources */,
+				261F378045D43893954593F0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -103,7 +140,7 @@
 				};
 			};
 			buildConfigurationList = B171901C2B0DDCA800518623 /* Build configuration list for PBXProject "SurfTool" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -127,34 +164,69 @@
 			files = (
 				B17190312B0DDCA900518623 /* LaunchScreen.storyboard in Resources */,
 				B171902E2B0DDCA900518623 /* Assets.xcassets in Resources */,
-				B171902C2B0DDCA800518623 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		261F378045D43893954593F0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SurfTool/Pods-SurfTool-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SurfTool/Pods-SurfTool-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SurfTool/Pods-SurfTool-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		28684E61D2C68744086EF7F5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SurfTool-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B171901D2B0DDCA800518623 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B17190292B0DDCA800518623 /* ViewController.swift in Sources */,
+				B171903E2B0F55F100518623 /* PhotoDBModel.swift in Sources */,
+				B171903A2B0DFF9200518623 /* PhotoListViewController.swift in Sources */,
+				B17190402B0F58FC00518623 /* PhotoDBHandler.swift in Sources */,
 				B17190252B0DDCA800518623 /* AppDelegate.swift in Sources */,
-				B17190272B0DDCA800518623 /* SceneDelegate.swift in Sources */,
+				B171903C2B0F52E100518623 /* PhotoItemCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B171902A2B0DDCA800518623 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B171902B2B0DDCA800518623 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B171902F2B0DDCA900518623 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -218,7 +290,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -275,7 +347,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -287,57 +359,87 @@
 		};
 		B17190362B0DDCA900518623 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B50FC2F7C750545CDB2F66CD /* Pods-SurfTool.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 28V5X27RZ4;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6P9263DA3S;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SurfTool/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Sad Album";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Access to the camera is required to capture photos for selection and display";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Photo library access is required to save images to the album";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Requires access to the photo gallery to obtain photos for selection and display";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.surf.SurfTool;
+				PRODUCT_BUNDLE_IDENTIFIER = com.surf.chat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = surf_dev;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		B17190372B0DDCA900518623 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C60C0B78843D8FEC13B9C6B3 /* Pods-SurfTool.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 28V5X27RZ4;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6P9263DA3S;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SurfTool/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Sad Album";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Access to the camera is required to capture photos for selection and display";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Photo library access is required to save images to the album";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Requires access to the photo gallery to obtain photos for selection and display";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.surf.SurfTool;
+				PRODUCT_BUNDLE_IDENTIFIER = com.surf.chat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = surf_dev;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
