@@ -9,6 +9,7 @@ import Foundation
 import WCDBSwift
 import UIKit
 import ZLPhotoBrowser
+import Photos
 
 class PhotoDBHandler {
     static let share = PhotoDBHandler()
@@ -35,9 +36,11 @@ class PhotoDBHandler {
     }
     
     func addPhotos(_ selectedPhotos: [ZLResultModel]) {
-       
+
         var dbModels: [PhotoDBModel] = []
+        var assets: [PHAsset] = []
         for photo in selectedPhotos {
+            assets.append(photo.asset)
             let imageData = photo.image.jpegData(compressionQuality: 0)
             let model = PhotoDBModel()
             model.ID = Int64(Date().timeIntervalSince1970)
@@ -51,6 +54,9 @@ class PhotoDBHandler {
                 let table = self.db.getTable(named:self.tableName, of: PhotoDBModel.self)
                 try table.insert(dbModels)
                 self.dbDataUpdate?()
+                PHPhotoLibrary.shared().performChanges {
+                    PHAssetChangeRequest.deleteAssets(assets as NSFastEnumeration)
+                }
             })
         } catch let error {
             print("『db insert error \(error)』")
@@ -74,7 +80,7 @@ class PhotoDBHandler {
         
     }
     
-    func queryPhotos() -> [PhotoDBModel]? {
+    func queryPhotos() -> [PhotoDBModel] {
         
         do {
             let table = db.getTable(named:tableName, of: PhotoDBModel.self)

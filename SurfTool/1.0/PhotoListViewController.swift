@@ -69,6 +69,7 @@ class PhotoListViewController: UIViewController {
         editBtn.setImage(UIImage(named: "delete"), for: .normal)
         editBtn.setTitle("Delete", for: .normal)
         editBtn.addTarget(self, action: #selector(editBtnClick), for: .touchUpInside)
+        editBtn.isHidden = true
         return editBtn
     }()
     
@@ -134,17 +135,21 @@ class PhotoListViewController: UIViewController {
        if !dataArr.isEmpty {
            dataArr.removeAll()
        }
-       if let data = PhotoDBHandler.share.queryPhotos() {
+       
+       let data = PhotoDBHandler.share.queryPhotos()
+       if !data.isEmpty {
            if data.count < 30 {
                let add = PhotoDBModel()
                add.ID = -1
                dataArr.append(add)
            }
            dataArr.append(contentsOf: data)
+           editBtn.isHidden = false
        } else {
            let add = PhotoDBModel()
            add.ID = -1
            dataArr.append(add)
+           editBtn.isHidden = true
        }
        
        listView.reloadData()
@@ -232,7 +237,6 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
                 deleteDataArr.remove(at: index)
             }
         }
-        print("\(deleteDataArr.count)")
     }
     
     private func deletePhoto() {
