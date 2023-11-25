@@ -28,6 +28,7 @@ import UIKit
 import Foundation
 
 class ZLAddPhotoCell: UICollectionViewCell {
+    
     private lazy var imageView: UIImageView = {
         let view = UIImageView(image: .zl.getImage("zl_addPhoto"))
         view.contentMode = .scaleAspectFit
@@ -65,4 +66,5 @@ class ZLAddPhotoCell: UICollectionViewCell {
         backgroundColor = .zl.cameraCellBgColor
         contentView.addSubview(imageView)
     }
+    
 }

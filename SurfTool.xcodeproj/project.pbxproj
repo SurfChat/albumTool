@@ -375,6 +375,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SurfTool/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Access to the camera is required to capture photos for selection and display\\";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Photo library access is required to save images to the album";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Requires access to the photo gallery to obtain photos for selection and display";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -416,6 +417,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SurfTool/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Access to the camera is required to capture photos for selection and display\\";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Photo library access is required to save images to the album";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Requires access to the photo gallery to obtain photos for selection and display";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

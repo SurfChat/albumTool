@@ -127,7 +127,7 @@ public class ZLEditImageConfiguration: NSObject {
     public var textStickerDefaultTextColor = UIColor.white
     
     /// The default font of text sticker.
-    public var textStickerDefaultFont: UIFont?
+    @objc public var textStickerDefaultFont: UIFont?
     
     private var pri_filters: [ZLFilter] = ZLFilter.all
     /// Filters for image editor.

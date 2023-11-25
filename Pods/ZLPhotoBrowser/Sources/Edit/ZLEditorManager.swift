@@ -28,7 +28,6 @@ import Foundation
 
 public enum ZLEditorAction {
     case draw(ZLDrawPath)
-    case eraser([ZLDrawPath])
     case clip(oldStatus: ZLClipStatus, newStatus: ZLClipStatus)
     case sticker(oldState: ZLBaseStickertState?, newState: ZLBaseStickertState?)
     case mosaic(ZLMosaicPath)
@@ -52,7 +51,7 @@ class ZLEditorManager {
     
     init(actions: [ZLEditorAction] = []) {
         self.actions = actions
-        redoActions = actions
+        self.redoActions = actions
     }
     
     func storeAction(_ action: ZLEditorAction) {

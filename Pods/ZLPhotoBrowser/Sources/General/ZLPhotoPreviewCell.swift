@@ -546,7 +546,6 @@ class ZLVideoPreviewCell: ZLPreviewBaseCell {
     
     deinit {
         cancelDownloadVideo()
-        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         zl_debugPrint("ZLVideoPreviewCell deinit")
     }
     
@@ -684,8 +683,6 @@ class ZLVideoPreviewCell: ZLPreviewBaseCell {
                 player?.currentItem?.seek(to: CMTimeMake(value: 0, timescale: 1))
             }
             imageView.isHidden = true
-            try? AVAudioSession.sharedInstance().setCategory(.playback)
-            try? AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
             player?.play()
             playBtn.setImage(nil, for: .normal)
             singleTapBlock?()
@@ -706,13 +703,15 @@ class ZLVideoPreviewCell: ZLPreviewBaseCell {
     
     private func pausePlayer(seekToZero: Bool) {
         player?.pause()
-        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         if seekToZero {
             player?.seek(to: .zero)
         }
-        
         playBtn.setImage(.zl.getImage("zl_playVideo"), for: .normal)
         singleTapBlock?()
+        
+        operationQueue.async {
+            try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        }
     }
     
     private func cancelDownloadVideo() {
@@ -748,8 +747,9 @@ class ZLNetVideoPreviewCell: ZLPreviewBaseCell {
         return false
     }
     
+    private let operationQueue = DispatchQueue(label: "com.ZLPhotoBrowser.ZLNetVideoPreviewCell")
+    
     deinit {
-        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         zl_debugPrint("ZLNetVideoPreviewCell deinit")
     }
     
@@ -790,8 +790,6 @@ class ZLNetVideoPreviewCell: ZLPreviewBaseCell {
                 player?.currentItem?.seek(to: CMTimeMake(value: 0, timescale: 1))
             }
             player?.play()
-            try? AVAudioSession.sharedInstance().setCategory(.playback)
-            try? AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
             playBtn.setImage(nil, for: .normal)
             singleTapBlock?()
         } else {
@@ -817,13 +815,15 @@ class ZLNetVideoPreviewCell: ZLPreviewBaseCell {
     
     private func pausePlayer(seekToZero: Bool) {
         player?.pause()
-        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         if seekToZero {
             player?.seek(to: .zero)
         }
-        
         playBtn.setImage(.zl.getImage("zl_playVideo"), for: .normal)
         singleTapBlock?()
+        
+        operationQueue.async {
+            try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        }
     }
     
     func configureCell(videoUrl: URL, httpHeader: [String: Any]?) {

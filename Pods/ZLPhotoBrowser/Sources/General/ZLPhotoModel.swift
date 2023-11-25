@@ -28,6 +28,7 @@ import UIKit
 import Photos
 
 public extension ZLPhotoModel {
+    
     enum MediaType: Int {
         case unknown = 0
         case image
@@ -35,18 +36,20 @@ public extension ZLPhotoModel {
         case livePhoto
         case video
     }
+    
 }
 
 public class ZLPhotoModel: NSObject {
+    
     public let ident: String
     
     public let asset: PHAsset
 
     public var type: ZLPhotoModel.MediaType = .unknown
     
-    public var duration = ""
+    public var duration: String = ""
     
-    public var isSelected = false
+    public var isSelected: Bool = false
     
     private var pri_dataSize: ZLPhotoConfiguration.KBUnit?
     
@@ -150,10 +153,13 @@ public class ZLPhotoModel: NSObject {
             return ""
         }
     }
+    
 }
 
 public extension ZLPhotoModel {
-    static func == (lhs: ZLPhotoModel, rhs: ZLPhotoModel) -> Bool {
+    
+    static func ==(lhs: ZLPhotoModel, rhs: ZLPhotoModel) -> Bool {
         return lhs.ident == rhs.ident
     }
+    
 }

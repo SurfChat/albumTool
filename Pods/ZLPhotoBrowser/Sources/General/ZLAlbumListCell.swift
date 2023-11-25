@@ -27,6 +27,7 @@
 import UIKit
 
 class ZLAlbumListCell: UITableViewCell {
+    
     private lazy var coverImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
@@ -203,4 +204,5 @@ class ZLAlbumListCell: UITableViewCell {
             }
         }
     }
+    
 }

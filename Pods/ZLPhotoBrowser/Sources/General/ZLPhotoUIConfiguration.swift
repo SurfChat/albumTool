@@ -134,13 +134,6 @@ public class ZLPhotoUIConfiguration: NSObject {
     /// Display the selected photos at the bottom of the preview large photos interface. Defaults to true.
     public var showSelectedPhotoPreview = true
     
-    /// If user choose limited Photo mode, a button with '+' will be added to the ZLThumbnailViewController. It will call PHPhotoLibrary.shared().presentLimitedLibraryPicker(from:) to add photo. Defaults to true.
-    public var showAddPhotoButton = true
-    
-    /// iOS14 limited Photo mode, will show collection footer view in ZLThumbnailViewController.
-    /// Will go to system setting if clicked. Defaults to true.
-    public var showEnterSettingTips = true
-    
     /// Timeout for image parsing. Defaults to 20.
     public var timeout: TimeInterval = 20
     
@@ -317,14 +310,6 @@ public class ZLPhotoUIConfiguration: NSObject {
     /// A color for background in bottom tool view in preview interface.
     /// 预览大图界面底部工具条背景色
     public var bottomToolViewBgColorOfPreviewVC: UIColor = .zl.rgba(35, 35, 35, 0.3)
-    
-    /// Title color of the original image size label in the album thumbnail interface.
-    /// 相册小图界面原图大小label的text颜色
-    public var originalSizeLabelTextColor: UIColor = .zl.rgba(130, 130, 130)
-    
-    /// Title color of the original image size label in the preview interface.
-    /// 预览大图界面原图大小label的text颜色
-    public var originalSizeLabelTextColorOfPreviewVC: UIColor = .zl.rgba(130, 130, 130)
     
     /// The normal state title color of bottom tool view buttons. Without done button.
     /// 相册小图界面底部按钮可交互状态下标题颜色，不包括 `完成` 按钮

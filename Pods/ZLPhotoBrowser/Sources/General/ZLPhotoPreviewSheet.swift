@@ -28,6 +28,7 @@ import UIKit
 import Photos
 
 public class ZLPhotoPreviewSheet: UIView {
+    
     private enum Layout {
         static let colH: CGFloat = 155
         
@@ -425,7 +426,7 @@ public class ZLPhotoPreviewSheet: UIView {
         let action = ZLCustomAlertAction(title: localLanguageTextValue(.ok), style: .default) { _ in
             ZLPhotoConfiguration.default().noAuthorityCallback?(.library)
         }
-        showAlertController(title: nil, message: String(format: localLanguageTextValue(.noPhotoLibratyAuthority), getAppName()), style: .alert, actions: [action], sender: sender)
+        showAlertController(title: nil, message: String(format: localLanguageTextValue(.noPhotoLibratyAuthority), getAppName()), style: .alert, actions: [action], sender: self.sender)
     }
     
     @objc private func tapAction(_ tap: UITapGestureRecognizer) {
@@ -860,16 +861,20 @@ public class ZLPhotoPreviewSheet: UIView {
         
         changeCancelBtnTitle()
     }
+    
 }
 
 extension ZLPhotoPreviewSheet: UIGestureRecognizerDelegate {
+    
     override public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         let location = gestureRecognizer.location(in: self)
         return !baseView.frame.contains(location)
     }
+    
 }
 
 extension ZLPhotoPreviewSheet: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let m = arrDataSources[indexPath.row]
         let w = CGFloat(m.asset.pixelWidth)
@@ -923,7 +928,7 @@ extension ZLPhotoPreviewSheet: UICollectionViewDataSource, UICollectionViewDeleg
         }
         
         if uiConfig.showSelectedIndex,
-           let index = arrSelectedModels.firstIndex(where: { $0 == model }) {
+           let index = arrSelectedModels.firstIndex(where: { $0 == model }){
             setCellIndex(cell, showIndexLabel: true, index: index + 1)
         } else {
             cell.indexLabel.isHidden = true
@@ -1120,7 +1125,7 @@ extension ZLPhotoPreviewSheet: UICollectionViewDataSource, UICollectionViewDeleg
     }
     
     private func changeCancelBtnTitle() {
-        if !arrSelectedModels.isEmpty {
+        if arrSelectedModels.count > 0 {
             cancelBtn.setTitle(String(format: "%@(%ld)", localLanguageTextValue(.done), arrSelectedModels.count), for: .normal)
             cancelBtn.setTitleColor(.zl.previewBtnHighlightTitleColor, for: .normal)
         } else {
@@ -1128,9 +1133,11 @@ extension ZLPhotoPreviewSheet: UICollectionViewDataSource, UICollectionViewDeleg
             cancelBtn.setTitleColor(.zl.previewBtnTitleColor, for: .normal)
         }
     }
+    
 }
 
 extension ZLPhotoPreviewSheet: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         picker.dismiss(animated: true) {
             let image = info[.originalImage] as? UIImage
@@ -1138,13 +1145,16 @@ extension ZLPhotoPreviewSheet: UIImagePickerControllerDelegate, UINavigationCont
             self.save(image: image, videoUrl: url)
         }
     }
+    
 }
 
 extension ZLPhotoPreviewSheet: PHPhotoLibraryChangeObserver {
+    
     public func photoLibraryDidChange(_ changeInstance: PHChange) {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
         ZLMainAsync {
             self.loadPhotos()
         }
     }
+    
 }

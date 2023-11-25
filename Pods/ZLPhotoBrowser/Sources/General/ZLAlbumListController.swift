@@ -28,6 +28,7 @@ import UIKit
 import Photos
 
 class ZLAlbumListController: UIViewController {
+    
     private lazy var navView = ZLExternalAlbumListNavView(title: localLanguageTextValue(.photo))
     
     private var navBlurView: UIVisualEffectView?
@@ -128,9 +129,11 @@ class ZLAlbumListController: UIViewController {
         }
         view.addSubview(navView)
     }
+    
 }
 
 extension ZLAlbumListController: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrDataSource.count
     }
@@ -147,10 +150,13 @@ extension ZLAlbumListController: UITableViewDataSource, UITableViewDelegate {
         let vc = ZLThumbnailViewController(albumList: arrDataSource[indexPath.row])
         show(vc, sender: nil)
     }
+    
 }
 
 extension ZLAlbumListController: PHPhotoLibraryChangeObserver {
+    
     func photoLibraryDidChange(_ changeInstance: PHChange) {
         shouldReloadAlbumList = true
     }
+    
 }

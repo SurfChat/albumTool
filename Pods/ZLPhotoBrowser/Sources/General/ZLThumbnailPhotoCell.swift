@@ -52,7 +52,7 @@ class ZLThumbnailPhotoCell: UICollectionViewCell {
         return view
     }()
     
-    private var imageIdentifier = ""
+    private var imageIdentifier: String = ""
     
     private var smallImageRequestID: PHImageRequestID = PHInvalidImageRequestID
     
@@ -313,4 +313,5 @@ class ZLThumbnailPhotoCell: UICollectionViewCell {
         progressView.isHidden = true
         imageView.alpha = 1
     }
+    
 }

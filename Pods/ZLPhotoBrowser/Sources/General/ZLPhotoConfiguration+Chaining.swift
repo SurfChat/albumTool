@@ -257,6 +257,18 @@ public extension ZLPhotoConfiguration {
     }
     
     @discardableResult
+    func showAddPhotoButton(_ value: Bool) -> ZLPhotoConfiguration {
+        showAddPhotoButton = value
+        return self
+    }
+    
+    @discardableResult
+    func showEnterSettingTips(_ value: Bool) -> ZLPhotoConfiguration {
+        showEnterSettingTips = value
+        return self
+    }
+    
+    @discardableResult
     func maxFrameCountForGIF(_ frameCount: Int) -> ZLPhotoConfiguration {
         maxFrameCountForGIF = frameCount
         return self

@@ -88,17 +88,6 @@ class ZLThumbnailViewController: UIViewController {
         return btn
     }()
     
-    private lazy var originalLabel: UILabel = {
-        let label = UILabel()
-        label.font = .zl.font(ofSize: 12)
-        label.textColor = .zl.originalSizeLabelTextColor
-        label.textAlignment = .center
-        label.minimumScaleFactor = 0.5
-        label.adjustsFontSizeToFitWidth = true
-        label.isHidden = true
-        return label
-    }()
-    
     private lazy var doneBtn: UIButton = {
         let btn = createBtn(localLanguageTextValue(.done), #selector(doneBtnClick), true)
         btn.layer.masksToBounds = true
@@ -155,9 +144,7 @@ class ZLThumbnailViewController: UIViewController {
     private var lastPanUpdateTime = CACurrentMediaTime()
     
     private let showLimitAuthTipsView: Bool = {
-        if #available(iOS 14.0, *),
-           PHPhotoLibrary.authorizationStatus(for: .readWrite) == .limited,
-           ZLPhotoUIConfiguration.default().showEnterSettingTips {
+        if #available(iOS 14.0, *), PHPhotoLibrary.authorizationStatus(for: .readWrite) == .limited, ZLPhotoConfiguration.default().showEnterSettingTips {
             return true
         } else {
             return false
@@ -212,7 +199,7 @@ class ZLThumbnailViewController: UIViewController {
     
     @available(iOS 14, *)
     var showAddPhotoCell: Bool {
-        PHPhotoLibrary.authorizationStatus(for: .readWrite) == .limited && ZLPhotoUIConfiguration.default().showAddPhotoButton && albumList.isCameraRoll
+        PHPhotoLibrary.authorizationStatus(for: .readWrite) == .limited && ZLPhotoConfiguration.default().showAddPhotoButton && albumList.isCameraRoll
     }
     
     private var hiddenStatusBar = false
@@ -363,13 +350,7 @@ class ZLThumbnailViewController: UIViewController {
                 )
             ).width + (originalBtn.currentImage?.size.width ?? 19) + 12
             let originBtnMaxW = min(btnMaxWidth, originBtnW)
-            originalBtn.frame = CGRect(x: (bottomView.zl.width - originBtnMaxW) / 2 - 5, y: btnY, width: originBtnMaxW, height: btnH)
-            originalLabel.frame = CGRect(
-                x: (bottomView.zl.width - btnMaxWidth) / 2 - 5,
-                y: originalBtn.zl.bottom,
-                width: btnMaxWidth,
-                height: originalLabel.font.lineHeight
-            )
+            originalBtn.frame = CGRect(x: (bottomView.bounds.width - originBtnMaxW) / 2 - 5, y: btnY, width: originBtnMaxW, height: btnH)
             
             refreshDoneBtnFrame()
         }
@@ -405,7 +386,6 @@ class ZLThumbnailViewController: UIViewController {
         
         bottomView.addSubview(previewBtn)
         bottomView.addSubview(originalBtn)
-        bottomView.addSubview(originalLabel)
         bottomView.addSubview(doneBtn)
         
         setupNavView()
@@ -568,7 +548,6 @@ class ZLThumbnailViewController: UIViewController {
     
     @objc private func originalPhotoClick() {
         originalBtn.isSelected.toggle()
-        refreshOriginalLabelText()
         (navigationController as? ZLImageNavController)?.isSelectedOriginal = originalBtn.isSelected
     }
     
@@ -592,16 +571,6 @@ class ZLThumbnailViewController: UIViewController {
     }
     
     @objc private func slideSelectAction(_ pan: UIPanGestureRecognizer) {
-        if pan.state == .ended || pan.state == .cancelled {
-            stopAutoScroll()
-            beginPanSelect = false
-            panSelectType = .none
-            arrSlideIndexPaths.removeAll()
-            dicOriSelectStatus.removeAll()
-            resetBottomToolBtnStatus()
-            return
-        }
-        
         let point = pan.location(in: collectionView)
         guard let indexPath = collectionView.indexPathForItem(at: point) else {
             return
@@ -743,6 +712,13 @@ class ZLThumbnailViewController: UIViewController {
                     }
                 }
             }
+        } else if pan.state == .ended || pan.state == .cancelled {
+            stopAutoScroll()
+            beginPanSelect = false
+            panSelectType = .none
+            arrSlideIndexPaths.removeAll()
+            dicOriSelectStatus.removeAll()
+            resetBottomToolBtnStatus()
         }
     }
     
@@ -842,29 +818,7 @@ class ZLThumbnailViewController: UIViewController {
             doneBtn.backgroundColor = .zl.bottomToolViewBtnDisableBgColor
         }
         originalBtn.isSelected = nav.isSelectedOriginal
-        refreshOriginalLabelText()
         refreshDoneBtnFrame()
-    }
-    
-    private func refreshOriginalLabelText() {
-        guard ZLPhotoConfiguration.default().showOriginalSizeWhenSelectOriginal else {
-            return
-        }
-        
-        guard originalBtn.isSelected else {
-            originalLabel.isHidden = true
-            return
-        }
-        
-        let selectModels = (navigationController as? ZLImageNavController)?.arrSelectedModels ?? []
-        if selectModels.isEmpty {
-            originalLabel.isHidden = true
-        } else {
-            originalLabel.isHidden = false
-            let totalSize = selectModels.reduce(into: 0) { $0 += ($1.dataSize ?? 0) * 1024 }
-            let str = ByteCountFormatter.string(fromByteCount: Int64(totalSize), countStyle: .binary).replacingOccurrences(of: " ", with: "")
-            originalLabel.text = localLanguageTextValue(.originalTotalSize) + " \(str)"
-        }
     }
     
     private func refreshDoneBtnFrame() {

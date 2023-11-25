@@ -194,9 +194,6 @@ public struct ZLLocalLanguageKey: Hashable {
     /// Full Image (原图)
     public static let originalPhoto = ZLLocalLanguageKey(rawValue: "originalPhoto")
     
-    /// Total (共)
-    public static let originalTotalSize = ZLLocalLanguageKey(rawValue: "originalTotalSize")
-    
     /// Back (返回)
     public static let back = ZLLocalLanguageKey(rawValue: "back")
     

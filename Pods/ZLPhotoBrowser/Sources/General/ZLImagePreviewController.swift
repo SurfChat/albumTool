@@ -150,13 +150,11 @@ public class ZLImagePreviewController: UIViewController {
     @objc public var videoHttpHeader: [String: Any]?
     
     override public var prefersStatusBarHidden: Bool {
-        !ZLPhotoUIConfiguration.default().showStatusBarInPreviewInterface
+        return !ZLPhotoUIConfiguration.default().showStatusBarInPreviewInterface
     }
     
-    override public var prefersHomeIndicatorAutoHidden: Bool { true }
-    
     override public var preferredStatusBarStyle: UIStatusBarStyle {
-        ZLPhotoUIConfiguration.default().statusBarStyle
+        return ZLPhotoUIConfiguration.default().statusBarStyle
     }
     
     deinit {
@@ -267,7 +265,7 @@ public class ZLImagePreviewController: UIViewController {
         }
     }
     
-    override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         collectionView.collectionViewLayout.invalidateLayout()
     }
