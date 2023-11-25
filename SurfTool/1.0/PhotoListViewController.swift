@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import ZLPhotoBrowser
+import JXPhotoBrowser
 
 class PhotoListViewController: UIViewController {
 
@@ -172,6 +173,13 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if dataArr.count > indexPath.item {
+           let data = dataArr[indexPath.item]
+            showBigImage(data: data)
+        }
+    }
+    
    private func presentPhotoPickerController() {
         ZLPhotoConfiguration.default()
             .maxSelectCount(10)
@@ -248,6 +256,21 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
         // 如果你在一个 UIViewController 中使用这段代码，请将 `self` 替换为你的视图控制器实例
         self.present(alertController, animated: true, completion: nil)
 
+    }
+    
+    private func showBigImage(data: PhotoDBModel) {
+        let browser = JXPhotoBrowser()
+        browser.numberOfItems = {
+            1
+        }
+        browser.cellClassAtIndex = { index in
+            JXPhotoBrowserImageCell.self
+        }
+        browser.reloadCellAtIndex = { context in
+            let browserCell = context.cell as? JXPhotoBrowserImageCell
+            browserCell?.imageView.image = data.applyGaussianBlur() ?? UIImage()
+        }
+        browser.show()
     }
 }
 
