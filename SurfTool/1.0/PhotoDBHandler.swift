@@ -25,7 +25,6 @@ class PhotoDBHandler {
     private let tableName = "photoDataTable"
     
     init() {
-        
         do {
             if try !db.isTableExists(tableName) {
                 try db.create(table: tableName, of: PhotoDBModel.self)
@@ -33,17 +32,18 @@ class PhotoDBHandler {
         } catch let error {
             print("『db create error \(error)』")
         }
-
     }
     
     func addPhotos(_ selectedPhotos: [ZLResultModel]) {
+       
         var dbModels: [PhotoDBModel] = []
         for photo in selectedPhotos {
             let imageData = photo.image.jpegData(compressionQuality: 0)
             let model = PhotoDBModel()
             model.ID = Int64(Date().timeIntervalSince1970)
             model.originalImage = imageData ?? Data()
-            model.percent = 1
+            let percent = Double.random(in: 0..<0.10)
+            model.percent = percent
             dbModels.append(model)
         }
         do {
@@ -55,9 +55,11 @@ class PhotoDBHandler {
         } catch let error {
             print("『db insert error \(error)』")
         }
+        
     }
     
     func deletePhotos(_ selectedPhotos: [PhotoDBModel]) {
+       
         for photo in selectedPhotos {
             do {
                 try self.db.run(transaction: { _ in
@@ -69,6 +71,7 @@ class PhotoDBHandler {
             }
         }
         self.dbDataUpdate?()
+        
     }
     
     func queryPhotos() -> [PhotoDBModel]? {
@@ -81,5 +84,20 @@ class PhotoDBHandler {
             print("『db query error \(error)』")
         }
         return []
+        
+    }
+    
+    func updatePhotos(_ updatedPhotos: [PhotoDBModel]) {
+        for photo in updatedPhotos {
+            do {
+                try self.db.run(transaction: { _ in
+                    let table = self.db.getTable(named:self.tableName, of: PhotoDBModel.self)
+                    try table.update(on: PhotoDBModel.Properties.percent, with: photo, where: PhotoDBModel.Properties.ID == photo.ID)
+                })
+            } catch let error {
+                print("『db update error \(error)』")
+            }
+        }
+        self.dbDataUpdate?()
     }
 }

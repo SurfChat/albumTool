@@ -13,7 +13,7 @@ import UIKit
 final class PhotoDBModel: TableCodable {
     
     var ID: Int64 = 0
-    var percent: Float = 1.0
+    var percent: Double = 0.0
     var originalImage: Data = Data()
     
     enum CodingKeys: String, CodingTableKey {
@@ -39,7 +39,7 @@ extension PhotoDBModel {
         
         // 根据百分比计算模糊半径
         let w = (UIScreen.main.bounds.width-50)/3.0
-        let radius = self.percent * Float(w)
+        let radius = self.percent * Double(w)
         
         filter?.setValue(radius, forKey: kCIInputRadiusKey)
         
