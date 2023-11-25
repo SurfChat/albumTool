@@ -192,7 +192,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
             .allowSelectGif(false)
             .allowSelectLivePhoto(false)
             .allowSelectVideo(false)
-            .useCustomCamera(false)
+            .cameraConfiguration(ZLCameraConfiguration().allowTakePhoto(false))
         let ps = ZLPhotoPreviewSheet()
         
         ps.selectImageBlock = { results, isOriginal in
