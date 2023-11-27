@@ -18,7 +18,7 @@ class PhotoBlurHandler {
             return
         }
 
-        let datas = PhotoDBHandler.share.queryPhotos()
+        let datas = PhotoDBHandler.share.queryPhotos(albumID: 0)
         if !datas.isEmpty {
             for data in datas {
                 let percent = Double.random(in: 0..<0.10)

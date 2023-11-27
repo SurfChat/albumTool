@@ -1,34 +1,14 @@
 //
-//  PhotoListViewController.swift
+//  AlbumListViewController.swift
 //  SurfTool
 //
-//  Created by Phenou on 22/11/2023.
+//  Created by Phenou on 27/11/2023.
 //
 
 import UIKit
-import SnapKit
-import ZLPhotoBrowser
-import JXPhotoBrowser
 
-private let statusBarHeight: CGFloat = UIApplication.shared.windows.first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+class AlbumListViewController: UIViewController {
 
-let navHeight: CGFloat = {
-    return statusBarHeight+44
-}()
-
-let homeBarHeight: CGFloat = {
-    if #available(iOS 11.0, *), let window = UIApplication.shared.windows.first {
-        return window.safeAreaInsets.bottom
-    } else {
-        return 0
-    }
-}()
-
-class PhotoListViewController: UIViewController {
-
-    var albumID: Int64 = 0
-    var isRoot: Bool = false
-    
     private lazy var listView: UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
@@ -36,12 +16,12 @@ class PhotoListViewController: UIViewController {
         layout.minimumInteritemSpacing = 10
         layout.sectionInset = UIEdgeInsets(top: 10, left: 15, bottom: (homeBarHeight>0 ? homeBarHeight : 10), right: 15)
         layout.scrollDirection = .vertical
-        let w = (UIScreen.main.bounds.width-50)/3.0
-        layout.itemSize = CGSizeMake(w, w)
+        let w = (UIScreen.main.bounds.width-40)/2.0
+        layout.itemSize = CGSizeMake(w, w+35)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(PhotoItemCell.self, forCellWithReuseIdentifier: "PhotoItemCell")
+        collectionView.register(AlbumItemCell.self, forCellWithReuseIdentifier: "AlbumItemCell")
         collectionView.backgroundColor = .white
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.showsVerticalScrollIndicator = false
@@ -53,25 +33,14 @@ class PhotoListViewController: UIViewController {
     private lazy var navView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        if isRoot {
-            let titleLab = UILabel()
-            titleLab.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-            titleLab.text = "Sad Album"
-            view.addSubview(titleLab)
-            titleLab.snp.makeConstraints { make in
-                make.bottom.equalToSuperview()
-                make.leading.equalTo(15)
-                make.height.equalTo(44)
-            }
-        } else {
-            let backBtn = UIButton(type: .custom)
-            backBtn.setImage(UIImage(named: "back"), for: .normal)
-            backBtn.addTarget(self, action: #selector(backBtnClick), for: .touchUpInside)
-            view.addSubview(backBtn)
-            backBtn.snp.makeConstraints { make in
-                make.leading.bottom.equalToSuperview()
-                make.width.height.equalTo(44)
-            }
+        let titleLab = UILabel()
+        titleLab.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        titleLab.text = "Sad Album"
+        view.addSubview(titleLab)
+        titleLab.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.leading.equalTo(15)
+            make.height.equalTo(44)
         }
         return view
     }()
@@ -83,7 +52,6 @@ class PhotoListViewController: UIViewController {
         editBtn.setImage(UIImage(named: "delete"), for: .normal)
         editBtn.setTitle("Delete", for: .normal)
         editBtn.addTarget(self, action: #selector(editBtnClick), for: .touchUpInside)
-        editBtn.isHidden = true
         return editBtn
     }()
     
@@ -97,7 +65,7 @@ class PhotoListViewController: UIViewController {
         editBtn.isHidden = true
         return editBtn
     }()
-
+    
     private lazy var addAlbumBtn: UIButton = {
         let editBtn = UIButton(type: .custom)
         editBtn.setImage(UIImage(named: "album_add"), for: .normal)
@@ -112,8 +80,8 @@ class PhotoListViewController: UIViewController {
         return editBtn
     }()
     
-    private lazy var dataArr: [PhotoDBModel] = []
-    private lazy var deleteDataArr: [PhotoDBModel] = []
+    private lazy var dataArr: [AlbumDBModel] = []
+    private lazy var deleteDataArr: [AlbumDBModel] = []
     private lazy var isListEdit = false
     
     override func viewDidLoad() {
@@ -144,94 +112,76 @@ class PhotoListViewController: UIViewController {
             make.top.equalTo(navView.snp.bottom)
             make.leading.bottom.trailing.equalToSuperview()
         }
-        PhotoDBHandler.share.dbDataUpdate = { [weak self] in
+        
+        view.addSubview(addAlbumBtn)
+        addAlbumBtn.snp.makeConstraints { make in
+            make.bottom.equalTo(-homeBarHeight-50)
+            make.trailing.equalTo(-15)
+            make.height.width.equalTo(60)
+        }
+        
+        PhotoDBHandler.share.dbAlbumDataUpdate = { [weak self] in
             DispatchQueue.main.async {
                 self?.setupData()
             }
         }
         
-        if isRoot {
-            view.addSubview(addAlbumBtn)
-            addAlbumBtn.snp.makeConstraints { make in
-                make.bottom.equalTo(-homeBarHeight-50)
-                make.trailing.equalTo(-15)
-                make.height.width.equalTo(60)
-            }
-        }
-        
         setupData()
     }
-    
-   private func setupData() {
-       if !dataArr.isEmpty {
-           dataArr.removeAll()
-       }
-       
-       let data = PhotoDBHandler.share.queryPhotos(albumID: 0)
-       if !data.isEmpty {
-           if data.count < 30 {
-               let add = PhotoDBModel()
-               add.ID = -1
-               dataArr.append(add)
-           }
-           dataArr.append(contentsOf: data)
-           editBtn.isHidden = false
-       } else {
-           let add = PhotoDBModel()
-           add.ID = -1
-           dataArr.append(add)
-           editBtn.isHidden = true
-       }
-       
-       listView.reloadData()
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
+    private func setupData() {
+        if !dataArr.isEmpty {
+            dataArr.removeAll()
+        }
+        
+        let data = PhotoDBHandler.share.queryAlbums()
+
+        dataArr.append(contentsOf: data)
+        listView.reloadData()
+     }
 }
 
-extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension AlbumListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataArr.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoItemCell", for: indexPath) as! PhotoItemCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlbumItemCell", for: indexPath) as! AlbumItemCell
         if dataArr.count > indexPath.item {
             cell.data = dataArr[indexPath.item]
         }
         cell.isEdit = isListEdit
-        cell.addAction = { [weak self] in
-            self?.presentPhotoPickerController()
-        }
+        
         cell.markAction = { [weak self] data, isAdd in
             self?.selectDeletePhoto(data: data, isAdd: isAdd)
+        }
+        
+        cell.updateTitle = { [weak self] albumID ,title in
+            self?.updateAlbumTitle(ID: albumID, title: title)
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if dataArr.count > indexPath.item {
-           let data = dataArr[indexPath.item]
-            showBigImage(data: data)
+        if dataArr.count > indexPath.item  {
+            let data = dataArr[indexPath.item]
+            let listVc = PhotoListViewController()
+            listVc.albumID = data.ID
+            listVc.isRoot = false
+            navigationController?.pushViewController(listVc, animated: true)
         }
     }
     
-   private func presentPhotoPickerController() {
-        ZLPhotoConfiguration.default()
-            .maxSelectCount(10)
-            .allowEditImage(false)
-            .allowSelectGif(false)
-            .allowSelectLivePhoto(false)
-            .allowSelectVideo(false)
-            .cameraConfiguration(ZLCameraConfiguration().allowTakePhoto(false))
-        let ps = ZLPhotoPreviewSheet()
-        
-        ps.selectImageBlock = { results, isOriginal in
-            PhotoDBHandler.share.addPhotos(results)
-        }
-        ps.showPhotoLibrary(sender: self)
-    }
-    
+
     @objc private func editBtnClick() {
        
         if isListEdit == true {
@@ -240,7 +190,6 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
             }
         } else {
             isListEdit = true
-            dataArr.remove(at: 0)
             listView.reloadData()
             cancelBtn.isHidden = false
         }
@@ -251,20 +200,13 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
         cancelBtn.isHidden = true
         editBtn.isSelected = false
         isListEdit = false
-        let add = PhotoDBModel()
-        add.ID = -1
-        dataArr.insert(add, at: 0)
         listView.reloadData()
         if deleteDataArr.count > 0 {
             deleteDataArr.removeAll()
         }
     }
     
-    @objc private func backBtnClick() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    private func selectDeletePhoto(data: PhotoDBModel, isAdd: Bool) {
+    private func selectDeletePhoto(data: AlbumDBModel, isAdd: Bool) {
         if isAdd {
             deleteDataArr.append(data)
         } else {
@@ -275,12 +217,12 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     private func deletePhoto() {
-        let alertController = UIAlertController(title: "Warm Tips", message: "Are you sure you want to delete the selected photos?", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Warm Tips", message: "Are you sure you want to delete the selected Albums?", preferredStyle: .alert)
 
         let okAction = UIAlertAction(title: "Sure", style: .default) { [weak self] (_) in
             // 当用户点击确定按钮时执行的操作
             guard let self = self else { return }
-            PhotoDBHandler.share.deletePhotos(self.deleteDataArr)
+            PhotoDBHandler.share.deleteAlbum(self.deleteDataArr)
             self.cancelBtnClick()
         }
 
@@ -297,28 +239,11 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
 
     }
     
-    private func showBigImage(data: PhotoDBModel) {
-        let browser = JXPhotoBrowser()
-        browser.numberOfItems = {
-            1
-        }
-        browser.cellClassAtIndex = { index in
-            JXPhotoBrowserImageCell.self
-        }
-        browser.reloadCellAtIndex = { context in
-            let browserCell = context.cell as? JXPhotoBrowserImageCell
-            browserCell?.imageView.image = data.applyGaussianBlur() ?? UIImage()
-        }
-        browser.show()
+    private func updateAlbumTitle(ID: Int64, title: String) {
+        PhotoDBHandler.share.updateAlbumTitle(ID: ID, title: title)
     }
     
     @objc private func addAlbumBtnClick() {
         
-    }
-}
-
-extension UIColor {
-    static func hexColor(_ hexValue: Int, alphaValue: Float) -> UIColor {
-        return UIColor(red: CGFloat((hexValue & 0xFF0000) >> 16) / 255, green: CGFloat((hexValue & 0x00FF00) >> 8) / 255, blue: CGFloat(hexValue & 0x0000FF) / 255, alpha: CGFloat(alphaValue))
     }
 }

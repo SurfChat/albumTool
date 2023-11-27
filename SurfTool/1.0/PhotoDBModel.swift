@@ -59,3 +59,18 @@ extension PhotoDBModel {
         return outputImage
     }
 }
+
+final class AlbumDBModel: TableCodable {
+    var ID: Int64 = 0
+    var coverImage: Data = Data()
+    var title: String = "Default"
+    
+    enum CodingKeys: String, CodingTableKey {
+        typealias Root = AlbumDBModel
+        static let objectRelationalMapping = TableBinding(CodingKeys.self)
+
+        case ID
+        case coverImage
+        case title
+    }
+}
