@@ -18,17 +18,19 @@ class PhotoBlurHandler {
             return
         }
 
-        let datas = PhotoDBHandler.share.queryPhotos(albumID: 0)
-        if !datas.isEmpty {
-            for data in datas {
-                let percent = Double.random(in: 0..<0.10)
-                if data.percent < 1 {
-                    data.percent += percent
+        let albums = PhotoDBHandler.share.queryAlbums()
+        for album in albums {
+            let datas = PhotoDBHandler.share.queryPhotos(albumID: album.ID)
+            if !datas.isEmpty {
+                for data in datas {
+                    let percent = Double.random(in: 0..<0.30)
+                    if data.percent < 1 {
+                        data.percent += percent
+                    }
                 }
+                PhotoDBHandler.share.updatePhotos(datas, albumID: album.ID)
             }
-            PhotoDBHandler.share.updatePhotos(datas)
         }
-        
     }
 }
 

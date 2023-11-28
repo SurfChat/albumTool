@@ -27,7 +27,7 @@ let homeBarHeight: CGFloat = {
 class PhotoListViewController: UIViewController {
 
     var albumID: Int64 = 0
-    var isRoot: Bool = false
+    var albumTitle: String = ""
     
     private lazy var listView: UICollectionView = {
         
@@ -53,26 +53,27 @@ class PhotoListViewController: UIViewController {
     private lazy var navView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        if isRoot {
-            let titleLab = UILabel()
-            titleLab.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-            titleLab.text = "Sad Album"
-            view.addSubview(titleLab)
-            titleLab.snp.makeConstraints { make in
-                make.bottom.equalToSuperview()
-                make.leading.equalTo(15)
-                make.height.equalTo(44)
-            }
-        } else {
-            let backBtn = UIButton(type: .custom)
-            backBtn.setImage(UIImage(named: "back"), for: .normal)
-            backBtn.addTarget(self, action: #selector(backBtnClick), for: .touchUpInside)
-            view.addSubview(backBtn)
-            backBtn.snp.makeConstraints { make in
-                make.leading.bottom.equalToSuperview()
-                make.width.height.equalTo(44)
-            }
+
+        let backBtn = UIButton(type: .custom)
+        backBtn.setImage(UIImage(named: "back"), for: .normal)
+        backBtn.addTarget(self, action: #selector(backBtnClick), for: .touchUpInside)
+        view.addSubview(backBtn)
+        backBtn.snp.makeConstraints { make in
+            make.leading.bottom.equalToSuperview()
+            make.width.height.equalTo(44)
         }
+        
+        let titleLab = UILabel()
+        titleLab.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        titleLab.text = albumTitle
+        view.addSubview(titleLab)
+        titleLab.snp.makeConstraints { make in
+            make.leading.equalTo(backBtn.snp.trailing).offset(0)
+            make.bottom.equalToSuperview()
+            make.height.equalTo(44)
+            make.width.equalTo(view.snp.width).multipliedBy(0.3)
+        }
+        
         return view
     }()
     
@@ -97,24 +98,51 @@ class PhotoListViewController: UIViewController {
         editBtn.isHidden = true
         return editBtn
     }()
+    
+    private lazy var gruidView: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width:UIScreen.main.bounds.width , height: UIScreen.main.bounds.height))
+        
+        view.backgroundColor = UIColor.hexColor(0x000000, alphaValue: 0.8)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(gruidViewTap))
+        tap.numberOfTapsRequired = 2
+        view.addGestureRecognizer(tap)
+        
+        let w = (UIScreen.main.bounds.width-50)/3.0
+        let transparentRect = CGRect(x: w+15, y: navHeight, width: w+20, height: w+20)
 
-    private lazy var addAlbumBtn: UIButton = {
-        let editBtn = UIButton(type: .custom)
-        editBtn.setImage(UIImage(named: "album_add"), for: .normal)
-        editBtn.addTarget(self, action: #selector(addAlbumBtnClick), for: .touchUpInside)
-        editBtn.backgroundColor = .white
-        editBtn.layer.cornerRadius = 30
-        editBtn.layer.shadowColor = UIColor.hexColor(0x000000, alphaValue: 0.6).cgColor
-        editBtn.layer.shadowOffset = CGSize(width: 1, height: 1)
-        editBtn.layer.shadowOpacity = 0.8
-        editBtn.layer.shadowPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 60, height: 60), cornerRadius: 30).cgPath
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = view.bounds
+        
+        let path = UIBezierPath(rect: view.bounds)
+        let transparentRectPath = UIBezierPath(ovalIn: transparentRect)
+        path.append(transparentRectPath)
+        path.usesEvenOddFillRule = true
 
-        return editBtn
+        maskLayer.path = path.cgPath
+        maskLayer.fillRule = .evenOdd
+
+        view.layer.mask = maskLayer
+        
+        let lab = UILabel()
+        lab.text = "Double Tap"
+        lab.textColor = UIColor.hexColor(0xFFECF6, alphaValue: 1)
+        lab.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        lab.textAlignment = .center
+        view.addSubview(lab)
+        lab.snp.makeConstraints { make in
+            make.top.equalTo(navHeight+30+w)
+            make.leading.equalTo(w+15+10)
+            make.width.equalTo(w)
+        }
+        
+        return view
     }()
     
     private lazy var dataArr: [PhotoDBModel] = []
     private lazy var deleteDataArr: [PhotoDBModel] = []
     private lazy var isListEdit = false
+    private lazy var firstAdd = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -150,14 +178,7 @@ class PhotoListViewController: UIViewController {
             }
         }
         
-        if isRoot {
-            view.addSubview(addAlbumBtn)
-            addAlbumBtn.snp.makeConstraints { make in
-                make.bottom.equalTo(-homeBarHeight-50)
-                make.trailing.equalTo(-15)
-                make.height.width.equalTo(60)
-            }
-        }
+        firstAdd = !UserDefaults.standard.bool(forKey: "newUserAdd")
         
         setupData()
     }
@@ -167,7 +188,7 @@ class PhotoListViewController: UIViewController {
            dataArr.removeAll()
        }
        
-       let data = PhotoDBHandler.share.queryPhotos(albumID: 0)
+       let data = PhotoDBHandler.share.queryPhotos(albumID: albumID)
        if !data.isEmpty {
            if data.count < 30 {
                let add = PhotoDBModel()
@@ -176,6 +197,11 @@ class PhotoListViewController: UIViewController {
            }
            dataArr.append(contentsOf: data)
            editBtn.isHidden = false
+           if firstAdd {
+               view.addSubview(gruidView)
+               
+           }
+           
        } else {
            let add = PhotoDBModel()
            add.ID = -1
@@ -206,14 +232,13 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
         cell.markAction = { [weak self] data, isAdd in
             self?.selectDeletePhoto(data: data, isAdd: isAdd)
         }
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if dataArr.count > indexPath.item {
-           let data = dataArr[indexPath.item]
-            showBigImage(data: data)
+        cell.tapAction = { [weak self] in
+            self?.photoTap(index: indexPath)
         }
+        cell.doubleTapAction = { [weak self] in
+            self?.photoDTap(index: indexPath)
+        }
+        return cell
     }
     
    private func presentPhotoPickerController() {
@@ -227,7 +252,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
         let ps = ZLPhotoPreviewSheet()
         
         ps.selectImageBlock = { results, isOriginal in
-            PhotoDBHandler.share.addPhotos(results)
+            PhotoDBHandler.share.addPhotos(results, albumID: self.albumID)
         }
         ps.showPhotoLibrary(sender: self)
     }
@@ -280,7 +305,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
         let okAction = UIAlertAction(title: "Sure", style: .default) { [weak self] (_) in
             // 当用户点击确定按钮时执行的操作
             guard let self = self else { return }
-            PhotoDBHandler.share.deletePhotos(self.deleteDataArr)
+            PhotoDBHandler.share.deletePhotos(self.deleteDataArr, albumID: self.albumID)
             self.cancelBtnClick()
         }
 
@@ -312,8 +337,54 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
         browser.show()
     }
     
-    @objc private func addAlbumBtnClick() {
+    @objc private func gruidViewTap() {
+        let data = dataArr[1]
+        data.percent = 0.3
+        dataArr[1] = data
+        PhotoDBHandler.share.updatePhoto(data, albumID: albumID, updateAlbum: true)
         
+        firstAdd = false
+        UserDefaults.standard.setValue(true, forKey: "newUserAdd")
+        UserDefaults.standard.synchronize()
+        
+        UIView.animate(withDuration: 0.3) {
+            self.gruidView.alpha = 0
+        } completion: { finish in
+            self.gruidView.removeFromSuperview()
+            self.listView.reloadItems(at: [IndexPath(item: 1, section: 0)])
+        }
+    }
+    
+    private func photoTap(index: IndexPath) {
+        if dataArr.count > index.item {
+            let data = dataArr[index.item]
+            showBigImage(data: data)
+        }
+    }
+    
+    private func photoDTap(index: IndexPath) {
+        if dataArr.count > index.item {
+            let data = dataArr[index.item]
+            data.percent = data.percent*0.8
+            dataArr[index.item] = data
+            
+            var updateAlbum = false
+            if dataArr.count < 30 {
+                if index.item == 1 {
+                    updateAlbum = true
+                }
+            } else {
+                if index.item == 0 {
+                    updateAlbum = true
+                }
+            }
+            
+            PhotoDBHandler.share.updatePhoto(data, albumID: albumID, updateAlbum: updateAlbum)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
+                self.listView.reloadItems(at: [index])
+            }
+        }
     }
 }
 

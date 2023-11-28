@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import IMProgressHUD
 
 class AlbumListViewController: UIViewController {
 
@@ -22,7 +23,7 @@ class AlbumListViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(AlbumItemCell.self, forCellWithReuseIdentifier: "AlbumItemCell")
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = UIColor.hexColor(0xFFECF6, alphaValue: 1)
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.showsVerticalScrollIndicator = false
         
@@ -32,14 +33,13 @@ class AlbumListViewController: UIViewController {
     
     private lazy var navView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.hexColor(0xFFECF6, alphaValue: 1)
         let titleLab = UILabel()
         titleLab.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         titleLab.text = "Sad Album"
         view.addSubview(titleLab)
         titleLab.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.leading.equalTo(15)
+            make.bottom.centerX.equalToSuperview()
             make.height.equalTo(44)
         }
         return view
@@ -142,9 +142,49 @@ class AlbumListViewController: UIViewController {
         
         let data = PhotoDBHandler.share.queryAlbums()
 
-        dataArr.append(contentsOf: data)
-        listView.reloadData()
+        if data.isEmpty {
+            
+            let alertController = UIAlertController(title: "Create your first album", message: nil, preferredStyle: .alert)
+
+            // 添加一个输入框
+            alertController.addTextField { (textField) in
+                textField.placeholder = "Album title"
+            }
+
+            let okAction = UIAlertAction(title: "Confirm", style: .default) { [weak self] (_) in
+                // 当用户点击确定按钮时执行的操作
+                if let textField = alertController.textFields?.first {
+                    if let text = textField.text {
+                        PhotoDBHandler.share.addAlbum(text)
+                        self?.perform(#selector(self?.goAddPhoto), with: nil, afterDelay: 0.5)
+                    }
+                }
+            }
+
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            dataArr.append(contentsOf: data)
+            listView.reloadData()
+        }
      }
+    
+   @objc private func goAddPhoto() {
+        
+       IMProgressHUD.showToast("Created successfully, go and add photos")
+       
+       DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+           if !self.dataArr.isEmpty {
+               if let data = self.dataArr.first {
+                   let listVc = PhotoListViewController()
+                   listVc.albumID = data.ID
+                   listVc.albumTitle = data.title
+                   self.navigationController?.pushViewController(listVc, animated: true)
+               }
+           }
+       }
+
+    }
 }
 
 extension AlbumListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -176,7 +216,7 @@ extension AlbumListViewController: UICollectionViewDelegate, UICollectionViewDat
             let data = dataArr[indexPath.item]
             let listVc = PhotoListViewController()
             listVc.albumID = data.ID
-            listVc.isRoot = false
+            listVc.albumTitle = data.title
             navigationController?.pushViewController(listVc, animated: true)
         }
     }
@@ -245,5 +285,41 @@ extension AlbumListViewController: UICollectionViewDelegate, UICollectionViewDat
     
     @objc private func addAlbumBtnClick() {
         
+        let isVip = UserDefaults.standard.bool(forKey: "sadAlbumVip")
+        
+        if !isVip && dataArr.count > 0 {
+            // 付费拦截
+            IMProgressHUD.showToast("请充值")
+//            UserDefaults.standard.setValue(true, forKey: "sadAlbumVip")
+//            UserDefaults.standard.synchronize()
+        } else {
+            
+            let alertController = UIAlertController(title: "Create new album", message: nil, preferredStyle: .alert)
+
+            // 添加一个输入框
+            alertController.addTextField { (textField) in
+                textField.placeholder = "Album title"
+            }
+
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+                // 当用户点击取消按钮时执行的操作
+                
+            }
+
+            let okAction = UIAlertAction(title: "Confirm", style: .default) { (_) in
+                // 当用户点击确定按钮时执行的操作
+                if let textField = alertController.textFields?.first {
+                    if let text = textField.text {
+                        PhotoDBHandler.share.addAlbum(text)
+                    }
+                }
+            }
+
+            alertController.addAction(cancelAction)
+            alertController.addAction(okAction)
+
+            self.present(alertController, animated: true, completion: nil)
+        }
+
     }
 }

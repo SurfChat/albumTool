@@ -29,7 +29,6 @@ class AlbumItemCell: UICollectionViewCell {
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = UIColor.hexColor(0xFFECF6, alphaValue: 1)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         return imageView
@@ -63,11 +62,21 @@ class AlbumItemCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = 5
+        contentView.clipsToBounds = true
         
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
+            make.top.leading.trailing.equalToSuperview().inset(15)
             make.height.equalTo(imageView.snp.width).multipliedBy(1)
+        }
+        
+        let bgView = UIView()
+        bgView.backgroundColor = .white
+        contentView.addSubview(bgView)
+        bgView.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom)
+            make.leading.bottom.trailing.equalToSuperview()
         }
         
         contentView.addSubview(markBtn)
@@ -75,16 +84,17 @@ class AlbumItemCell: UICollectionViewCell {
             make.top.leading.equalTo(5)
         }
         
-        contentView.addSubview(editBtn)
+        bgView.addSubview(editBtn)
         editBtn.snp.makeConstraints { make in
-            make.bottom.trailing.equalToSuperview()
-            make.width.height.equalTo(30)
+            make.centerY.equalToSuperview()
+            make.trailing.equalTo(-15)
+            make.width.equalTo(30)
         }
         
-        contentView.addSubview(titleLab)
+        bgView.addSubview(titleLab)
         titleLab.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.height.bottom.equalTo(editBtn)
+            make.leading.equalTo(15)
+            make.centerY.equalTo(editBtn)
             make.trailing.equalTo(editBtn.snp.leading).offset(-10)
         }
     }

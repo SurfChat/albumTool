@@ -26,23 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = .white
         window?.makeKeyAndVisible()
         
-        let isVip = UserDefaults.standard.bool(forKey: "sadAlbumVip")
-        let albums = PhotoDBHandler.share.queryAlbums()
-        // 付费后且添加过照片 跳转相册列表
-        if isVip && !albums.isEmpty {
-            let listVc = AlbumListViewController()
-            window?.rootViewController = UINavigationController(rootViewController: listVc)
-        } else {
-            let listVc = PhotoListViewController()
-            listVc.isRoot = true
-            window?.rootViewController = listVc
-        }
+        let listVc = AlbumListViewController()
+        window?.rootViewController = UINavigationController(rootViewController: listVc)
         
         return true
     }
-
-   
-
 
 }
 

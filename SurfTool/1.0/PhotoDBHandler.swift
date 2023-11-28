@@ -41,20 +41,29 @@ class PhotoDBHandler {
     }
     
     // MARK: Photo增删改查
-    func addPhotos(_ selectedPhotos: [ZLResultModel], albumID: Int64 = 0) {
+    func addPhotos(_ selectedPhotos: [ZLResultModel], albumID: Int64) {
+        
+        let firstAdd = !UserDefaults.standard.bool(forKey: "newUserAdd")
         
         var dbModels: [PhotoDBModel] = []
         var assets: [PHAsset] = []
-        for photo in selectedPhotos {
+        
+        for i in 0..<selectedPhotos.count {
+            let photo = selectedPhotos[i]
             assets.append(photo.asset)
             let imageData = photo.image.jpegData(compressionQuality: 0)
             let model = PhotoDBModel()
-            model.ID = Int64(Date().timeIntervalSince1970)
+            model.ID = Int64(Date().timeIntervalSince1970 * 1000)
+            model.albumID = albumID
             model.originalImage = imageData ?? Data()
-            let percent = Double.random(in: 0..<0.10)
+            let percent = Double.random(in: 0..<0.30)
             model.percent = percent
+            if firstAdd && i == selectedPhotos.count-1 {
+                model.percent = 1
+            }
             dbModels.append(model)
         }
+        
         do {
             try self.db.run(transaction: { _ in
                 let table = self.db.getTable(named:self.tableName, of: PhotoDBModel.self)
@@ -68,19 +77,11 @@ class PhotoDBHandler {
             print("『db insert error \(error)』")
         }
         
-        // 未付费 创建一个默认相册
-        if albumID == 0 {
-            if queryAlbum(ID: albumID) == nil {
-                let newAlbum = AlbumDBModel()
-                addAlbum(newAlbum)
-            }
-        }
-        
         // 更新相册封面
         updateAlbumPhotos(ID: albumID, coverImage: dbModels.last)
     }
     
-    func deletePhotos(_ selectedPhotos: [PhotoDBModel]) {
+    func deletePhotos(_ selectedPhotos: [PhotoDBModel], albumID: Int64) {
         
         for photo in selectedPhotos {
             do {
@@ -109,7 +110,7 @@ class PhotoDBHandler {
         
     }
     
-    func updatePhotos(_ updatedPhotos: [PhotoDBModel]) {
+    func updatePhotos(_ updatedPhotos: [PhotoDBModel], albumID: Int64) {
         for photo in updatedPhotos {
             do {
                 try self.db.run(transaction: { _ in
@@ -123,8 +124,31 @@ class PhotoDBHandler {
         self.dbDataUpdate?()
     }
     
+    func updatePhoto(_ photo: PhotoDBModel, albumID: Int64, updateAlbum: Bool = false) {
+        do {
+            try self.db.run(transaction: { _ in
+                let table = self.db.getTable(named:self.tableName, of: PhotoDBModel.self)
+                try table.update(on: PhotoDBModel.Properties.percent, with: photo, where: PhotoDBModel.Properties.ID == photo.ID)
+            })
+        } catch let error {
+            print("『db update error \(error)』")
+        }
+        
+        if updateAlbum {
+            // 更新相册封面
+            updateAlbumPhotos(ID: albumID, coverImage: photo)
+        }
+    }
+    
     // MARK: Album增删改查
-    func addAlbum(_ album: AlbumDBModel) {
+    func addAlbum(_ albumTitle: String?) {
+        let album = AlbumDBModel()
+        if let title = albumTitle {
+            album.title = title
+        }
+        let albums = PhotoDBHandler.share.queryAlbums()
+        album.ID = Int64(albums.count)
+        
         do {
             try self.db.run(transaction: { _ in
                 let table = self.db.getTable(named:self.albumTableName, of: AlbumDBModel.self)
@@ -139,7 +163,7 @@ class PhotoDBHandler {
     func deleteAlbum(_ albums: [AlbumDBModel]) {
         for album in albums {
             let photos = queryPhotos(albumID: album.ID)
-            deletePhotos(photos)
+            deletePhotos(photos, albumID: album.ID)
             do {
                 try self.db.run(transaction: { _ in
                     let table = self.db.getTable(named:self.albumTableName, of: AlbumDBModel.self)
@@ -149,7 +173,14 @@ class PhotoDBHandler {
                 print("『im db delete error \(error)』")
             }
         }
-        dbAlbumDataUpdate?()
+        
+        let albums = queryAlbums()
+        
+        if albums.isEmpty {
+            NotificationCenter.default.post(name: Notification.Name("changeRootVc"), object: nil)
+        } else {
+            dbAlbumDataUpdate?()
+        }
     }
     
     func queryAlbums() -> [AlbumDBModel] {
