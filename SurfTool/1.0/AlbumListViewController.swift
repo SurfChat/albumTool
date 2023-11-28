@@ -34,15 +34,33 @@ class AlbumListViewController: UIViewController {
     private lazy var navView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.hexColor(0xFFECF6, alphaValue: 1)
+    
+        view.addSubview(userBtn)
+        userBtn.snp.makeConstraints { make in
+            make.leading.equalTo(5)
+            make.bottom.equalToSuperview()
+            make.width.height.equalTo(44)
+        }
+        
         let titleLab = UILabel()
         titleLab.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        titleLab.textColor = UIColor.hexColor(0x333333, alphaValue: 1)
         titleLab.text = "Sad Album"
         view.addSubview(titleLab)
         titleLab.snp.makeConstraints { make in
-            make.bottom.centerX.equalToSuperview()
+            make.leading.equalTo(userBtn.snp.trailing).offset(0)
+            make.bottom.equalToSuperview()
             make.height.equalTo(44)
         }
         return view
+    }()
+    
+    private lazy var userBtn: UIButton = {
+        let user = UIButton(type: .custom)
+        user.setImage(UIImage(named: "user"), for: .normal)
+        user.addTarget(self, action: #selector(userBtnClick), for: .touchUpInside)
+        
+        return user
     }()
     
     private lazy var editBtn: UIButton = {
@@ -80,6 +98,14 @@ class AlbumListViewController: UIViewController {
         return editBtn
     }()
     
+    private lazy var userView: PhotoUserView = {
+        let view = PhotoUserView()
+        view.cellTapAction = { [weak self] type in
+            self?.userListAction(type)
+        }
+        return view
+    }()
+    
     private lazy var dataArr: [AlbumDBModel] = []
     private lazy var deleteDataArr: [AlbumDBModel] = []
     private lazy var isListEdit = false
@@ -107,10 +133,19 @@ class AlbumListViewController: UIViewController {
             make.height.equalTo(navHeight)
         }
 
+        view.addSubview(userView)
+        userView.snp.makeConstraints { make in
+            make.top.equalTo(navView.snp.bottom)
+            make.leading.equalTo(0)
+            make.bottom.equalToSuperview()
+            make.width.equalTo(UIScreen.main.bounds.width*0.35)
+        }
+        
         view.addSubview(listView)
         listView.snp.makeConstraints { make in
             make.top.equalTo(navView.snp.bottom)
-            make.leading.bottom.trailing.equalToSuperview()
+            make.leading.equalTo(0)
+            make.bottom.trailing.equalToSuperview()
         }
         
         view.addSubview(addAlbumBtn)
@@ -133,6 +168,14 @@ class AlbumListViewController: UIViewController {
         super.viewWillAppear(animated)
         
         navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if userBtn.isSelected {
+            userBtn.sendActions(for: .touchUpInside)
+        }
     }
     
     private func setupData() {
@@ -169,22 +212,6 @@ class AlbumListViewController: UIViewController {
         }
      }
     
-   @objc private func goAddPhoto() {
-        
-       IMProgressHUD.showToast("Created successfully, go and add photos")
-       
-       DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-           if !self.dataArr.isEmpty {
-               if let data = self.dataArr.first {
-                   let listVc = PhotoListViewController()
-                   listVc.albumID = data.ID
-                   listVc.albumTitle = data.title
-                   self.navigationController?.pushViewController(listVc, animated: true)
-               }
-           }
-       }
-
-    }
 }
 
 extension AlbumListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -220,8 +247,10 @@ extension AlbumListViewController: UICollectionViewDelegate, UICollectionViewDat
             navigationController?.pushViewController(listVc, animated: true)
         }
     }
-    
+}
 
+extension AlbumListViewController {
+    
     @objc private func editBtnClick() {
        
         if isListEdit == true {
@@ -321,5 +350,70 @@ extension AlbumListViewController: UICollectionViewDelegate, UICollectionViewDat
             self.present(alertController, animated: true, completion: nil)
         }
 
+    }
+    
+    @objc private func userBtnClick(sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        
+        if sender.isSelected {
+            UIView.animate(withDuration: 0.3) {
+                self.listView.snp.updateConstraints { make in
+                    make.leading.equalTo(UIScreen.main.bounds.width*0.35)
+                }
+                self.view.layoutIfNeeded()
+            }
+
+        } else {
+            UIView.animate(withDuration: 0.3) {
+                self.listView.snp.updateConstraints { make in
+                    make.leading.equalTo(0)
+                }
+                self.view.layoutIfNeeded()
+            }
+        }
+
+    }
+    
+    @objc private func goAddPhoto() {
+         
+        IMProgressHUD.showToast("Created successfully, go and add photos")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+            if !self.dataArr.isEmpty {
+                if let data = self.dataArr.first {
+                    let listVc = PhotoListViewController()
+                    listVc.albumID = data.ID
+                    listVc.albumTitle = data.title
+                    self.navigationController?.pushViewController(listVc, animated: true)
+                }
+            }
+        }
+
+     }
+    
+    private func userListAction(_ type: UserListType) {
+        switch type {
+        case .vip: do {
+            let vip = PhotoVipViewController()
+            navigationController?.pushViewController(vip, animated: true)
+        }
+            
+        case .diamond: do {
+            let diamond = PhotoDiamondViewController()
+            navigationController?.pushViewController(diamond, animated: true)
+        }
+            
+        case .terms: do {
+            let webVc = PhotoWebViewController(url: "http://www.surf-chat.com/user-terms.html")
+            navigationController?.pushViewController(webVc, animated: true)
+        }
+            
+        case .policy: do {
+            let webVc = PhotoWebViewController(url: "http://www.surf-chat.com/privacy-policy.html")
+            navigationController?.pushViewController(webVc, animated: true)
+        }
+           
+        default: break
+        }
     }
 }

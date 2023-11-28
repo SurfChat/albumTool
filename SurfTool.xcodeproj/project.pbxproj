@@ -18,6 +18,10 @@
 		B1A4C3872B1195B900E3C2C2 /* PhotoBlurHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3862B1195B900E3C2C2 /* PhotoBlurHandler.swift */; };
 		B1A4C3892B14381900E3C2C2 /* AlbumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3882B14381900E3C2C2 /* AlbumListViewController.swift */; };
 		B1A4C38B2B143FC800E3C2C2 /* AlbumItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C38A2B143FC800E3C2C2 /* AlbumItemCell.swift */; };
+		B1A4C38D2B15E5FA00E3C2C2 /* PhotoUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C38C2B15E5FA00E3C2C2 /* PhotoUserView.swift */; };
+		B1A4C38F2B15FF5400E3C2C2 /* PhotoWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C38E2B15FF5400E3C2C2 /* PhotoWebViewController.swift */; };
+		B1A4C3912B16065200E3C2C2 /* PhotoVipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3902B16065200E3C2C2 /* PhotoVipViewController.swift */; };
+		B1A4C3932B16065E00E3C2C2 /* PhotoDiamondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3922B16065E00E3C2C2 /* PhotoDiamondViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +37,10 @@
 		B1A4C3862B1195B900E3C2C2 /* PhotoBlurHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBlurHandler.swift; sourceTree = "<group>"; };
 		B1A4C3882B14381900E3C2C2 /* AlbumListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListViewController.swift; sourceTree = "<group>"; };
 		B1A4C38A2B143FC800E3C2C2 /* AlbumItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumItemCell.swift; sourceTree = "<group>"; };
+		B1A4C38C2B15E5FA00E3C2C2 /* PhotoUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoUserView.swift; sourceTree = "<group>"; };
+		B1A4C38E2B15FF5400E3C2C2 /* PhotoWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoWebViewController.swift; sourceTree = "<group>"; };
+		B1A4C3902B16065200E3C2C2 /* PhotoVipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoVipViewController.swift; sourceTree = "<group>"; };
+		B1A4C3922B16065E00E3C2C2 /* PhotoDiamondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDiamondViewController.swift; sourceTree = "<group>"; };
 		B50FC2F7C750545CDB2F66CD /* Pods-SurfTool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfTool.debug.xcconfig"; path = "Target Support Files/Pods-SurfTool/Pods-SurfTool.debug.xcconfig"; sourceTree = "<group>"; };
 		BF3273B0BA11BAD2BC9EA2E3 /* Pods_SurfTool.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurfTool.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C60C0B78843D8FEC13B9C6B3 /* Pods-SurfTool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfTool.release.xcconfig"; path = "Target Support Files/Pods-SurfTool/Pods-SurfTool.release.xcconfig"; sourceTree = "<group>"; };
@@ -99,6 +107,10 @@
 				B1A4C3862B1195B900E3C2C2 /* PhotoBlurHandler.swift */,
 				B1A4C3882B14381900E3C2C2 /* AlbumListViewController.swift */,
 				B1A4C38A2B143FC800E3C2C2 /* AlbumItemCell.swift */,
+				B1A4C38C2B15E5FA00E3C2C2 /* PhotoUserView.swift */,
+				B1A4C38E2B15FF5400E3C2C2 /* PhotoWebViewController.swift */,
+				B1A4C3902B16065200E3C2C2 /* PhotoVipViewController.swift */,
+				B1A4C3922B16065E00E3C2C2 /* PhotoDiamondViewController.swift */,
 			);
 			path = 1.0;
 			sourceTree = "<group>";
@@ -226,12 +238,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1A4C3872B1195B900E3C2C2 /* PhotoBlurHandler.swift in Sources */,
+				B1A4C3912B16065200E3C2C2 /* PhotoVipViewController.swift in Sources */,
 				B1A4C3892B14381900E3C2C2 /* AlbumListViewController.swift in Sources */,
+				B1A4C38D2B15E5FA00E3C2C2 /* PhotoUserView.swift in Sources */,
+				B1A4C3932B16065E00E3C2C2 /* PhotoDiamondViewController.swift in Sources */,
 				B171903E2B0F55F100518623 /* PhotoDBModel.swift in Sources */,
 				B171903A2B0DFF9200518623 /* PhotoListViewController.swift in Sources */,
 				B17190402B0F58FC00518623 /* PhotoDBHandler.swift in Sources */,
 				B17190252B0DDCA800518623 /* AppDelegate.swift in Sources */,
 				B1A4C38B2B143FC800E3C2C2 /* AlbumItemCell.swift in Sources */,
+				B1A4C38F2B15FF5400E3C2C2 /* PhotoWebViewController.swift in Sources */,
 				B171903C2B0F52E100518623 /* PhotoItemCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
