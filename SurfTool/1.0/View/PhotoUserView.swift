@@ -39,12 +39,16 @@ class PhotoUserView: UIView {
             make.edges.equalToSuperview()
         }
         
+        NotificationCenter.default.addObserver(self, selector: #selector(rechargeSuc), name: NSNotification.Name("rechargeSucNoti"), object: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc private func rechargeSuc() {
+        tableView.reloadData()
+    }
 }
 
 extension PhotoUserView: UITableViewDelegate, UITableViewDataSource {
@@ -82,7 +86,23 @@ class UserListCell: UITableViewCell {
                 imgView.isHidden = false
                 imgView.image = UIImage(named: data.icon)
             }
+            
             lab.text = data.title
+            if data.type == .vip {
+                let vip = UserDefaults.standard.double(forKey: "sadAlbumVipTill")
+                if vip > 0 {
+                    let date = Date(timeIntervalSince1970: vip)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "MM-dd-yyyy"
+                    let dateString = dateFormatter.string(from: date)
+                    lab.text = data.title + " Till\n" + dateString
+                }
+            } else if data.type == .diamond {
+                let diamonds = UserDefaults.standard.integer(forKey: "sadAlbumDiamondsBalance")
+                if diamonds > 0 {
+                    lab.text = data.title + "\n\(diamonds)"
+                }
+            }
         }
     }
     
@@ -95,6 +115,7 @@ class UserListCell: UITableViewCell {
         let lab = UILabel()
         lab.textColor = UIColor.hexColor(0x333333, alphaValue: 1)
         lab.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        lab.numberOfLines = 2
         return lab
     }()
     

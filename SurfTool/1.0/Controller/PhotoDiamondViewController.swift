@@ -26,7 +26,7 @@ class PhotoDiamondViewController: UIViewController {
         
         let titleLab = UILabel()
         titleLab.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        titleLab.text = "Diamond"
+        titleLab.text = "Purchase"
         view.addSubview(titleLab)
         titleLab.snp.makeConstraints { make in
             make.leading.equalTo(backBtn.snp.trailing).offset(0)
@@ -95,11 +95,13 @@ class PhotoDiamondViewController: UIViewController {
         }
         
         if isDiamond {
-            view.layoutIfNeeded()
-            let lastSectionIndex = tableView.numberOfSections - 1
-            let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
-            let lastIndexPath = IndexPath(row: lastRowIndex, section: lastSectionIndex)
-            tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: false)
+            if PhotoPurchHandler.share.diamondDatas.count > 0 {
+                view.layoutIfNeeded()
+                let lastSectionIndex = tableView.numberOfSections - 1
+                let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
+                let lastIndexPath = IndexPath(row: lastRowIndex, section: lastSectionIndex)
+                tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: false)
+            }
         }
         
     }
@@ -109,7 +111,18 @@ class PhotoDiamondViewController: UIViewController {
     }
     
     @objc private func buyBtnClick() {
-        
+        if let selectedIndexPath = selectedIndexPath {
+            if selectedIndexPath.section == 0 {
+                let data = PhotoPurchHandler.share.vipDatas[selectedIndexPath.row]
+                
+                PhotoPurchHandler.startBuyVip(model: data)
+                
+            } else {
+                let data = PhotoPurchHandler.share.diamondDatas[selectedIndexPath.row]
+                
+                PhotoPurchHandler.startBuyCoin(model: data)
+            }
+        }
     }
 }
 
