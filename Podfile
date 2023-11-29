@@ -16,6 +16,7 @@ pod 'IMProgressHUD'
 pod 'ZLPhotoBrowser'
 pod 'WCDB.swift'
 pod 'JXPhotoBrowser'
+pod 'SwiftyStoreKit'
 
 end
 

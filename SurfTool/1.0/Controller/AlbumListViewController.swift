@@ -394,22 +394,25 @@ extension AlbumListViewController {
     private func userListAction(_ type: UserListType) {
         switch type {
         case .vip: do {
-            let vip = PhotoVipViewController()
+            let vip = PhotoDiamondViewController()
             navigationController?.pushViewController(vip, animated: true)
         }
             
         case .diamond: do {
             let diamond = PhotoDiamondViewController()
+            diamond.isDiamond = true
             navigationController?.pushViewController(diamond, animated: true)
         }
             
         case .terms: do {
             let webVc = PhotoWebViewController(url: "http://www.surf-chat.com/user-terms.html")
+            webVc.title = "Terms of Use"
             navigationController?.pushViewController(webVc, animated: true)
         }
             
         case .policy: do {
             let webVc = PhotoWebViewController(url: "http://www.surf-chat.com/privacy-policy.html")
+            webVc.title = "Privacy Policy"
             navigationController?.pushViewController(webVc, animated: true)
         }
            

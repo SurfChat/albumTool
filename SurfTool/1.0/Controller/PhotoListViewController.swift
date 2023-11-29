@@ -25,7 +25,7 @@ let homeBarHeight: CGFloat = {
 }()
 
 class PhotoListViewController: UIViewController {
-
+    
     var albumID: Int64 = 0
     var albumTitle: String = ""
     
@@ -53,7 +53,7 @@ class PhotoListViewController: UIViewController {
     private lazy var navView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-
+        
         let backBtn = UIButton(type: .custom)
         backBtn.setImage(UIImage(named: "back"), for: .normal)
         backBtn.addTarget(self, action: #selector(backBtnClick), for: .touchUpInside)
@@ -71,7 +71,7 @@ class PhotoListViewController: UIViewController {
             make.leading.equalTo(backBtn.snp.trailing).offset(0)
             make.bottom.equalToSuperview()
             make.height.equalTo(44)
-            make.width.equalTo(view.snp.width).multipliedBy(0.3)
+            make.width.equalTo(view.snp.width).multipliedBy(0.35)
         }
         
         return view
@@ -110,7 +110,7 @@ class PhotoListViewController: UIViewController {
         
         let w = (UIScreen.main.bounds.width-50)/3.0
         let transparentRect = CGRect(x: w+15, y: navHeight, width: w+20, height: w+20)
-
+        
         let maskLayer = CAShapeLayer()
         maskLayer.frame = view.bounds
         
@@ -118,22 +118,28 @@ class PhotoListViewController: UIViewController {
         let transparentRectPath = UIBezierPath(ovalIn: transparentRect)
         path.append(transparentRectPath)
         path.usesEvenOddFillRule = true
-
+        
         maskLayer.path = path.cgPath
         maskLayer.fillRule = .evenOdd
-
+        
         view.layer.mask = maskLayer
+        
+        let icon = UIImageView(image: UIImage(named: "double_tap_white"))
+        view.addSubview(icon)
+        icon.snp.makeConstraints { make in
+            make.top.equalTo(navHeight+30+w)
+            make.leading.equalTo(w*1.5)
+        }
         
         let lab = UILabel()
         lab.text = "Double Tap"
-        lab.textColor = UIColor.hexColor(0xFFECF6, alphaValue: 1)
-        lab.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        lab.textColor = .white
+        lab.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         lab.textAlignment = .center
         view.addSubview(lab)
         lab.snp.makeConstraints { make in
-            make.top.equalTo(navHeight+30+w)
-            make.leading.equalTo(w+15+10)
-            make.width.equalTo(w)
+            make.top.equalTo(icon.snp.bottom)
+            make.centerX.equalTo(icon)
         }
         
         return view
@@ -146,7 +152,7 @@ class PhotoListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         navView.addSubview(editBtn)
         editBtn.snp.makeConstraints { make in
@@ -166,7 +172,7 @@ class PhotoListViewController: UIViewController {
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(navHeight)
         }
-
+        
         view.addSubview(listView)
         listView.snp.makeConstraints { make in
             make.top.equalTo(navView.snp.bottom)
@@ -183,33 +189,32 @@ class PhotoListViewController: UIViewController {
         setupData()
     }
     
-   private func setupData() {
-       if !dataArr.isEmpty {
-           dataArr.removeAll()
-       }
-       
-       let data = PhotoDBHandler.share.queryPhotos(albumID: albumID)
-       if !data.isEmpty {
-           if data.count < 30 {
-               let add = PhotoDBModel()
-               add.ID = -1
-               dataArr.append(add)
-           }
-           dataArr.append(contentsOf: data)
-           editBtn.isHidden = false
-           if firstAdd {
-               view.addSubview(gruidView)
-               
-           }
-           
-       } else {
-           let add = PhotoDBModel()
-           add.ID = -1
-           dataArr.append(add)
-           editBtn.isHidden = true
-       }
-       
-       listView.reloadData()
+    private func setupData() {
+        if !dataArr.isEmpty {
+            dataArr.removeAll()
+        }
+        
+        let data = PhotoDBHandler.share.queryPhotos(albumID: albumID)
+        if !data.isEmpty {
+            if data.count < 30 {
+                let add = PhotoDBModel()
+                add.ID = -1
+                dataArr.append(add)
+            }
+            dataArr.append(contentsOf: data)
+            editBtn.isHidden = false
+            if firstAdd {
+                view.addSubview(gruidView)
+            }
+            
+        } else {
+            let add = PhotoDBModel()
+            add.ID = -1
+            dataArr.append(add)
+            editBtn.isHidden = true
+        }
+        
+        listView.reloadData()
     }
     
 }
@@ -220,7 +225,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoItemCell", for: indexPath) as! PhotoItemCell
         if dataArr.count > indexPath.item {
             cell.data = dataArr[indexPath.item]
@@ -241,7 +246,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
         return cell
     }
     
-   private func presentPhotoPickerController() {
+    private func presentPhotoPickerController() {
         ZLPhotoConfiguration.default()
             .maxSelectCount(10)
             .allowEditImage(false)
@@ -258,7 +263,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     @objc private func editBtnClick() {
-       
+        
         if isListEdit == true {
             if deleteDataArr.count > 0 {
                 deletePhoto()
@@ -272,7 +277,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     @objc private func cancelBtnClick() {
-
+        
         cancelBtn.isHidden = true
         editBtn.isSelected = false
         isListEdit = false
@@ -301,25 +306,25 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
     
     private func deletePhoto() {
         let alertController = UIAlertController(title: "Warm Tips", message: "Are you sure you want to delete the selected photos?", preferredStyle: .alert)
-
+        
         let okAction = UIAlertAction(title: "Sure", style: .default) { [weak self] (_) in
             // 当用户点击确定按钮时执行的操作
             guard let self = self else { return }
             PhotoDBHandler.share.deletePhotos(self.deleteDataArr, albumID: self.albumID)
             self.cancelBtnClick()
         }
-
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
-
+            
         }
-
+        
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
-
+        
         // 在视图控制器中显示警告框
         // 如果你在一个 UIViewController 中使用这段代码，请将 `self` 替换为你的视图控制器实例
         self.present(alertController, animated: true, completion: nil)
-
+        
     }
     
     private func showBigImage(data: PhotoDBModel) {

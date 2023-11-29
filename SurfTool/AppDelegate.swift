@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.synchronize()
         
         PhotoBlurHandler.updateBlur()
+        PhotoPurchHandler.share
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white
