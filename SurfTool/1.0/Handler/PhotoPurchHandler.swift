@@ -8,6 +8,7 @@
 import Foundation
 import SwiftyStoreKit
 import StoreKit
+import IMProgressHUD
 
 class PhotoPurchHandler {
     static let share = PhotoPurchHandler()
@@ -50,18 +51,37 @@ class PhotoPurchHandler {
     }
     
     static func startBuyVip(model: SKProduct) {
+
+        IMProgressHUD.showIndicator(.system, message: "")
         
         SwiftyStoreKit.purchaseProduct(model.productIdentifier, atomically: false) { result in
             switch result {
             case .success(let product):
                 // fetch content from your server, then:
                 print("Purchase Success: \(product.productId)")
-                share.checkOrder(detail: product)
-                
-                NotificationCenter.default.post(name: NSNotification.Name("rechargeSucNoti"), object: nil)
-                
+                share.checkOrder(detail: product) {
+                    if let count = model.productIdentifier.components(separatedBy: ".").last {
+                        var currentDate = Date()
+                        let vip = UserDefaults.standard.double(forKey: "sadAlbumVipTill")
+                        if vip > 0 {
+                            // 之前购买过 在之前的日期上延长
+                            currentDate = Date(timeIntervalSince1970: vip)
+                        }
+                        
+                        var dateComponents = DateComponents()
+                        dateComponents.month = 1 * (Int(count) ?? 0)
+                       
+                        if let futureDate = Calendar.current.date(byAdding: dateComponents, to: currentDate) {
+                            let till = futureDate.timeIntervalSince1970
+                            UserDefaults.standard.setValue(till, forKey: "sadAlbumVipTill")
+                            UserDefaults.standard.synchronize()
+                            NotificationCenter.default.post(name: NSNotification.Name("rechargeSucNoti"), object: nil)
+                        }
+                    }
+                }
             case .error(let error):
-
+                IMProgressHUD.hide()
+                IMProgressHUD.showFail("Purchase request failed")
                 switch error.code {
                 case .unknown: print("Unknown error. Please contact support")
                 case .clientInvalid: print("Not allowed to make the payment")
@@ -79,15 +99,25 @@ class PhotoPurchHandler {
     }
     
     static func startBuyCoin(model: SKProduct) {
-      
+
+        IMProgressHUD.showIndicator(.system, message: "")
+        
         SwiftyStoreKit.purchaseProduct(model.productIdentifier, atomically: false) { result in
             switch result {
             case .success(let product):
                 // fetch content from your server, then:
-                share.checkOrder(detail: product)
+                share.checkOrder(detail: product) {
+                    if let count = model.productIdentifier.components(separatedBy: ".").last {
+                        let diamonds = UserDefaults.standard.integer(forKey: "sadAlbumDiamondsBalance")
+                        UserDefaults.standard.setValue(diamonds+(Int(count) ?? 0), forKey: "sadAlbumDiamondsBalance")
+                        UserDefaults.standard.synchronize()
+                        NotificationCenter.default.post(name: NSNotification.Name("rechargeSucNoti"), object: nil)
+                    }
+                }
                 print("Purchase Success: \(product.productId)")
             case .error(let error):
-               
+                IMProgressHUD.hide()
+                IMProgressHUD.showFail("Purchase request failed")
                 switch error.code {
                 case .unknown: print("Unknown error. Please contact support")
                 case .clientInvalid: print("Not allowed to make the payment")
@@ -104,16 +134,20 @@ class PhotoPurchHandler {
         }
     }
     
-    private func checkOrder(detail: PurchaseDetails) {
+    private func checkOrder(detail: PurchaseDetails, suc: @escaping(() -> Void)) {
         
         SwiftyStoreKit.fetchReceipt(forceRefresh: false) { result in
+            IMProgressHUD.hide()
+            if detail.needsFinishTransaction {
+                SwiftyStoreKit.finishTransaction(detail.transaction)
+            }
             switch result {
-            case .success(let receiptData): do {
-                let receiptStr = receiptData.base64EncodedString(options: .endLineWithLineFeed)
-
+            case .success(_): do {
+                IMProgressHUD.showSuccess("Recharged successfully")
+                suc()
             }
             case .error(let error): do {
-//                FTYBaseHandler.hideLoadingFail(text: FTYLanguageHandler.fty_localizedString("Rechargefailed"))
+                IMProgressHUD.showFail("Recharge failed")
                 print("receiptData Error \(error.localizedDescription)")
             }
             }
