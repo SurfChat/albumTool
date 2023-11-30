@@ -344,7 +344,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
     
     @objc private func gruidViewTap() {
         let data = dataArr[1]
-        data.percent = 0.3
+        data.percent = 0.05
         dataArr[1] = data
         PhotoDBHandler.share.updatePhoto(data, albumID: albumID, updateAlbum: true)
         

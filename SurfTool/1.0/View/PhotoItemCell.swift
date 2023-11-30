@@ -146,7 +146,7 @@ class PhotoItemCell: UICollectionViewCell {
             flowAni.values = [startX, endX, endX]
             flowAni.duration = duration + interval
             flowAni.keyTimes = [NSNumber(floatLiteral: 0), NSNumber(floatLiteral: times), NSNumber(floatLiteral: 1)]
-            flowAni.repeatCount = 1
+            flowAni.repeatCount = 2
             flowAni.isRemovedOnCompletion = false
             flowAni.fillMode = CAMediaTimingFillMode.forwards
             gradint.add(flowAni, forKey: "guideView")
