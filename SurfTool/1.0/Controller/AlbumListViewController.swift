@@ -354,6 +354,7 @@ extension AlbumListViewController {
         sender.isSelected = !sender.isSelected
         
         if sender.isSelected {
+            userView.updateData()
             UIView.animate(withDuration: 0.3) {
                 self.listView.snp.updateConstraints { make in
                     make.leading.equalTo(UIScreen.main.bounds.width*0.35)

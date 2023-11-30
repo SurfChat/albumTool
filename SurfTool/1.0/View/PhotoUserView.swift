@@ -39,7 +39,7 @@ class PhotoUserView: UIView {
             make.edges.equalToSuperview()
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(rechargeSuc), name: NSNotification.Name("rechargeSucNoti"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateData), name: NSNotification.Name("rechargeSucNoti"), object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -50,7 +50,7 @@ class PhotoUserView: UIView {
         NotificationCenter.default.removeObserver(self)
     }
     
-    @objc private func rechargeSuc() {
+    @objc func updateData() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }

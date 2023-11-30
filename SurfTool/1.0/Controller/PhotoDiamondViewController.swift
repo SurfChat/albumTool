@@ -58,6 +58,8 @@ class PhotoDiamondViewController: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.hexColor(0xd7dfec, alphaValue: 1)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(backBtnClick), name: NSNotification.Name("rechargeSucNoti"), object: nil)
+        
         view.addSubview(navView)
         navView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
