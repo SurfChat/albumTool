@@ -45,7 +45,7 @@ class AlbumListViewController: UIViewController {
         let titleLab = UILabel()
         titleLab.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         titleLab.textColor = UIColor.hexColor(0x333333, alphaValue: 1)
-        titleLab.text = "Sad Album"
+        titleLab.text = "Memories Album"
         view.addSubview(titleLab)
         titleLab.snp.makeConstraints { make in
             make.leading.equalTo(userBtn.snp.trailing).offset(0)
