@@ -7,7 +7,25 @@
 		<key>SurfTool.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>8</integer>
+			<integer>12</integer>
+		</dict>
+		<key>islandExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>B17190202B0DDCA800518623</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B1A4C3A12B18730600E3C2C2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

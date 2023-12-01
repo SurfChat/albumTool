@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ActivityKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -33,6 +34,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        if #available(iOS 16.2, *) {
+            
+            guard ActivityAuthorizationInfo().areActivitiesEnabled else {
+                return
+            }
+       
+            let att = islandAttributes()
+            let content = islandAttributes.ContentState(star: PhotoBlurHandler.share.percent)
+            let attContent = ActivityContent(state: content, staleDate: nil)
+            do {
+                let activity = try Activity<islandAttributes>.request(attributes: att, content: attContent)
+                print("Requested a pizza delivery Live Activity \(activity.id)")
+            } catch (let error) {
+                print("Error requesting pizza delivery Live Activity \(error.localizedDescription)")
+            }
+           
+            
+        }
+    }
     
 }
 

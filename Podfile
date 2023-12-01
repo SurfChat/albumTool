@@ -12,12 +12,11 @@ install! 'cocoapods', :warn_for_unused_master_specs_repo => false
 target 'SurfTool' do
 
 pod 'SnapKit'
-pod 'IMProgressHUD'
 pod 'ZLPhotoBrowser'
 pod 'WCDB.swift'
 pod 'JXPhotoBrowser'
 pod 'SwiftyStoreKit'
-
+pod 'JFPopup', '1.5.4'
 end
 
 post_install do |installer|

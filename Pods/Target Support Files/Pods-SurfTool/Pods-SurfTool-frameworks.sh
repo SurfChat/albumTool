@@ -176,7 +176,8 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/IMProgressHUD/IMProgressHUD.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/JFPopup/JFPopup.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/JRBaseKit/JRBaseKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework"
@@ -185,7 +186,8 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/ZLPhotoBrowser/ZLPhotoBrowser.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/IMProgressHUD/IMProgressHUD.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/JFPopup/JFPopup.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/JRBaseKit/JRBaseKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework"

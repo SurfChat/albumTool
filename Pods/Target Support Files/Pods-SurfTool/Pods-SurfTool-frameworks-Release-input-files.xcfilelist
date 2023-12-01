@@ -1,5 +1,6 @@
 ${PODS_ROOT}/Target Support Files/Pods-SurfTool/Pods-SurfTool-frameworks.sh
-${BUILT_PRODUCTS_DIR}/IMProgressHUD/IMProgressHUD.framework
+${BUILT_PRODUCTS_DIR}/JFPopup/JFPopup.framework
+${BUILT_PRODUCTS_DIR}/JRBaseKit/JRBaseKit.framework
 ${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework
 ${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework

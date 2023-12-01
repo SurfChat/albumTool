@@ -8,6 +8,18 @@
 import Foundation
 
 class PhotoBlurHandler {
+    static let share = PhotoBlurHandler()
+    
+    var percent: Int {
+        if totalCount > 0 {
+            return 5-Int(totalPercent)/totalCount
+        } else {
+            return Int.random(in: 1...5)
+        }
+    }
+    
+    private var totalCount: Int = 0
+    private var totalPercent: Double = 0
     
     static func updateBlur() {
         let lanuchTime = UserDefaults.standard.value(forKey: "sadAlbumLanuchTime") as! Double
@@ -23,10 +35,12 @@ class PhotoBlurHandler {
             let datas = PhotoDBHandler.share.queryPhotos(albumID: album.ID)
             if !datas.isEmpty {
                 for data in datas {
+                    share.totalCount += 1
                     let percent = Double.random(in: 0..<0.30)
                     if data.percent < 1 {
                         data.percent += percent
                     }
+                    share.totalPercent += data.percent
                 }
                 PhotoDBHandler.share.updatePhotos(datas, albumID: album.ID)
             }

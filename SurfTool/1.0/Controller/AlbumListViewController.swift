@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import IMProgressHUD
+import JFPopup
 
 class AlbumListViewController: UIViewController {
 
@@ -375,7 +375,7 @@ extension AlbumListViewController {
     
     @objc private func goAddPhoto() {
          
-        IMProgressHUD.showToast("Created successfully, go and add photos")
+        JFPopupView.popup.toast(hit: "Created successfully\nGo and add photos", icon: .success)
         
         DispatchQueue.main.asyncAfter(deadline: .now()+1) {
             if !self.dataArr.isEmpty {

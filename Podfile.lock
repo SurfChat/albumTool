@@ -1,5 +1,7 @@
 PODS:
-  - IMProgressHUD (1.0.0)
+  - JFPopup (1.5.4):
+    - JRBaseKit (~> 1.1.1)
+  - JRBaseKit (1.1.2)
   - JXPhotoBrowser (3.1.4)
   - SnapKit (5.6.0)
   - SwiftyStoreKit (0.16.1)
@@ -14,7 +16,7 @@ PODS:
   - ZLPhotoBrowser/Core (4.4.6)
 
 DEPENDENCIES:
-  - IMProgressHUD
+  - JFPopup (= 1.5.4)
   - JXPhotoBrowser
   - SnapKit
   - SwiftyStoreKit
@@ -23,7 +25,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - IMProgressHUD
+    - JFPopup
+    - JRBaseKit
     - JXPhotoBrowser
     - SnapKit
     - SwiftyStoreKit
@@ -32,7 +35,8 @@ SPEC REPOS:
     - ZLPhotoBrowser
 
 SPEC CHECKSUMS:
-  IMProgressHUD: dfcb1c0894b82f17da5eb310b28ff88226e906f2
+  JFPopup: c3ada13bbda3cfe85bd71228e20a0b622eab72af
+  JRBaseKit: 825cca458a73990f6019deaaaaff75840dea477f
   JXPhotoBrowser: 41ffa41252c8d5264f97ab3c1936a5cf935a58d7
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftyStoreKit: 6b9c08810269f030586dac1fae8e75871a82e84a
@@ -40,6 +44,6 @@ SPEC CHECKSUMS:
   WCDBOptimizedSQLCipher: ef2be79fed278289a309ad0d4d707c55bf166d6d
   ZLPhotoBrowser: 8b3653a677a858e158fedf870f211b1219bb4c0f
 
-PODFILE CHECKSUM: f2131a8a146ab7faca263ad988a4632762634339
+PODFILE CHECKSUM: 59a5a7271bf7876b3adbb9b7c74f5dfc3ffa9ba1
 
 COCOAPODS: 1.13.0

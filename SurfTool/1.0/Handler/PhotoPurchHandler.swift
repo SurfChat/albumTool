@@ -8,7 +8,7 @@
 import Foundation
 import SwiftyStoreKit
 import StoreKit
-import IMProgressHUD
+import JFPopup
 
 class PhotoPurchHandler {
     static let share = PhotoPurchHandler()
@@ -52,7 +52,7 @@ class PhotoPurchHandler {
     
     static func startBuyVip(model: SKProduct) {
 
-        IMProgressHUD.showIndicator(.system, message: "")
+        JFPopupView.popup.loading()
         
         SwiftyStoreKit.purchaseProduct(model.productIdentifier, atomically: false) { result in
             switch result {
@@ -80,8 +80,10 @@ class PhotoPurchHandler {
                     }
                 }
             case .error(let error):
-                IMProgressHUD.hide()
-                IMProgressHUD.showFail("Purchase request failed")
+                DispatchQueue.main.async {
+                    JFPopupView.popup.hideLoading()
+                    JFPopupView.popup.toast(hit: "Purchase request failed", icon: .fail)
+                }
                 switch error.code {
                 case .unknown: print("Unknown error. Please contact support")
                 case .clientInvalid: print("Not allowed to make the payment")
@@ -100,7 +102,7 @@ class PhotoPurchHandler {
     
     static func startBuyCoin(model: SKProduct) {
 
-        IMProgressHUD.showIndicator(.system, message: "")
+        JFPopupView.popup.loading()
         
         SwiftyStoreKit.purchaseProduct(model.productIdentifier, atomically: false) { result in
             switch result {
@@ -116,8 +118,10 @@ class PhotoPurchHandler {
                 }
                 print("Purchase Success: \(product.productId)")
             case .error(let error):
-                IMProgressHUD.hide()
-                IMProgressHUD.showFail("Purchase request failed")
+                DispatchQueue.main.async {
+                    JFPopupView.popup.hideLoading()
+                    JFPopupView.popup.toast(hit: "Purchase request failed", icon: .fail)
+                }
                 switch error.code {
                 case .unknown: print("Unknown error. Please contact support")
                 case .clientInvalid: print("Not allowed to make the payment")
@@ -137,19 +141,21 @@ class PhotoPurchHandler {
     private func checkOrder(detail: PurchaseDetails, suc: @escaping(() -> Void)) {
         
         SwiftyStoreKit.fetchReceipt(forceRefresh: false) { result in
-            IMProgressHUD.hide()
             if detail.needsFinishTransaction {
                 SwiftyStoreKit.finishTransaction(detail.transaction)
             }
-            switch result {
-            case .success(_): do {
-                IMProgressHUD.showSuccess("Recharged successfully")
-                suc()
-            }
-            case .error(let error): do {
-                IMProgressHUD.showFail("Recharge failed")
-                print("receiptData Error \(error.localizedDescription)")
-            }
+            DispatchQueue.main.async {
+                JFPopupView.popup.hideLoading()
+                switch result {
+                case .success(_): do {
+                    JFPopupView.popup.toast(hit: "Recharged Successfully", icon: .success)
+                    suc()
+                }
+                case .error(let error): do {
+                    JFPopupView.popup.toast(hit: "Recharge Failed", icon: .fail)
+                    print("receiptData Error \(error.localizedDescription)")
+                }
+                }
             }
         }
     }

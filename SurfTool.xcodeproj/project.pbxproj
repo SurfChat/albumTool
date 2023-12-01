@@ -24,7 +24,40 @@
 		B1A4C3992B16086A00E3C2C2 /* PhotoPurchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3982B16086A00E3C2C2 /* PhotoPurchHandler.swift */; };
 		B1A4C39B2B1609AC00E3C2C2 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A4C39A2B1609AC00E3C2C2 /* StoreKit.framework */; };
 		B1A4C39D2B17155800E3C2C2 /* PurchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C39C2B17155800E3C2C2 /* PurchCell.swift */; };
+		B1A4C3A42B18730600E3C2C2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A4C3A32B18730600E3C2C2 /* WidgetKit.framework */; };
+		B1A4C3A62B18730600E3C2C2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A4C3A52B18730600E3C2C2 /* SwiftUI.framework */; };
+		B1A4C3A92B18730600E3C2C2 /* islandBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3A82B18730600E3C2C2 /* islandBundle.swift */; };
+		B1A4C3AB2B18730600E3C2C2 /* islandLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3AA2B18730600E3C2C2 /* islandLiveActivity.swift */; };
+		B1A4C3AD2B18730600E3C2C2 /* island.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3AC2B18730600E3C2C2 /* island.swift */; };
+		B1A4C3AF2B18730800E3C2C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1A4C3AE2B18730800E3C2C2 /* Assets.xcassets */; };
+		B1A4C3B32B18730800E3C2C2 /* islandExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B1A4C3A22B18730600E3C2C2 /* islandExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B1D3DEAF2B197220000F516D /* IslandAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3DEAE2B197220000F516D /* IslandAttributes.swift */; };
+		B1D3DEB02B197220000F516D /* IslandAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3DEAE2B197220000F516D /* IslandAttributes.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B1A4C3B12B18730800E3C2C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B17190192B0DDCA800518623 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B1A4C3A12B18730600E3C2C2;
+			remoteInfo = islandExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B1A4C3B72B18730800E3C2C2 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B1A4C3B32B18730800E3C2C2 /* islandExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B17190212B0DDCA800518623 /* SurfTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SurfTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,6 +78,17 @@
 		B1A4C3982B16086A00E3C2C2 /* PhotoPurchHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPurchHandler.swift; sourceTree = "<group>"; };
 		B1A4C39A2B1609AC00E3C2C2 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B1A4C39C2B17155800E3C2C2 /* PurchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchCell.swift; sourceTree = "<group>"; };
+		B1A4C3A22B18730600E3C2C2 /* islandExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = islandExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1A4C3A32B18730600E3C2C2 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		B1A4C3A52B18730600E3C2C2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		B1A4C3A82B18730600E3C2C2 /* islandBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = islandBundle.swift; sourceTree = "<group>"; };
+		B1A4C3AA2B18730600E3C2C2 /* islandLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = islandLiveActivity.swift; sourceTree = "<group>"; };
+		B1A4C3AC2B18730600E3C2C2 /* island.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = island.swift; sourceTree = "<group>"; };
+		B1A4C3AE2B18730800E3C2C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B1A4C3B02B18730800E3C2C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1A4C3B82B18868600E3C2C2 /* SurfTool.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SurfTool.entitlements; sourceTree = "<group>"; };
+		B1A4C3B92B18876200E3C2C2 /* islandExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = islandExtension.entitlements; sourceTree = "<group>"; };
+		B1D3DEAE2B197220000F516D /* IslandAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IslandAttributes.swift; sourceTree = "<group>"; };
 		B50FC2F7C750545CDB2F66CD /* Pods-SurfTool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfTool.debug.xcconfig"; path = "Target Support Files/Pods-SurfTool/Pods-SurfTool.debug.xcconfig"; sourceTree = "<group>"; };
 		BF3273B0BA11BAD2BC9EA2E3 /* Pods_SurfTool.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurfTool.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C60C0B78843D8FEC13B9C6B3 /* Pods-SurfTool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfTool.release.xcconfig"; path = "Target Support Files/Pods-SurfTool/Pods-SurfTool.release.xcconfig"; sourceTree = "<group>"; };
@@ -57,6 +101,15 @@
 			files = (
 				0AE154CCAC3DAE7EF4069D7D /* Pods_SurfTool.framework in Frameworks */,
 				B1A4C39B2B1609AC00E3C2C2 /* StoreKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B1A4C39F2B18730600E3C2C2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1A4C3A62B18730600E3C2C2 /* SwiftUI.framework in Frameworks */,
+				B1A4C3A42B18730600E3C2C2 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,7 +128,9 @@
 		B17190182B0DDCA800518623 = {
 			isa = PBXGroup;
 			children = (
+				B1A4C3B92B18876200E3C2C2 /* islandExtension.entitlements */,
 				B17190232B0DDCA800518623 /* SurfTool */,
+				B1A4C3A72B18730600E3C2C2 /* island */,
 				B17190222B0DDCA800518623 /* Products */,
 				47783B9714FBB0150F685866 /* Pods */,
 				F997C11ECC077DBB27B820C7 /* Frameworks */,
@@ -86,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				B17190212B0DDCA800518623 /* SurfTool.app */,
+				B1A4C3A22B18730600E3C2C2 /* islandExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -93,6 +149,7 @@
 		B17190232B0DDCA800518623 /* SurfTool */ = {
 			isa = PBXGroup;
 			children = (
+				B1A4C3B82B18868600E3C2C2 /* SurfTool.entitlements */,
 				B17190382B0DDD3300518623 /* 1.0 */,
 				B17190242B0DDCA800518623 /* AppDelegate.swift */,
 				B171902D2B0DDCA900518623 /* Assets.xcassets */,
@@ -153,11 +210,26 @@
 			path = Handler;
 			sourceTree = "<group>";
 		};
+		B1A4C3A72B18730600E3C2C2 /* island */ = {
+			isa = PBXGroup;
+			children = (
+				B1D3DEAE2B197220000F516D /* IslandAttributes.swift */,
+				B1A4C3A82B18730600E3C2C2 /* islandBundle.swift */,
+				B1A4C3AA2B18730600E3C2C2 /* islandLiveActivity.swift */,
+				B1A4C3AC2B18730600E3C2C2 /* island.swift */,
+				B1A4C3AE2B18730800E3C2C2 /* Assets.xcassets */,
+				B1A4C3B02B18730800E3C2C2 /* Info.plist */,
+			);
+			path = island;
+			sourceTree = "<group>";
+		};
 		F997C11ECC077DBB27B820C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				B1A4C39A2B1609AC00E3C2C2 /* StoreKit.framework */,
 				BF3273B0BA11BAD2BC9EA2E3 /* Pods_SurfTool.framework */,
+				B1A4C3A32B18730600E3C2C2 /* WidgetKit.framework */,
+				B1A4C3A52B18730600E3C2C2 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -174,15 +246,34 @@
 				B171901E2B0DDCA800518623 /* Frameworks */,
 				B171901F2B0DDCA800518623 /* Resources */,
 				261F378045D43893954593F0 /* [CP] Embed Pods Frameworks */,
+				B1A4C3B72B18730800E3C2C2 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B1A4C3B22B18730800E3C2C2 /* PBXTargetDependency */,
 			);
 			name = SurfTool;
 			productName = SurfTool;
 			productReference = B17190212B0DDCA800518623 /* SurfTool.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B1A4C3A12B18730600E3C2C2 /* islandExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B1A4C3B42B18730800E3C2C2 /* Build configuration list for PBXNativeTarget "islandExtension" */;
+			buildPhases = (
+				B1A4C39E2B18730600E3C2C2 /* Sources */,
+				B1A4C39F2B18730600E3C2C2 /* Frameworks */,
+				B1A4C3A02B18730600E3C2C2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = islandExtension;
+			productName = islandExtension;
+			productReference = B1A4C3A22B18730600E3C2C2 /* islandExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -195,6 +286,9 @@
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					B17190202B0DDCA800518623 = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
+					B1A4C3A12B18730600E3C2C2 = {
 						CreatedOnToolsVersion = 15.0.1;
 					};
 				};
@@ -213,6 +307,7 @@
 			projectRoot = "";
 			targets = (
 				B17190202B0DDCA800518623 /* SurfTool */,
+				B1A4C3A12B18730600E3C2C2 /* islandExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -224,6 +319,14 @@
 			files = (
 				B17190312B0DDCA900518623 /* LaunchScreen.storyboard in Resources */,
 				B171902E2B0DDCA900518623 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B1A4C3A02B18730600E3C2C2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1A4C3AF2B18730800E3C2C2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +379,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1D3DEAF2B197220000F516D /* IslandAttributes.swift in Sources */,
 				B1A4C3872B1195B900E3C2C2 /* PhotoBlurHandler.swift in Sources */,
 				B1A4C3892B14381900E3C2C2 /* AlbumListViewController.swift in Sources */,
 				B1A4C38D2B15E5FA00E3C2C2 /* PhotoUserView.swift in Sources */,
@@ -292,7 +396,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B1A4C39E2B18730600E3C2C2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1A4C3AD2B18730600E3C2C2 /* island.swift in Sources */,
+				B1A4C3A92B18730600E3C2C2 /* islandBundle.swift in Sources */,
+				B1A4C3AB2B18730600E3C2C2 /* islandLiveActivity.swift in Sources */,
+				B1D3DEB02B197220000F516D /* IslandAttributes.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B1A4C3B22B18730800E3C2C2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B1A4C3A12B18730600E3C2C2 /* islandExtension */;
+			targetProxy = B1A4C3B12B18730800E3C2C2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B171902F2B0DDCA900518623 /* LaunchScreen.storyboard */ = {
@@ -429,8 +552,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B50FC2F7C750545CDB2F66CD /* Pods-SurfTool.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SurfTool/SurfTool.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -443,6 +568,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "Access to the camera is required to capture photos for selection and display\\";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Photo library access is required to save images to the album";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Requires access to the photo gallery to obtain photos for selection and display";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -473,8 +599,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C60C0B78843D8FEC13B9C6B3 /* Pods-SurfTool.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SurfTool/SurfTool.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -487,6 +615,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "Access to the camera is required to capture photos for selection and display\\";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Photo library access is required to save images to the album";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Requires access to the photo gallery to obtain photos for selection and display";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -513,6 +642,72 @@
 			};
 			name = Release;
 		};
+		B1A4C3B52B18730800E3C2C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = islandExtension.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6P9263DA3S;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = island/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = island;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.surf.chat.island;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = surftool_dev;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B1A4C3B62B18730800E3C2C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = islandExtension.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6P9263DA3S;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = island/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = island;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.surf.chat.island;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = surfTool_release;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -530,6 +725,15 @@
 			buildConfigurations = (
 				B17190362B0DDCA900518623 /* Debug */,
 				B17190372B0DDCA900518623 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B1A4C3B42B18730800E3C2C2 /* Build configuration list for PBXNativeTarget "islandExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1A4C3B52B18730800E3C2C2 /* Debug */,
+				B1A4C3B62B18730800E3C2C2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
