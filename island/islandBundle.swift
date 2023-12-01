@@ -11,7 +11,6 @@ import SwiftUI
 @main
 struct islandBundle: WidgetBundle {
     var body: some Widget {
-//        island()
         islandLiveActivity()
     }
 }

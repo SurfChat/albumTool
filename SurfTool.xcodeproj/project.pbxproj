@@ -28,7 +28,6 @@
 		B1A4C3A62B18730600E3C2C2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A4C3A52B18730600E3C2C2 /* SwiftUI.framework */; };
 		B1A4C3A92B18730600E3C2C2 /* islandBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3A82B18730600E3C2C2 /* islandBundle.swift */; };
 		B1A4C3AB2B18730600E3C2C2 /* islandLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3AA2B18730600E3C2C2 /* islandLiveActivity.swift */; };
-		B1A4C3AD2B18730600E3C2C2 /* island.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3AC2B18730600E3C2C2 /* island.swift */; };
 		B1A4C3AF2B18730800E3C2C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1A4C3AE2B18730800E3C2C2 /* Assets.xcassets */; };
 		B1A4C3B32B18730800E3C2C2 /* islandExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B1A4C3A22B18730600E3C2C2 /* islandExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B1D3DEAF2B197220000F516D /* IslandAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3DEAE2B197220000F516D /* IslandAttributes.swift */; };
@@ -83,7 +82,6 @@
 		B1A4C3A52B18730600E3C2C2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		B1A4C3A82B18730600E3C2C2 /* islandBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = islandBundle.swift; sourceTree = "<group>"; };
 		B1A4C3AA2B18730600E3C2C2 /* islandLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = islandLiveActivity.swift; sourceTree = "<group>"; };
-		B1A4C3AC2B18730600E3C2C2 /* island.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = island.swift; sourceTree = "<group>"; };
 		B1A4C3AE2B18730800E3C2C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1A4C3B02B18730800E3C2C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1A4C3B82B18868600E3C2C2 /* SurfTool.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SurfTool.entitlements; sourceTree = "<group>"; };
@@ -216,7 +214,6 @@
 				B1D3DEAE2B197220000F516D /* IslandAttributes.swift */,
 				B1A4C3A82B18730600E3C2C2 /* islandBundle.swift */,
 				B1A4C3AA2B18730600E3C2C2 /* islandLiveActivity.swift */,
-				B1A4C3AC2B18730600E3C2C2 /* island.swift */,
 				B1A4C3AE2B18730800E3C2C2 /* Assets.xcassets */,
 				B1A4C3B02B18730800E3C2C2 /* Info.plist */,
 			);
@@ -400,7 +397,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1A4C3AD2B18730600E3C2C2 /* island.swift in Sources */,
 				B1A4C3A92B18730600E3C2C2 /* islandBundle.swift in Sources */,
 				B1A4C3AB2B18730600E3C2C2 /* islandLiveActivity.swift in Sources */,
 				B1D3DEB02B197220000F516D /* IslandAttributes.swift in Sources */,
@@ -657,7 +653,7 @@
 				INFOPLIST_FILE = island/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = island;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -669,9 +665,12 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = surftool_dev;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -690,7 +689,7 @@
 				INFOPLIST_FILE = island/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = island;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -702,9 +701,12 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = surfTool_release;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
