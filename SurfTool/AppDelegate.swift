@@ -55,5 +55,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func applicationWillTerminate(_ application: UIApplication) {
+        if #available(iOS 16.1, *) {
+            for activity in Activity<islandAttributes>.activities {
+                Task {
+                    await activity.end(using: nil, dismissalPolicy: .immediate)
+                }
+            }
+        }
+    }
 }
 
