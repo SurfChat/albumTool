@@ -178,8 +178,8 @@ class UserListViewModel {
         ver.title = "Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String)"
         
         
-        dataArr.append(vip)
-        dataArr.append(coin)
+//        dataArr.append(vip)
+//        dataArr.append(coin)
         dataArr.append(agreement)
         dataArr.append(privacy)
         dataArr.append(ver)

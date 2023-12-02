@@ -314,12 +314,12 @@ extension AlbumListViewController {
     
     @objc private func addAlbumBtnClick() {
         
-        let vip = UserDefaults.standard.double(forKey: "sadAlbumVipTill")
-
-        if vip == 0 && dataArr.count > 0 {
-            // 付费拦截
-            userListAction(.vip)
-        } else {
+//        let vip = UserDefaults.standard.double(forKey: "sadAlbumVipTill")
+//
+//        if vip == 0 && dataArr.count > 0 {
+//            // 付费拦截
+//            userListAction(.vip)
+//        } else {
             
             let alertController = UIAlertController(title: "Create new album", message: nil, preferredStyle: .alert)
 
@@ -346,7 +346,7 @@ extension AlbumListViewController {
             alertController.addAction(okAction)
 
             self.present(alertController, animated: true, completion: nil)
-        }
+//        }
 
     }
     
