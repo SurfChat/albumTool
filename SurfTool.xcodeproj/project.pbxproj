@@ -15,6 +15,9 @@
 		B171903C2B0F52E100518623 /* PhotoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B171903B2B0F52E100518623 /* PhotoItemCell.swift */; };
 		B171903E2B0F55F100518623 /* PhotoDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B171903D2B0F55F100518623 /* PhotoDBModel.swift */; };
 		B17190402B0F58FC00518623 /* PhotoDBHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B171903F2B0F58FC00518623 /* PhotoDBHandler.swift */; };
+		B175BCF22B1DA0C5000B83A6 /* PhotoTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175BCF12B1DA0C5000B83A6 /* PhotoTextCell.swift */; };
+		B175BCF62B1DC929000B83A6 /* PhotoStickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175BCF52B1DC929000B83A6 /* PhotoStickerView.swift */; };
+		B175BCF82B1DCDDB000B83A6 /* PhotoFullViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175BCF72B1DCDDB000B83A6 /* PhotoFullViewController.swift */; };
 		B1A4C3872B1195B900E3C2C2 /* PhotoBlurHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3862B1195B900E3C2C2 /* PhotoBlurHandler.swift */; };
 		B1A4C3892B14381900E3C2C2 /* AlbumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3882B14381900E3C2C2 /* AlbumListViewController.swift */; };
 		B1A4C38B2B143FC800E3C2C2 /* AlbumItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C38A2B143FC800E3C2C2 /* AlbumItemCell.swift */; };
@@ -68,6 +71,9 @@
 		B171903B2B0F52E100518623 /* PhotoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoItemCell.swift; sourceTree = "<group>"; };
 		B171903D2B0F55F100518623 /* PhotoDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDBModel.swift; sourceTree = "<group>"; };
 		B171903F2B0F58FC00518623 /* PhotoDBHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDBHandler.swift; sourceTree = "<group>"; };
+		B175BCF12B1DA0C5000B83A6 /* PhotoTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTextCell.swift; sourceTree = "<group>"; };
+		B175BCF52B1DC929000B83A6 /* PhotoStickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoStickerView.swift; sourceTree = "<group>"; };
+		B175BCF72B1DCDDB000B83A6 /* PhotoFullViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFullViewController.swift; sourceTree = "<group>"; };
 		B1A4C3862B1195B900E3C2C2 /* PhotoBlurHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBlurHandler.swift; sourceTree = "<group>"; };
 		B1A4C3882B14381900E3C2C2 /* AlbumListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListViewController.swift; sourceTree = "<group>"; };
 		B1A4C38A2B143FC800E3C2C2 /* AlbumItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumItemCell.swift; sourceTree = "<group>"; };
@@ -175,6 +181,8 @@
 				B1A4C38A2B143FC800E3C2C2 /* AlbumItemCell.swift */,
 				B171903B2B0F52E100518623 /* PhotoItemCell.swift */,
 				B1A4C39C2B17155800E3C2C2 /* PurchCell.swift */,
+				B175BCF12B1DA0C5000B83A6 /* PhotoTextCell.swift */,
+				B175BCF52B1DC929000B83A6 /* PhotoStickerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -186,6 +194,7 @@
 				B1A4C38E2B15FF5400E3C2C2 /* PhotoWebViewController.swift */,
 				B1A4C3882B14381900E3C2C2 /* AlbumListViewController.swift */,
 				B17190392B0DFF9200518623 /* PhotoListViewController.swift */,
+				B175BCF72B1DCDDB000B83A6 /* PhotoFullViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -387,8 +396,11 @@
 				B1A4C39D2B17155800E3C2C2 /* PurchCell.swift in Sources */,
 				B17190252B0DDCA800518623 /* AppDelegate.swift in Sources */,
 				B1A4C3992B16086A00E3C2C2 /* PhotoPurchHandler.swift in Sources */,
+				B175BCF62B1DC929000B83A6 /* PhotoStickerView.swift in Sources */,
 				B1A4C38B2B143FC800E3C2C2 /* AlbumItemCell.swift in Sources */,
+				B175BCF82B1DCDDB000B83A6 /* PhotoFullViewController.swift in Sources */,
 				B1A4C38F2B15FF5400E3C2C2 /* PhotoWebViewController.swift in Sources */,
+				B175BCF22B1DA0C5000B83A6 /* PhotoTextCell.swift in Sources */,
 				B171903C2B0F52E100518623 /* PhotoItemCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

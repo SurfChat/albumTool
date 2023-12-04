@@ -10,7 +10,7 @@ import JFPopup
 
 class AlbumListViewController: UIViewController {
 
-    private lazy var listView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 10
@@ -23,7 +23,7 @@ class AlbumListViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(AlbumItemCell.self, forCellWithReuseIdentifier: "AlbumItemCell")
-        collectionView.backgroundColor = UIColor.hexColor(0xFFECF6, alphaValue: 1)
+        collectionView.backgroundColor = .clear
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.showsVerticalScrollIndicator = false
         
@@ -31,9 +31,15 @@ class AlbumListViewController: UIViewController {
         
     }()
     
+    private lazy var listView: UIView = {
+        let bgView = UIView()
+        bgView.backgroundColor = .white
+        return bgView
+    }()
+    
     private lazy var navView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.hexColor(0xFFECF6, alphaValue: 1)
+        view.backgroundColor = .white
     
         view.addSubview(userBtn)
         userBtn.snp.makeConstraints { make in
@@ -140,12 +146,24 @@ class AlbumListViewController: UIViewController {
             make.bottom.equalToSuperview()
             make.width.equalTo(UIScreen.main.bounds.width*0.35)
         }
-        
+                
         view.addSubview(listView)
         listView.snp.makeConstraints { make in
             make.top.equalTo(navView.snp.bottom)
             make.leading.equalTo(0)
             make.bottom.trailing.equalToSuperview()
+        }
+        
+        let bottomBgImage = UIImageView(image: UIImage(named: "launch_bg"))
+        listView.addSubview(bottomBgImage)
+        bottomBgImage.snp.makeConstraints { make in
+            make.leading.bottom.trailing.equalToSuperview()
+            make.height.equalTo(bottomBgImage.snp.width).multipliedBy(375.0/308.0)
+        }
+        
+        listView.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         
         view.addSubview(addAlbumBtn)
@@ -208,7 +226,7 @@ class AlbumListViewController: UIViewController {
             self.present(alertController, animated: true, completion: nil)
         } else {
             dataArr.append(contentsOf: data)
-            listView.reloadData()
+            collectionView.reloadData()
         }
      }
     
@@ -259,7 +277,7 @@ extension AlbumListViewController {
             }
         } else {
             isListEdit = true
-            listView.reloadData()
+            collectionView.reloadData()
             cancelBtn.isHidden = false
         }
     }
@@ -269,7 +287,7 @@ extension AlbumListViewController {
         cancelBtn.isHidden = true
         editBtn.isSelected = false
         isListEdit = false
-        listView.reloadData()
+        collectionView.reloadData()
         if deleteDataArr.count > 0 {
             deleteDataArr.removeAll()
         }

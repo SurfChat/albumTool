@@ -140,6 +140,18 @@ class PhotoDBHandler {
         }
     }
     
+    func updatePhotoText(_ photo: PhotoDBModel, albumID: Int64) {
+        do {
+            try self.db.run(transaction: { _ in
+                let table = self.db.getTable(named:self.tableName, of: PhotoDBModel.self)
+                try table.update(on: PhotoDBModel.Properties.text, with: photo, where: PhotoDBModel.Properties.ID == photo.ID)
+            })
+        } catch let error {
+            print("『db update error \(error)』")
+        }
+        self.dbDataUpdate?()
+    }
+    
     // MARK: Album增删改查
     func addAlbum(_ albumTitle: String?) {
         let album = AlbumDBModel()

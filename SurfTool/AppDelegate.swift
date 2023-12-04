@@ -7,6 +7,7 @@
 
 import UIKit
 import ActivityKit
+import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let listVc = AlbumListViewController()
         window?.rootViewController = UINavigationController(rootViewController: listVc)
+        
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.enableAutoToolbar = false
+        IQKeyboardManager.shared.reloadLayoutIfNeeded()
         
         return true
     }

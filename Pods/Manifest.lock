@@ -1,8 +1,12 @@
 PODS:
+  - IQKeyboardManagerSwift (6.5.16)
   - JFPopup (1.5.4):
     - JRBaseKit (~> 1.1.1)
   - JRBaseKit (1.1.2)
   - JXPhotoBrowser (3.1.4)
+  - RSKGrowingTextView (6.1.1):
+    - RSKPlaceholderTextView (= 6.1.0)
+  - RSKPlaceholderTextView (6.1.0)
   - SnapKit (5.6.0)
   - SwiftyStoreKit (0.16.1)
   - WCDB.swift (2.0.4):
@@ -16,8 +20,10 @@ PODS:
   - ZLPhotoBrowser/Core (4.4.6)
 
 DEPENDENCIES:
+  - IQKeyboardManagerSwift
   - JFPopup (= 1.5.4)
   - JXPhotoBrowser
+  - RSKGrowingTextView
   - SnapKit
   - SwiftyStoreKit
   - WCDB.swift
@@ -25,9 +31,12 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - IQKeyboardManagerSwift
     - JFPopup
     - JRBaseKit
     - JXPhotoBrowser
+    - RSKGrowingTextView
+    - RSKPlaceholderTextView
     - SnapKit
     - SwiftyStoreKit
     - WCDB.swift
@@ -35,15 +44,18 @@ SPEC REPOS:
     - ZLPhotoBrowser
 
 SPEC CHECKSUMS:
+  IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
   JFPopup: c3ada13bbda3cfe85bd71228e20a0b622eab72af
   JRBaseKit: 825cca458a73990f6019deaaaaff75840dea477f
   JXPhotoBrowser: 41ffa41252c8d5264f97ab3c1936a5cf935a58d7
+  RSKGrowingTextView: 76303a23f9c987fcf1a909720aac27bb9747511d
+  RSKPlaceholderTextView: 52f26e643b6f9bbf16f45cd2bbe2181b6dfe090c
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftyStoreKit: 6b9c08810269f030586dac1fae8e75871a82e84a
   WCDB.swift: 28dd96180d913abadb3ea9cf99bd6e942262379a
   WCDBOptimizedSQLCipher: ef2be79fed278289a309ad0d4d707c55bf166d6d
   ZLPhotoBrowser: 8b3653a677a858e158fedf870f211b1219bb4c0f
 
-PODFILE CHECKSUM: 59a5a7271bf7876b3adbb9b7c74f5dfc3ffa9ba1
+PODFILE CHECKSUM: c7ac74c708d69134b20b27b8a1ac41c89b8f827d
 
 COCOAPODS: 1.13.0

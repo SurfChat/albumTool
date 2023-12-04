@@ -62,8 +62,11 @@ class AlbumItemCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = 5
-        contentView.clipsToBounds = true
+        contentView.layer.shadowColor = UIColor.hexColor(0x000000, alphaValue: 0.6).cgColor
+        contentView.layer.shadowOffset = CGSize(width: 1, height: 1)
+        contentView.layer.shadowOpacity = 0.8
+        let w = (UIScreen.main.bounds.width-40)/2.0
+        contentView.layer.shadowPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: w, height: w+35), cornerRadius: 0).cgPath
         
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in

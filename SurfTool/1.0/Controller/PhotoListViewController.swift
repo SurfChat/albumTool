@@ -36,13 +36,12 @@ class PhotoListViewController: UIViewController {
         layout.minimumInteritemSpacing = 10
         layout.sectionInset = UIEdgeInsets(top: 10, left: 15, bottom: (homeBarHeight>0 ? homeBarHeight : 10), right: 15)
         layout.scrollDirection = .vertical
-        let w = (UIScreen.main.bounds.width-50)/3.0
-        layout.itemSize = CGSizeMake(w, w)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(PhotoItemCell.self, forCellWithReuseIdentifier: "PhotoItemCell")
-        collectionView.backgroundColor = .white
+        collectionView.register(PhotoTextCell.self, forCellWithReuseIdentifier: "PhotoTextCell")
+        collectionView.backgroundColor = .clear
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.showsVerticalScrollIndicator = false
         
@@ -52,7 +51,7 @@ class PhotoListViewController: UIViewController {
     
     private lazy var navView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         
         let backBtn = UIButton(type: .custom)
         backBtn.setImage(UIImage(named: "back"), for: .normal)
@@ -145,13 +144,38 @@ class PhotoListViewController: UIViewController {
         return view
     }()
     
+    private lazy var layoutBtn: UIButton = {
+        let editBtn = UIButton(type: .custom)
+        editBtn.setImage(UIImage(named: "list2"), for: .normal)
+        editBtn.setImage(UIImage(named: "list1"), for: .selected)
+        editBtn.addTarget(self, action: #selector(layoutBtnClick), for: .touchUpInside)
+        editBtn.backgroundColor = .white
+        editBtn.layer.cornerRadius = 30
+        editBtn.layer.shadowColor = UIColor.hexColor(0x000000, alphaValue: 0.6).cgColor
+        editBtn.layer.shadowOffset = CGSize(width: 1, height: 1)
+        editBtn.layer.shadowOpacity = 0.8
+        editBtn.layer.shadowPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 60, height: 60), cornerRadius: 30).cgPath
+
+        return editBtn
+    }()
+    
     private lazy var dataArr: [PhotoDBModel] = []
     private lazy var deleteDataArr: [PhotoDBModel] = []
     private lazy var isListEdit = false
     private lazy var firstAdd = false
+    private lazy var hidePhotoText = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .white
+        
+        let bottomBgImage = UIImageView(image: UIImage(named: "launch_bg"))
+        view.addSubview(bottomBgImage)
+        bottomBgImage.snp.makeConstraints { make in
+            make.leading.bottom.trailing.equalToSuperview()
+            make.height.equalTo(bottomBgImage.snp.width).multipliedBy(375.0/308.0)
+        }
         
         // Do any additional setup after loading the view.
         navView.addSubview(editBtn)
@@ -178,6 +202,14 @@ class PhotoListViewController: UIViewController {
             make.top.equalTo(navView.snp.bottom)
             make.leading.bottom.trailing.equalToSuperview()
         }
+        
+        view.addSubview(layoutBtn)
+        layoutBtn.snp.makeConstraints { make in
+            make.bottom.equalTo(-homeBarHeight-50)
+            make.trailing.equalTo(-15)
+            make.height.width.equalTo(60)
+        }
+        
         PhotoDBHandler.share.dbDataUpdate = { [weak self] in
             DispatchQueue.main.async {
                 self?.setupData()
@@ -217,33 +249,70 @@ class PhotoListViewController: UIViewController {
         listView.reloadData()
     }
     
+    deinit {
+        print("🗑️\(type(of: self)) deinitialized")
+    }
 }
 
-extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataArr.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoItemCell", for: indexPath) as! PhotoItemCell
-        if dataArr.count > indexPath.item {
-            cell.data = dataArr[indexPath.item]
+        if hidePhotoText {
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoItemCell", for: indexPath) as! PhotoItemCell
+            if dataArr.count > indexPath.item {
+                cell.data = dataArr[indexPath.item]
+            }
+            cell.isEdit = isListEdit
+            cell.addAction = { [weak self] in
+                self?.presentPhotoPickerController()
+            }
+            cell.markAction = { [weak self] data, isAdd in
+                self?.selectDeletePhoto(data: data, isAdd: isAdd)
+            }
+            cell.tapAction = { [weak self] in
+                self?.photoTap(index: indexPath)
+            }
+            cell.doubleTapAction = { [weak self] in
+                self?.photoDTap(index: indexPath)
+            }
+            return cell
+            
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoTextCell", for: indexPath) as! PhotoTextCell
+            if dataArr.count > indexPath.item {
+                cell.data = dataArr[indexPath.item]
+            }
+            cell.isEdit = isListEdit
+            cell.addAction = { [weak self] in
+                self?.presentPhotoPickerController()
+            }
+            cell.markAction = { [weak self] data, isAdd in
+                self?.selectDeletePhoto(data: data, isAdd: isAdd)
+            }
+            cell.tapAction = { [weak self] in
+                self?.photoTap(index: indexPath)
+            }
+            cell.doubleTapAction = { [weak self] in
+                self?.photoDTap(index: indexPath)
+            }
+            return cell
         }
-        cell.isEdit = isListEdit
-        cell.addAction = { [weak self] in
-            self?.presentPhotoPickerController()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if hidePhotoText {
+            let w = (UIScreen.main.bounds.width-50)/3.0
+            return CGSizeMake(w, w)
+         
+        } else {
+            let w = (UIScreen.main.bounds.width-40)/2.0
+            return CGSizeMake(w, w+35)
         }
-        cell.markAction = { [weak self] data, isAdd in
-            self?.selectDeletePhoto(data: data, isAdd: isAdd)
-        }
-        cell.tapAction = { [weak self] in
-            self?.photoTap(index: indexPath)
-        }
-        cell.doubleTapAction = { [weak self] in
-            self?.photoDTap(index: indexPath)
-        }
-        return cell
     }
     
     private func presentPhotoPickerController() {
@@ -327,19 +396,33 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
         
     }
     
-    private func showBigImage(data: PhotoDBModel) {
-        let browser = JXPhotoBrowser()
-        browser.numberOfItems = {
-            1
+    private func showBigImage(data: PhotoDBModel, hideText: Bool) {
+        if hideText {
+            let browser = JXPhotoBrowser()
+            browser.numberOfItems = {
+                1
+            }
+            browser.cellClassAtIndex = { index in
+                JXPhotoBrowserImageCell.self
+            }
+            browser.reloadCellAtIndex = { context in
+                let browserCell = context.cell as? JXPhotoBrowserImageCell
+                browserCell?.imageView.image = data.applyGaussianBlur() ?? UIImage()
+            }
+            browser.show()
+        } else {
+            let browser = PhotoFullViewController()
+            browser.data = data
+            browser.updateTitle = {[weak self] data in
+                self?.updatePhotoDesc(data: data)
+            }
+            addChild(browser)
+            view.addSubview(browser.view)
+            browser.view.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            browser.show()
         }
-        browser.cellClassAtIndex = { index in
-            JXPhotoBrowserImageCell.self
-        }
-        browser.reloadCellAtIndex = { context in
-            let browserCell = context.cell as? JXPhotoBrowserImageCell
-            browserCell?.imageView.image = data.applyGaussianBlur() ?? UIImage()
-        }
-        browser.show()
     }
     
     @objc private func gruidViewTap() {
@@ -363,7 +446,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
     private func photoTap(index: IndexPath) {
         if dataArr.count > index.item {
             let data = dataArr[index.item]
-            showBigImage(data: data)
+            showBigImage(data: data, hideText: hidePhotoText)
         }
     }
     
@@ -401,10 +484,20 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
 //            navigationController?.pushViewController(diamond, animated: true)
 //        }
     }
+    
+    @objc private func layoutBtnClick(sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        hidePhotoText = sender.isSelected
+        listView.reloadData()
+    }
+    
+    private func updatePhotoDesc(data: PhotoDBModel) {
+        PhotoDBHandler.share.updatePhotoText(data, albumID: data.albumID)
+    }
 }
 
 extension UIColor {
-    static func hexColor(_ hexValue: Int, alphaValue: Float) -> UIColor {
+    static func hexColor(_ hexValue: Int, alphaValue: Float = 1) -> UIColor {
         return UIColor(red: CGFloat((hexValue & 0xFF0000) >> 16) / 255, green: CGFloat((hexValue & 0x00FF00) >> 8) / 255, blue: CGFloat(hexValue & 0x0000FF) / 255, alpha: CGFloat(alphaValue))
     }
 }

@@ -16,6 +16,7 @@ final class PhotoDBModel: TableCodable {
     var percent: Double = 0.0
     var originalImage: Data = Data()
     var albumID: Int64 = 0
+    var text: String = ""
     
     enum CodingKeys: String, CodingTableKey {
         typealias Root = PhotoDBModel
@@ -25,6 +26,7 @@ final class PhotoDBModel: TableCodable {
         case percent
         case originalImage
         case albumID
+        case text
     }
     
 }
