@@ -38,12 +38,6 @@ class PhotoTextCell: UICollectionViewCell {
         }
     }
     
-    private var showFlowLight = false {
-        didSet {
-            guideView.isHidden = !showFlowLight
-        }
-    }
-    
     var addAction: (() -> Void)?
     
     var markAction: ((_ data: PhotoDBModel, _ isAdd: Bool) -> Void)?
@@ -74,14 +68,6 @@ class PhotoTextCell: UICollectionViewCell {
         btn.addTarget(self, action: #selector(markBtnClick), for: .touchUpInside)
         btn.isHidden = true
         return btn
-    }()
-    
-    private lazy var guideView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        view.clipsToBounds = true
-        view.isHidden = true
-        return view
     }()
     
     private lazy var titleLab: UILabel = {
@@ -123,11 +109,6 @@ class PhotoTextCell: UICollectionViewCell {
         addBtn.snp.makeConstraints { make in
             make.edges.equalTo(imageView)
         }
-        
-        contentView.addSubview(guideView)
-        guideView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
 
         contentView.addSubview(markBtn)
         markBtn.snp.makeConstraints { make in
@@ -140,36 +121,6 @@ class PhotoTextCell: UICollectionViewCell {
             make.leading.equalTo(15)
             make.bottom.equalTo(-5)
             make.trailing.equalTo(-15)
-        }
-        
-        layoutIfNeeded()
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
-            let gradint = CAGradientLayer()
-            let middleRef = UIColor.white.withAlphaComponent(0.6).cgColor
-            let fadeRef = UIColor.white.withAlphaComponent(0.0).cgColor
-            gradint.colors = [fadeRef,middleRef,fadeRef]
-            gradint.locations = [NSNumber(floatLiteral: 0.6), NSNumber(floatLiteral: 0.98), NSNumber(floatLiteral: 1.0)]
-            gradint.startPoint = CGPoint(x: 0, y: 0)
-            gradint.endPoint = CGPoint(x: 1, y: 0)
-            let w = (UIScreen.main.bounds.width-40)/2.0
-            let rect = CGRect(x: 0, y: 0, width: w, height: w)
-            gradint.frame = rect
-            
-            self.guideView.layer.addSublayer(gradint)
-            let startX = -rect.size.width
-            let endX = 100
-            
-            let flowAni = CAKeyframeAnimation(keyPath: "transform.translation.x")
-            let duration = 2.5
-            let interval = 1.0
-            let times = duration / (duration+interval)
-            flowAni.values = [startX, endX, endX]
-            flowAni.duration = duration + interval
-            flowAni.keyTimes = [NSNumber(floatLiteral: 0), NSNumber(floatLiteral: times), NSNumber(floatLiteral: 1)]
-            flowAni.repeatCount = 2
-            flowAni.isRemovedOnCompletion = false
-            flowAni.fillMode = CAMediaTimingFillMode.forwards
-            gradint.add(flowAni, forKey: "guideView")
         }
     }
     

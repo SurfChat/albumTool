@@ -212,7 +212,7 @@ class PhotoListViewController: UIViewController {
             }
             dataArr.append(contentsOf: data)
             editBtn.isHidden = false
-            if firstAdd {
+            if firstAdd && albumData?.scheme == 1 {
                 view.addSubview(gruidView)
             }
             

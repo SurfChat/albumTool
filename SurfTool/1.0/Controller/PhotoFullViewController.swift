@@ -217,28 +217,26 @@ extension PhotoFullViewController: UITextViewDelegate {
         
         markImageView.enabledBorder = false
         markImageView.enabledControl = false
-        if let logoImage = markImageView.contentImage {
-            
-            let scale = CGFloat(image.size.width/UIScreen.main.scale/markImageView.frame.size.width)
-            let w = CGFloat(markImageView.frame.size.width*scale)
-            
-            let firstElement = MediaElement(view: markImageView)
-            firstElement.frame = CGRect(x: markImageView.frame.origin.x*scale, y: markImageView.frame.origin.y*scale, width: w, height: w)
-                                
-            item.add(element: firstElement)
-                    
-            let mediaProcessor = MediaProcessor()
-            mediaProcessor.processElements(item: item) { [weak self] (result, error) in
+        
+        let scale = CGFloat(image.size.width/imageView.frame.size.width)
+        let w = CGFloat(markImageView.frame.size.width*scale)
+        
+        let firstElement = MediaElement(view: markImageView)
+        firstElement.frame = CGRect(x: markImageView.frame.origin.x*scale, y: markImageView.frame.origin.y*scale, width: w, height: w)
+                            
+        item.add(element: firstElement)
                 
-                guard let self = self else { return }
-                // handle result
-                if let resultImage = result.image {
-                    self.markImageView.isHidden = true
-                    self.imageView.image = resultImage
-                    if let newImageData = resultImage.jpegData(compressionQuality: 0) {
-                        self.data!.originalImage = newImageData
-                        self.updatePhoto?(self.data!)
-                    }
+        let mediaProcessor = MediaProcessor()
+        mediaProcessor.processElements(item: item) { [weak self] (result, error) in
+            
+            guard let self = self else { return }
+            // handle result
+            if let resultImage = result.image {
+                self.markImageView.isHidden = true
+                self.imageView.image = resultImage
+                if let newImageData = resultImage.jpegData(compressionQuality: 0) {
+                    self.data!.originalImage = newImageData
+                    self.updatePhoto?(self.data!)
                 }
             }
         }

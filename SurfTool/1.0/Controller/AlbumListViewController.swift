@@ -199,6 +199,7 @@ class AlbumListViewController: UIViewController {
     private func setupData() {
         if !dataArr.isEmpty {
             dataArr.removeAll()
+            collectionView.reloadData()
         }
         
         let data = PhotoDBHandler.share.queryAlbums()
