@@ -32,17 +32,20 @@ class PhotoBlurHandler {
 
         let albums = PhotoDBHandler.share.queryAlbums()
         for album in albums {
-            let datas = PhotoDBHandler.share.queryPhotos(albumID: album.ID)
-            if !datas.isEmpty {
-                for data in datas {
-                    share.totalCount += 1
-                    let percent = Double.random(in: 0..<0.30)
-                    if data.percent < 1 {
-                        data.percent += percent
+            if album.scheme == 1 {
+                // 悲伤相册才更新
+                let datas = PhotoDBHandler.share.queryPhotos(albumID: album.ID)
+                if !datas.isEmpty {
+                    for data in datas {
+                        share.totalCount += 1
+                        let percent = Double.random(in: 0..<0.30)
+                        if data.percent < 1 {
+                            data.percent += percent
+                        }
+                        share.totalPercent += data.percent
                     }
-                    share.totalPercent += data.percent
+                    PhotoDBHandler.share.updatePhotos(datas, albumID: album.ID)
                 }
-                PhotoDBHandler.share.updatePhotos(datas, albumID: album.ID)
             }
         }
     }

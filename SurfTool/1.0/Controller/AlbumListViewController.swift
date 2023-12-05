@@ -23,7 +23,7 @@ class AlbumListViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(AlbumItemCell.self, forCellWithReuseIdentifier: "AlbumItemCell")
-        collectionView.backgroundColor = .clear
+        collectionView.backgroundColor = UIColor.hexColor(0xd7dfec, alphaValue: 0.2)
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.showsVerticalScrollIndicator = false
         
@@ -39,7 +39,7 @@ class AlbumListViewController: UIViewController {
     
     private lazy var navView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.hexColor(0xd7dfec, alphaValue: 0.2)
     
         view.addSubview(userBtn)
         userBtn.snp.makeConstraints { make in
@@ -205,7 +205,7 @@ class AlbumListViewController: UIViewController {
 
         if data.isEmpty {
             
-            let alertController = UIAlertController(title: "Create your first album", message: nil, preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Create Your First Happy Album", message: nil, preferredStyle: .alert)
 
             // 添加一个输入框
             alertController.addTextField { (textField) in
@@ -216,7 +216,10 @@ class AlbumListViewController: UIViewController {
                 // 当用户点击确定按钮时执行的操作
                 if let textField = alertController.textFields?.first {
                     if let text = textField.text {
-                        PhotoDBHandler.share.addAlbum(text)
+                        let album = AlbumDBModel()
+                        album.title = text
+                        album.scheme = 0
+                        PhotoDBHandler.share.addAlbum(album)
                         self?.perform(#selector(self?.goAddPhoto), with: nil, afterDelay: 0.5)
                     }
                 }
@@ -260,8 +263,7 @@ extension AlbumListViewController: UICollectionViewDelegate, UICollectionViewDat
         if dataArr.count > indexPath.item  {
             let data = dataArr[indexPath.item]
             let listVc = PhotoListViewController()
-            listVc.albumID = data.ID
-            listVc.albumTitle = data.title
+            listVc.albumData = data
             navigationController?.pushViewController(listVc, animated: true)
         }
     }
@@ -331,7 +333,7 @@ extension AlbumListViewController {
     }
     
     @objc private func addAlbumBtnClick() {
-        
+        cancelBtnClick()
 //        let vip = UserDefaults.standard.double(forKey: "sadAlbumVipTill")
 //
 //        if vip == 0 && dataArr.count > 0 {
@@ -339,33 +341,59 @@ extension AlbumListViewController {
 //            userListAction(.vip)
 //        } else {
             
-            let alertController = UIAlertController(title: "Create new album", message: nil, preferredStyle: .alert)
-
-            // 添加一个输入框
-            alertController.addTextField { (textField) in
-                textField.placeholder = "Album title"
-            }
-
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
-                // 当用户点击取消按钮时执行的操作
-                
-            }
-
-            let okAction = UIAlertAction(title: "Confirm", style: .default) { (_) in
-                // 当用户点击确定按钮时执行的操作
-                if let textField = alertController.textFields?.first {
-                    if let text = textField.text {
-                        PhotoDBHandler.share.addAlbum(text)
-                    }
-                }
-            }
-
-            alertController.addAction(cancelAction)
-            alertController.addAction(okAction)
-
-            self.present(alertController, animated: true, completion: nil)
+        let sheet = UIAlertController(title: "Choose Album Type", message: nil, preferredStyle: .actionSheet)
+        
+        let option1Action = UIAlertAction(title: "Happy Album", style: .default) { [weak self] (action) in
+            self?.createAlbum(albumType: 0)
+         }
+        sheet.addAction(option1Action)
+         
+         let option2Action = UIAlertAction(title: "Sad Album", style: .default) { [weak self] (action) in
+             self?.createAlbum(albumType: 1)
+         }
+        sheet.addAction(option2Action)
+         
+         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        sheet.addAction(cancelAction)
+        self.present(sheet, animated: true, completion: nil)
+        
 //        }
 
+    }
+    
+    private func createAlbum(albumType: Int) {
+        var title = "Happy Album"
+        if albumType == 1 {
+            title = "Sad Album"
+        }
+        let alertController = UIAlertController(title: "Create New \(title)", message: nil, preferredStyle: .alert)
+        
+        // 添加一个输入框
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Album title"
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            // 当用户点击取消按钮时执行的操作
+            
+        }
+        
+        let okAction = UIAlertAction(title: "Confirm", style: .default) { (_) in
+            // 当用户点击确定按钮时执行的操作
+            if let textField = alertController.textFields?.first {
+                if let text = textField.text {
+                    let album = AlbumDBModel()
+                    album.title = text
+                    album.scheme = albumType
+                    PhotoDBHandler.share.addAlbum(album)
+                }
+            }
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
     @objc private func userBtnClick(sender: UIButton) {
@@ -399,8 +427,7 @@ extension AlbumListViewController {
             if !self.dataArr.isEmpty {
                 if let data = self.dataArr.first {
                     let listVc = PhotoListViewController()
-                    listVc.albumID = data.ID
-                    listVc.albumTitle = data.title
+                    listVc.albumData = data
                     self.navigationController?.pushViewController(listVc, animated: true)
                 }
             }

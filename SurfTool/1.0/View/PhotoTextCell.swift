@@ -18,8 +18,7 @@ class PhotoTextCell: UICollectionViewCell {
                     titleLab.text = ""
                 } else {
                     addBtn.isHidden = true
-                    imageView.image = data.applyGaussianBlur() ?? UIImage()
-                    showFlowLight = data.percent > 0.5
+                    imageView.image = UIImage(data: data.originalImage)
                     if !data.text.isEmpty {
                         titleLab.text = data.text
                     } else {

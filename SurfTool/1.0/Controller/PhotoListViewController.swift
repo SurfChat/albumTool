@@ -26,8 +26,7 @@ let homeBarHeight: CGFloat = {
 
 class PhotoListViewController: UIViewController {
     
-    var albumID: Int64 = 0
-    var albumTitle: String = ""
+    var albumData: AlbumDBModel?
     
     private lazy var listView: UICollectionView = {
         
@@ -64,7 +63,7 @@ class PhotoListViewController: UIViewController {
         
         let titleLab = UILabel()
         titleLab.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        titleLab.text = albumTitle
+        titleLab.text = albumData?.title
         view.addSubview(titleLab)
         titleLab.snp.makeConstraints { make in
             make.leading.equalTo(backBtn.snp.trailing).offset(0)
@@ -144,26 +143,10 @@ class PhotoListViewController: UIViewController {
         return view
     }()
     
-    private lazy var layoutBtn: UIButton = {
-        let editBtn = UIButton(type: .custom)
-        editBtn.setImage(UIImage(named: "list2"), for: .normal)
-        editBtn.setImage(UIImage(named: "list1"), for: .selected)
-        editBtn.addTarget(self, action: #selector(layoutBtnClick), for: .touchUpInside)
-        editBtn.backgroundColor = .white
-        editBtn.layer.cornerRadius = 30
-        editBtn.layer.shadowColor = UIColor.hexColor(0x000000, alphaValue: 0.6).cgColor
-        editBtn.layer.shadowOffset = CGSize(width: 1, height: 1)
-        editBtn.layer.shadowOpacity = 0.8
-        editBtn.layer.shadowPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 60, height: 60), cornerRadius: 30).cgPath
-
-        return editBtn
-    }()
-    
     private lazy var dataArr: [PhotoDBModel] = []
     private lazy var deleteDataArr: [PhotoDBModel] = []
     private lazy var isListEdit = false
     private lazy var firstAdd = false
-    private lazy var hidePhotoText = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -203,13 +186,6 @@ class PhotoListViewController: UIViewController {
             make.leading.bottom.trailing.equalToSuperview()
         }
         
-        view.addSubview(layoutBtn)
-        layoutBtn.snp.makeConstraints { make in
-            make.bottom.equalTo(-homeBarHeight-50)
-            make.trailing.equalTo(-15)
-            make.height.width.equalTo(60)
-        }
-        
         PhotoDBHandler.share.dbDataUpdate = { [weak self] in
             DispatchQueue.main.async {
                 self?.setupData()
@@ -226,8 +202,9 @@ class PhotoListViewController: UIViewController {
             dataArr.removeAll()
         }
         
-        let data = PhotoDBHandler.share.queryPhotos(albumID: albumID)
+        let data = PhotoDBHandler.share.queryPhotos(albumID: albumData?.ID ?? 0)
         if !data.isEmpty {
+            PhotoDBHandler.share.updateAlbumCover(ID: albumData?.ID ?? 0, coverImage: data.first)
             if data.count < 30 {
                 let add = PhotoDBModel()
                 add.ID = -1
@@ -261,7 +238,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if hidePhotoText {
+        if albumData?.scheme == 1 {
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoItemCell", for: indexPath) as! PhotoItemCell
             if dataArr.count > indexPath.item {
@@ -297,15 +274,15 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
             cell.tapAction = { [weak self] in
                 self?.photoTap(index: indexPath)
             }
-            cell.doubleTapAction = { [weak self] in
-                self?.photoDTap(index: indexPath)
-            }
+//            cell.doubleTapAction = { [weak self] in
+//                self?.photoDTap(index: indexPath)
+//            }
             return cell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if hidePhotoText {
+        if albumData?.scheme == 1 {
             let w = (UIScreen.main.bounds.width-50)/3.0
             return CGSizeMake(w, w)
          
@@ -316,17 +293,25 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     private func presentPhotoPickerController() {
+        let editConfig = ZLEditImageConfiguration()
+        editConfig.tools([.clip])
+        editConfig.clipRatios([ZLImageClipRatio.wh1x1])
+        
         ZLPhotoConfiguration.default()
-            .maxSelectCount(10)
-            .allowEditImage(false)
+            .maxSelectCount(1)
+            .allowEditImage(true)
+            .editImageConfiguration(editConfig)
             .allowSelectGif(false)
             .allowSelectLivePhoto(false)
             .allowSelectVideo(false)
             .cameraConfiguration(ZLCameraConfiguration().allowTakePhoto(false))
+            .editAfterSelectThumbnailImage(true)
+            .showClipDirectlyIfOnlyHasClipTool(true)
+        
         let ps = ZLPhotoPreviewSheet()
         
         ps.selectImageBlock = { results, isOriginal in
-            PhotoDBHandler.share.addPhotos(results, albumID: self.albumID)
+            PhotoDBHandler.share.addPhotos(results, albumID: self.albumData?.ID ?? 0, albumType: self.albumData?.scheme ?? 0)
         }
         ps.showPhotoLibrary(sender: self)
     }
@@ -379,7 +364,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
         let okAction = UIAlertAction(title: "Sure", style: .default) { [weak self] (_) in
             // 当用户点击确定按钮时执行的操作
             guard let self = self else { return }
-            PhotoDBHandler.share.deletePhotos(self.deleteDataArr, albumID: self.albumID)
+            PhotoDBHandler.share.deletePhotos(self.deleteDataArr, albumID: self.albumData?.ID ?? 0)
             self.cancelBtnClick()
         }
         
@@ -396,7 +381,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
         
     }
     
-    private func showBigImage(data: PhotoDBModel, hideText: Bool) {
+    private func showBigImage(data: PhotoDBModel, hideText: Bool, updateAlbum: Bool) {
         if hideText {
             let browser = JXPhotoBrowser()
             browser.numberOfItems = {
@@ -416,6 +401,9 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
             browser.updateTitle = {[weak self] data in
                 self?.updatePhotoDesc(data: data)
             }
+            browser.updatePhoto =  {[weak self] data in
+                self?.updatePhoto(data: data, updateAlbum: updateAlbum)
+            }
             addChild(browser)
             view.addSubview(browser.view)
             browser.view.snp.makeConstraints { make in
@@ -429,7 +417,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
         let data = dataArr[1]
         data.percent = 0.05
         dataArr[1] = data
-        PhotoDBHandler.share.updatePhoto(data, albumID: albumID, updateAlbum: true)
+        PhotoDBHandler.share.updatePhoto(data, albumID: albumData?.ID ?? 0, updateAlbum: true)
         
         firstAdd = false
         UserDefaults.standard.setValue(true, forKey: "newUserAdd")
@@ -446,7 +434,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
     private func photoTap(index: IndexPath) {
         if dataArr.count > index.item {
             let data = dataArr[index.item]
-            showBigImage(data: data, hideText: hidePhotoText)
+            showBigImage(data: data, hideText: albumData?.scheme == 1, updateAlbum: index.item == 1)
         }
     }
     
@@ -469,7 +457,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
                     }
                 }
                 
-                PhotoDBHandler.share.updatePhoto(data, albumID: albumID, updateAlbum: updateAlbum)
+                PhotoDBHandler.share.updatePhoto(data, albumID: albumData?.ID ?? 0, updateAlbum: updateAlbum)
                 
 //                UserDefaults.standard.setValue(diamonds-100, forKey: "sadAlbumDiamondsBalance")
 //                UserDefaults.standard.synchronize()
@@ -485,14 +473,12 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
 //        }
     }
     
-    @objc private func layoutBtnClick(sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        hidePhotoText = sender.isSelected
-        listView.reloadData()
-    }
-    
     private func updatePhotoDesc(data: PhotoDBModel) {
         PhotoDBHandler.share.updatePhotoText(data, albumID: data.albumID)
+    }
+    
+    private func updatePhoto(data: PhotoDBModel, updateAlbum: Bool) {
+        PhotoDBHandler.share.updatePhotoOriImage(data, albumID: data.albumID, updateAlbum: updateAlbum)
     }
 }
 

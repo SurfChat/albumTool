@@ -7,11 +7,13 @@
 
 import UIKit
 import RSKGrowingTextView
+import MediaWatermark
 
 class PhotoFullViewController: UIViewController {
     
     var updateTitle:((_ data: PhotoDBModel) -> Void)?
-
+    var updatePhoto:((_ data: PhotoDBModel) -> Void)?
+    
     var data: PhotoDBModel?
     
     private lazy var navView: UIView = {
@@ -27,6 +29,16 @@ class PhotoFullViewController: UIViewController {
             make.width.height.equalTo(44)
         }
         
+        let saveBtn = UIButton(type: .custom)
+        saveBtn.setImage(UIImage(named: "save"), for: .normal)
+        saveBtn.addTarget(self, action: #selector(saveBtnClick), for: .touchUpInside)
+        view.addSubview(saveBtn)
+        saveBtn.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.trailing.equalTo(-15)
+            make.height.equalTo(44)
+        }
+        
         return view
     }()
     
@@ -34,8 +46,8 @@ class PhotoFullViewController: UIViewController {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = data?.applyGaussianBlur() ?? UIImage()
-    
+        imageView.image = UIImage(data: data?.originalImage ?? Data())
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -43,7 +55,7 @@ class PhotoFullViewController: UIViewController {
         let textView = RSKGrowingTextView()
         textView.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         textView.textColor = UIColor.hexColor(0x666666, alphaValue: 1)
-        textView.placeholder = "Record some stories in this photo"
+        textView.placeholder = "The Happy Memory"
         textView.placeholderColor = UIColor.hexColor(0x8B8A8F, alphaValue: 1)
         textView.maximumNumberOfLines = 2
         textView.backgroundColor = .white
@@ -61,8 +73,21 @@ class PhotoFullViewController: UIViewController {
         return btn
     }()
     
-    private lazy var stickerView = PhotoStickerView()
+    private lazy var stickerView = {
+        let view = PhotoStickerView()
+        view.selectMarkImage = { [weak self] name in
+            self?.showMarkImage(name: name)
+        }
+        return view
+    }()
     
+    private lazy var markImageView: StickerView = {
+        let imageView = StickerView(contentFrame:CGRect(x: 0, y: 0, width: 70, height: 70), contentImage: UIImage(named: "sticker_1"))
+        imageView!.isHidden = true
+        imageView!.backgroundColor = .clear
+        return imageView!
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -81,8 +106,7 @@ class PhotoFullViewController: UIViewController {
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(navHeight)
         }
-        
-        
+                
         let bgView = UIView()
         bgView.backgroundColor = .white
         bgView.layer.shadowColor = UIColor.hexColor(0x000000, alphaValue: 0.6).cgColor
@@ -104,6 +128,8 @@ class PhotoFullViewController: UIViewController {
             make.trailing.equalTo(-15)
             make.height.equalTo(imageView.snp.width).multipliedBy(1)
         }
+        
+        imageView.addSubview(markImageView)
         
         bgView.addSubview(editBtn)
         editBtn.snp.makeConstraints { make in
@@ -165,12 +191,57 @@ extension PhotoFullViewController: UITextViewDelegate {
             // Return 键被点击
             print("Return key pressed")
             editBtnClick()
-            if !textView.text.isEmpty {
-                data?.text = textView.text
-                updateTitle?(data!)
-            }
             return false // 返回 false 可以阻止换行符的插入
         }
         return true
     }
+    
+    private func showMarkImage(name: String) {
+        markImageView.isHidden = false
+        markImageView.enabledBorder = true
+        markImageView.enabledControl = true
+        markImageView.contentImage = UIImage(named: name)
+    }
+    
+    @objc private func saveBtnClick() {
+        if !textView.text.isEmpty {
+            data?.text = textView.text
+            updateTitle?(data!)
+        }
+        
+        guard let imageData = data?.originalImage else { return }
+        
+        guard let image = UIImage(data: imageData) else { return }
+        
+        let item = MediaItem(image:image)
+        
+        markImageView.enabledBorder = false
+        markImageView.enabledControl = false
+        if let logoImage = markImageView.contentImage {
+            
+            let scale = CGFloat(image.size.width/UIScreen.main.scale/markImageView.frame.size.width)
+            let w = CGFloat(markImageView.frame.size.width*scale)
+            
+            let firstElement = MediaElement(view: markImageView)
+            firstElement.frame = CGRect(x: markImageView.frame.origin.x*scale, y: markImageView.frame.origin.y*scale, width: w, height: w)
+                                
+            item.add(element: firstElement)
+                    
+            let mediaProcessor = MediaProcessor()
+            mediaProcessor.processElements(item: item) { [weak self] (result, error) in
+                
+                guard let self = self else { return }
+                // handle result
+                if let resultImage = result.image {
+                    self.markImageView.isHidden = true
+                    self.imageView.image = resultImage
+                    if let newImageData = resultImage.jpegData(compressionQuality: 0) {
+                        self.data!.originalImage = newImageData
+                        self.updatePhoto?(self.data!)
+                    }
+                }
+            }
+        }
+    }
+
 }

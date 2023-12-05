@@ -41,7 +41,7 @@ class PhotoDBHandler {
     }
     
     // MARK: Photo增删改查
-    func addPhotos(_ selectedPhotos: [ZLResultModel], albumID: Int64) {
+    func addPhotos(_ selectedPhotos: [ZLResultModel], albumID: Int64, albumType: Int) {
         
         let firstAdd = !UserDefaults.standard.bool(forKey: "newUserAdd")
         
@@ -56,10 +56,12 @@ class PhotoDBHandler {
             model.ID = Int64(Date().timeIntervalSince1970 * 1000)
             model.albumID = albumID
             model.originalImage = imageData ?? Data()
-            let percent = Double.random(in: 0..<0.30)
-            model.percent = percent
-            if firstAdd && i == selectedPhotos.count-1 {
-                model.percent = 1
+            if albumType == 1 {
+                let percent = Double.random(in: 0..<0.30)
+                model.percent = percent
+                if firstAdd && i == selectedPhotos.count-1 {
+                    model.percent = 1
+                }
             }
             dbModels.append(model)
         }
@@ -78,7 +80,7 @@ class PhotoDBHandler {
         }
         
         // 更新相册封面
-        updateAlbumPhotos(ID: albumID, coverImage: dbModels.last)
+        updateAlbumCover(ID: albumID, coverImage: dbModels.last)
     }
     
     func deletePhotos(_ selectedPhotos: [PhotoDBModel], albumID: Int64) {
@@ -136,7 +138,7 @@ class PhotoDBHandler {
         
         if updateAlbum {
             // 更新相册封面
-            updateAlbumPhotos(ID: albumID, coverImage: photo)
+            updateAlbumCover(ID: albumID, coverImage: photo)
         }
     }
     
@@ -152,19 +154,32 @@ class PhotoDBHandler {
         self.dbDataUpdate?()
     }
     
-    // MARK: Album增删改查
-    func addAlbum(_ albumTitle: String?) {
-        let album = AlbumDBModel()
-        if let title = albumTitle {
-            album.title = title
+    func updatePhotoOriImage(_ photo: PhotoDBModel, albumID: Int64, updateAlbum: Bool = false) {
+        do {
+            try self.db.run(transaction: { _ in
+                let table = self.db.getTable(named:self.tableName, of: PhotoDBModel.self)
+                try table.update(on: PhotoDBModel.Properties.originalImage, with: photo, where: PhotoDBModel.Properties.ID == photo.ID)
+            })
+        } catch let error {
+            print("『db update error \(error)』")
         }
+        self.dbDataUpdate?()
+        
+        if updateAlbum {
+            // 更新相册封面
+            updateAlbumCover(ID: albumID, coverImage: photo)
+        }
+    }
+    
+    // MARK: Album增删改查
+    func addAlbum(_ albumData: AlbumDBModel) {
         let albums = PhotoDBHandler.share.queryAlbums()
-        album.ID = Int64(albums.count)
+        albumData.ID = Int64(albums.count)
         
         do {
             try self.db.run(transaction: { _ in
                 let table = self.db.getTable(named:self.albumTableName, of: AlbumDBModel.self)
-                try table.insert(album)
+                try table.insert(albumData)
                 self.dbAlbumDataUpdate?()
             })
         } catch let error {
@@ -186,13 +201,7 @@ class PhotoDBHandler {
             }
         }
         
-        let albums = queryAlbums()
-        
-        if albums.isEmpty {
-            NotificationCenter.default.post(name: Notification.Name("changeRootVc"), object: nil)
-        } else {
-            dbAlbumDataUpdate?()
-        }
+        dbAlbumDataUpdate?()
     }
     
     func queryAlbums() -> [AlbumDBModel] {
@@ -235,7 +244,7 @@ class PhotoDBHandler {
         }
     }
     
-    func updateAlbumPhotos(ID: Int64, coverImage: PhotoDBModel?) {
+    func updateAlbumCover(ID: Int64, coverImage: PhotoDBModel?) {
         if let coverImage = coverImage {
             let album = AlbumDBModel()
             let imageData = coverImage.applyGaussianBlur()?.jpegData(compressionQuality: 0)

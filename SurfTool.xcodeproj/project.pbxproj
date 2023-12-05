@@ -18,6 +18,9 @@
 		B175BCF22B1DA0C5000B83A6 /* PhotoTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175BCF12B1DA0C5000B83A6 /* PhotoTextCell.swift */; };
 		B175BCF62B1DC929000B83A6 /* PhotoStickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175BCF52B1DC929000B83A6 /* PhotoStickerView.swift */; };
 		B175BCF82B1DCDDB000B83A6 /* PhotoFullViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175BCF72B1DCDDB000B83A6 /* PhotoFullViewController.swift */; };
+		B175BCFF2B1EF930000B83A6 /* StickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B175BCFA2B1EF930000B83A6 /* StickerView.bundle */; };
+		B175BD002B1EF930000B83A6 /* SingleHandGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = B175BCFD2B1EF930000B83A6 /* SingleHandGestureRecognizer.m */; };
+		B175BD012B1EF930000B83A6 /* StickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = B175BCFE2B1EF930000B83A6 /* StickerView.m */; };
 		B1A4C3872B1195B900E3C2C2 /* PhotoBlurHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3862B1195B900E3C2C2 /* PhotoBlurHandler.swift */; };
 		B1A4C3892B14381900E3C2C2 /* AlbumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3882B14381900E3C2C2 /* AlbumListViewController.swift */; };
 		B1A4C38B2B143FC800E3C2C2 /* AlbumItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C38A2B143FC800E3C2C2 /* AlbumItemCell.swift */; };
@@ -74,6 +77,12 @@
 		B175BCF12B1DA0C5000B83A6 /* PhotoTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTextCell.swift; sourceTree = "<group>"; };
 		B175BCF52B1DC929000B83A6 /* PhotoStickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoStickerView.swift; sourceTree = "<group>"; };
 		B175BCF72B1DCDDB000B83A6 /* PhotoFullViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFullViewController.swift; sourceTree = "<group>"; };
+		B175BCFA2B1EF930000B83A6 /* StickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = StickerView.bundle; sourceTree = "<group>"; };
+		B175BCFB2B1EF930000B83A6 /* StickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StickerView.h; sourceTree = "<group>"; };
+		B175BCFC2B1EF930000B83A6 /* SingleHandGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleHandGestureRecognizer.h; sourceTree = "<group>"; };
+		B175BCFD2B1EF930000B83A6 /* SingleHandGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleHandGestureRecognizer.m; sourceTree = "<group>"; };
+		B175BCFE2B1EF930000B83A6 /* StickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StickerView.m; sourceTree = "<group>"; };
+		B175BD082B1EFAD8000B83A6 /* SurfTool-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SurfTool-Bridging-Header.h"; sourceTree = "<group>"; };
 		B1A4C3862B1195B900E3C2C2 /* PhotoBlurHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBlurHandler.swift; sourceTree = "<group>"; };
 		B1A4C3882B14381900E3C2C2 /* AlbumListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListViewController.swift; sourceTree = "<group>"; };
 		B1A4C38A2B143FC800E3C2C2 /* AlbumItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumItemCell.swift; sourceTree = "<group>"; };
@@ -170,13 +179,27 @@
 				B1A4C3962B16083200E3C2C2 /* Model */,
 				B1A4C3952B16081B00E3C2C2 /* Controller */,
 				B1A4C3942B16080100E3C2C2 /* View */,
+				B175BD082B1EFAD8000B83A6 /* SurfTool-Bridging-Header.h */,
 			);
 			path = 1.0;
+			sourceTree = "<group>";
+		};
+		B175BCF92B1EF930000B83A6 /* StickerView-Framework */ = {
+			isa = PBXGroup;
+			children = (
+				B175BCFC2B1EF930000B83A6 /* SingleHandGestureRecognizer.h */,
+				B175BCFD2B1EF930000B83A6 /* SingleHandGestureRecognizer.m */,
+				B175BCFA2B1EF930000B83A6 /* StickerView.bundle */,
+				B175BCFB2B1EF930000B83A6 /* StickerView.h */,
+				B175BCFE2B1EF930000B83A6 /* StickerView.m */,
+			);
+			path = "StickerView-Framework";
 			sourceTree = "<group>";
 		};
 		B1A4C3942B16080100E3C2C2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B175BCF92B1EF930000B83A6 /* StickerView-Framework */,
 				B1A4C38C2B15E5FA00E3C2C2 /* PhotoUserView.swift */,
 				B1A4C38A2B143FC800E3C2C2 /* AlbumItemCell.swift */,
 				B171903B2B0F52E100518623 /* PhotoItemCell.swift */,
@@ -324,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B17190312B0DDCA900518623 /* LaunchScreen.storyboard in Resources */,
+				B175BCFF2B1EF930000B83A6 /* StickerView.bundle in Resources */,
 				B171902E2B0DDCA900518623 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -386,9 +410,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1D3DEAF2B197220000F516D /* IslandAttributes.swift in Sources */,
+				B175BD012B1EF930000B83A6 /* StickerView.m in Sources */,
 				B1A4C3872B1195B900E3C2C2 /* PhotoBlurHandler.swift in Sources */,
 				B1A4C3892B14381900E3C2C2 /* AlbumListViewController.swift in Sources */,
 				B1A4C38D2B15E5FA00E3C2C2 /* PhotoUserView.swift in Sources */,
+				B175BD002B1EF930000B83A6 /* SingleHandGestureRecognizer.m in Sources */,
 				B1A4C3932B16065E00E3C2C2 /* PhotoDiamondViewController.swift in Sources */,
 				B171903E2B0F55F100518623 /* PhotoDBModel.swift in Sources */,
 				B171903A2B0DFF9200518623 /* PhotoListViewController.swift in Sources */,
@@ -598,6 +624,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "SurfTool/1.0/SurfTool-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -645,6 +672,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "SurfTool/1.0/SurfTool-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

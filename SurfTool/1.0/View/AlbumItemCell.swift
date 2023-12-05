@@ -12,6 +12,11 @@ class AlbumItemCell: UICollectionViewCell {
         didSet {
             imageView.image = UIImage(data: data?.coverImage ?? Data()) ?? UIImage()
             titleLab.text = data?.title
+            if data?.scheme == 1 {
+                contentView.backgroundColor = UIColor.hexColor(0xd7dfec, alphaValue: 1)
+            } else {
+                contentView.backgroundColor = UIColor.hexColor(0xFFECF6, alphaValue: 1)
+            }
         }
     }
     
@@ -75,7 +80,7 @@ class AlbumItemCell: UICollectionViewCell {
         }
         
         let bgView = UIView()
-        bgView.backgroundColor = .white
+        bgView.backgroundColor = .clear
         contentView.addSubview(bgView)
         bgView.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom)

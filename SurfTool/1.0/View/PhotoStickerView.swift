@@ -9,6 +9,8 @@ import UIKit
 
 class PhotoStickerView: UIView {
 
+    var selectMarkImage: ((_ name: String) -> Void)?
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 10
@@ -63,7 +65,9 @@ extension PhotoStickerView: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        if dataArr.count > indexPath.item {
+            selectMarkImage?(dataArr[indexPath.item])
+        }
     }
 }
 
@@ -79,9 +83,16 @@ class PhotoStickerItem: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.selectedBackgroundView = UIView()
+        self.selectedBackgroundView?.backgroundColor = .clear
+        self.selectedBackgroundView?.layer.cornerRadius = 10
+        self.selectedBackgroundView?.layer.borderWidth = 3
+        self.selectedBackgroundView?.layer.borderColor = UIColor.hexColor(0xd7dfec).cgColor
+        self.selectedBackgroundView?.clipsToBounds = true
+        
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.edges.equalToSuperview().inset(5)
         }
  
     }

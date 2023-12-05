@@ -66,6 +66,8 @@ final class AlbumDBModel: TableCodable {
     var ID: Int64 = 0
     var coverImage: Data = Data()
     var title: String = "Default"
+    /// 主題0 happy 1 sad
+    var scheme: Int = 0
     
     enum CodingKeys: String, CodingTableKey {
         typealias Root = AlbumDBModel
@@ -74,5 +76,6 @@ final class AlbumDBModel: TableCodable {
         case ID
         case coverImage
         case title
+        case scheme
     }
 }

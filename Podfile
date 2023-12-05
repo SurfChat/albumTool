@@ -19,7 +19,7 @@ pod 'SwiftyStoreKit'
 pod 'JFPopup', '1.5.4'
 pod 'RSKGrowingTextView'
 pod 'IQKeyboardManagerSwift'
-
+pod "MediaWatermark"
 end
 
 post_install do |installer|
