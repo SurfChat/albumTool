@@ -7,9 +7,13 @@
 
 import UIKit
 import JFPopup
+import SwiftUI
 
 class AlbumListViewController: UIViewController {
 
+    /// 主題0 happy 1 sad
+    var scheme: Int = 0
+    
     private lazy var collectionView: UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
@@ -23,7 +27,7 @@ class AlbumListViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(AlbumItemCell.self, forCellWithReuseIdentifier: "AlbumItemCell")
-        collectionView.backgroundColor = UIColor.hexColor(0xd7dfec, alphaValue: 0.2)
+        collectionView.backgroundColor = .clear
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.showsVerticalScrollIndicator = false
         
@@ -39,34 +43,19 @@ class AlbumListViewController: UIViewController {
     
     private lazy var navView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.hexColor(0xd7dfec, alphaValue: 0.2)
-    
-        view.addSubview(userBtn)
-        userBtn.snp.makeConstraints { make in
-            make.leading.equalTo(5)
-            make.bottom.equalToSuperview()
-            make.width.height.equalTo(44)
-        }
-        
+        view.backgroundColor = .white
+
         let titleLab = UILabel()
         titleLab.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         titleLab.textColor = UIColor.hexColor(0x333333, alphaValue: 1)
         titleLab.text = "Memories Album"
         view.addSubview(titleLab)
         titleLab.snp.makeConstraints { make in
-            make.leading.equalTo(userBtn.snp.trailing).offset(0)
+            make.leading.equalTo(15)
             make.bottom.equalToSuperview()
             make.height.equalTo(44)
         }
         return view
-    }()
-    
-    private lazy var userBtn: UIButton = {
-        let user = UIButton(type: .custom)
-        user.setImage(UIImage(named: "user"), for: .normal)
-        user.addTarget(self, action: #selector(userBtnClick), for: .touchUpInside)
-        
-        return user
     }()
     
     private lazy var editBtn: UIButton = {
@@ -104,12 +93,20 @@ class AlbumListViewController: UIViewController {
         return editBtn
     }()
     
-    private lazy var userView: PhotoUserView = {
-        let view = PhotoUserView()
-        view.cellTapAction = { [weak self] type in
-            self?.userListAction(type)
+    private lazy var meunView: UIHostingController = {
+        var view = CircleMeunView()
+        view.addAlbumAction = { [weak self] in
+            self?.addAlbumBtnClick()
         }
-        return view
+        view.editListAction = { [weak self] in
+            self?.editBtnClick()
+        }
+        view.endEditAction =  { [weak self] in
+            self?.cancelBtnClick()
+        }
+        let vc = UIHostingController(rootView: view)
+        vc.view.backgroundColor = .clear
+        return vc
     }()
     
     private lazy var dataArr: [AlbumDBModel] = []
@@ -119,32 +116,13 @@ class AlbumListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .white
         // Do any additional setup after loading the view.
-        navView.addSubview(editBtn)
-        editBtn.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.trailing.equalTo(-15)
-            make.height.equalTo(44)
-        }
-        
-        navView.addSubview(cancelBtn)
-        cancelBtn.snp.makeConstraints { make in
-            make.bottom.height.equalTo(editBtn)
-            make.trailing.equalTo(editBtn.snp.leading).offset(-10)
-        }
         
         view.addSubview(navView)
         navView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(navHeight)
-        }
-
-        view.addSubview(userView)
-        userView.snp.makeConstraints { make in
-            make.top.equalTo(navView.snp.bottom)
-            make.leading.equalTo(0)
-            make.bottom.equalToSuperview()
-            make.width.equalTo(UIScreen.main.bounds.width*0.35)
         }
                 
         view.addSubview(listView)
@@ -154,7 +132,11 @@ class AlbumListViewController: UIViewController {
             make.bottom.trailing.equalToSuperview()
         }
         
+        
         let bottomBgImage = UIImageView(image: UIImage(named: "launch_bg"))
+        if scheme == 1 {
+            bottomBgImage.image = UIImage(named: "sad_bg")
+        }
         listView.addSubview(bottomBgImage)
         bottomBgImage.snp.makeConstraints { make in
             make.leading.bottom.trailing.equalToSuperview()
@@ -166,11 +148,11 @@ class AlbumListViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         
-        view.addSubview(addAlbumBtn)
-        addAlbumBtn.snp.makeConstraints { make in
-            make.bottom.equalTo(-homeBarHeight-50)
+        view.addSubview(meunView.view)
+        meunView.view.snp.makeConstraints { make in
+            make.bottom.equalTo(-homeBarHeight-60)
             make.trailing.equalTo(-15)
-            make.height.width.equalTo(60)
+            make.width.height.equalTo(200)
         }
         
         PhotoDBHandler.share.dbAlbumDataUpdate = { [weak self] in
@@ -188,21 +170,13 @@ class AlbumListViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        if userBtn.isSelected {
-            userBtn.sendActions(for: .touchUpInside)
-        }
-    }
-    
     private func setupData() {
         if !dataArr.isEmpty {
             dataArr.removeAll()
             collectionView.reloadData()
         }
         
-        let data = PhotoDBHandler.share.queryAlbums()
+        let data = PhotoDBHandler.share.queryAlbums(scheme: scheme)
 
         if data.isEmpty {
             
@@ -397,29 +371,6 @@ extension AlbumListViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    @objc private func userBtnClick(sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        
-        if sender.isSelected {
-            userView.updateData()
-            UIView.animate(withDuration: 0.3) {
-                self.listView.snp.updateConstraints { make in
-                    make.leading.equalTo(UIScreen.main.bounds.width*0.35)
-                }
-                self.view.layoutIfNeeded()
-            }
-
-        } else {
-            UIView.animate(withDuration: 0.3) {
-                self.listView.snp.updateConstraints { make in
-                    make.leading.equalTo(0)
-                }
-                self.view.layoutIfNeeded()
-            }
-        }
-
-    }
-    
     @objc private func goAddPhoto() {
          
         JFPopupView.popup.toast(hit: "Created successfully\nGo and add photos", icon: .success)
@@ -436,32 +387,4 @@ extension AlbumListViewController {
 
      }
     
-    private func userListAction(_ type: UserListType) {
-        switch type {
-        case .vip: do {
-            let vip = PhotoDiamondViewController()
-            navigationController?.pushViewController(vip, animated: true)
-        }
-            
-        case .diamond: do {
-            let diamond = PhotoDiamondViewController()
-            diamond.isDiamond = true
-            navigationController?.pushViewController(diamond, animated: true)
-        }
-            
-        case .terms: do {
-            let webVc = PhotoWebViewController(url: "http://www.surf-chat.com/user-terms.html")
-            webVc.title = "Terms of Use"
-            navigationController?.pushViewController(webVc, animated: true)
-        }
-            
-        case .policy: do {
-            let webVc = PhotoWebViewController(url: "http://www.surf-chat.com/privacy-policy.html")
-            webVc.title = "Privacy Policy"
-            navigationController?.pushViewController(webVc, animated: true)
-        }
-           
-        default: break
-        }
-    }
 }

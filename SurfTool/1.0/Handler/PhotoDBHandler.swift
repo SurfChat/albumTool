@@ -204,11 +204,11 @@ class PhotoDBHandler {
         dbAlbumDataUpdate?()
     }
     
-    func queryAlbums() -> [AlbumDBModel] {
+    func queryAlbums(scheme: Int = 0) -> [AlbumDBModel] {
         
         do {
             let table = db.getTable(named:albumTableName, of: AlbumDBModel.self)
-            let objects: [AlbumDBModel] = try table.getObjects()
+            let objects: [AlbumDBModel] = try table.getObjects(where: AlbumDBModel.Properties.scheme == scheme)
             return objects.reversed()
         } catch let error {
             print("『db query error \(error)』")

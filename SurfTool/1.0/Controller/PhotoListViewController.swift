@@ -154,6 +154,9 @@ class PhotoListViewController: UIViewController {
         view.backgroundColor = .white
         
         let bottomBgImage = UIImageView(image: UIImage(named: "launch_bg"))
+        if albumData?.scheme == 1 {
+            bottomBgImage.image = UIImage(named: "sad_bg")
+        }
         view.addSubview(bottomBgImage)
         bottomBgImage.snp.makeConstraints { make in
             make.leading.bottom.trailing.equalToSuperview()

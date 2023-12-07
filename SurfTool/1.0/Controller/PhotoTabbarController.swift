@@ -21,6 +21,7 @@ class PhotoTabbarController: UITabBarController {
         addChild(UINavigationController(rootViewController: happy))
         
         let sad = AlbumListViewController()
+        sad.scheme = 1
         sad.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "tabbar_nomal")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "tabbar_sad")?.withRenderingMode(.alwaysOriginal))
         sad.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
         addChild(UINavigationController(rootViewController: sad))
@@ -44,9 +45,9 @@ extension PhotoTabbarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         switch selectedIndex {
         case 0:
-            tabBar.backgroundColor = UIColor.hexColor(0xFFECF6, alphaValue: 0.6)
+            tabBar.backgroundColor = .clear
         case 1:
-            tabBar.backgroundColor = UIColor.hexColor(0xd7dfec, alphaValue: 0.6)
+            tabBar.backgroundColor = .clear
         default:
             tabBar.backgroundColor = .white
         }
