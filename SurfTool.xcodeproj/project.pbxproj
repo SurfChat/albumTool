@@ -21,6 +21,9 @@
 		B175BCFF2B1EF930000B83A6 /* StickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B175BCFA2B1EF930000B83A6 /* StickerView.bundle */; };
 		B175BD002B1EF930000B83A6 /* SingleHandGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = B175BCFD2B1EF930000B83A6 /* SingleHandGestureRecognizer.m */; };
 		B175BD012B1EF930000B83A6 /* StickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = B175BCFE2B1EF930000B83A6 /* StickerView.m */; };
+		B175BD0D2B208FA0000B83A6 /* PhotoTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175BD0C2B208FA0000B83A6 /* PhotoTabbarController.swift */; };
+		B175BD0F2B2097DD000B83A6 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175BD0E2B2097DD000B83A6 /* MyViewController.swift */; };
+		B175BD112B2098E6000B83A6 /* VideoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175BD102B2098E6000B83A6 /* VideoListViewController.swift */; };
 		B1A4C3872B1195B900E3C2C2 /* PhotoBlurHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3862B1195B900E3C2C2 /* PhotoBlurHandler.swift */; };
 		B1A4C3892B14381900E3C2C2 /* AlbumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C3882B14381900E3C2C2 /* AlbumListViewController.swift */; };
 		B1A4C38B2B143FC800E3C2C2 /* AlbumItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A4C38A2B143FC800E3C2C2 /* AlbumItemCell.swift */; };
@@ -83,6 +86,9 @@
 		B175BCFD2B1EF930000B83A6 /* SingleHandGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleHandGestureRecognizer.m; sourceTree = "<group>"; };
 		B175BCFE2B1EF930000B83A6 /* StickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StickerView.m; sourceTree = "<group>"; };
 		B175BD082B1EFAD8000B83A6 /* SurfTool-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SurfTool-Bridging-Header.h"; sourceTree = "<group>"; };
+		B175BD0C2B208FA0000B83A6 /* PhotoTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTabbarController.swift; sourceTree = "<group>"; };
+		B175BD0E2B2097DD000B83A6 /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
+		B175BD102B2098E6000B83A6 /* VideoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListViewController.swift; sourceTree = "<group>"; };
 		B1A4C3862B1195B900E3C2C2 /* PhotoBlurHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBlurHandler.swift; sourceTree = "<group>"; };
 		B1A4C3882B14381900E3C2C2 /* AlbumListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListViewController.swift; sourceTree = "<group>"; };
 		B1A4C38A2B143FC800E3C2C2 /* AlbumItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumItemCell.swift; sourceTree = "<group>"; };
@@ -218,6 +224,9 @@
 				B1A4C3882B14381900E3C2C2 /* AlbumListViewController.swift */,
 				B17190392B0DFF9200518623 /* PhotoListViewController.swift */,
 				B175BCF72B1DCDDB000B83A6 /* PhotoFullViewController.swift */,
+				B175BD0C2B208FA0000B83A6 /* PhotoTabbarController.swift */,
+				B175BD0E2B2097DD000B83A6 /* MyViewController.swift */,
+				B175BD102B2098E6000B83A6 /* VideoListViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -419,8 +428,11 @@
 				B171903E2B0F55F100518623 /* PhotoDBModel.swift in Sources */,
 				B171903A2B0DFF9200518623 /* PhotoListViewController.swift in Sources */,
 				B17190402B0F58FC00518623 /* PhotoDBHandler.swift in Sources */,
+				B175BD112B2098E6000B83A6 /* VideoListViewController.swift in Sources */,
+				B175BD0F2B2097DD000B83A6 /* MyViewController.swift in Sources */,
 				B1A4C39D2B17155800E3C2C2 /* PurchCell.swift in Sources */,
 				B17190252B0DDCA800518623 /* AppDelegate.swift in Sources */,
+				B175BD0D2B208FA0000B83A6 /* PhotoTabbarController.swift in Sources */,
 				B1A4C3992B16086A00E3C2C2 /* PhotoPurchHandler.swift in Sources */,
 				B175BCF62B1DC929000B83A6 /* PhotoStickerView.swift in Sources */,
 				B1A4C38B2B143FC800E3C2C2 /* AlbumItemCell.swift in Sources */,

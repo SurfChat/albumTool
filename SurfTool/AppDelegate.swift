@@ -29,8 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = .white
         window?.makeKeyAndVisible()
         
-        let listVc = AlbumListViewController()
-        window?.rootViewController = UINavigationController(rootViewController: listVc)
+        let tabbar = PhotoTabbarController()
+        window?.rootViewController = tabbar
         
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = false
