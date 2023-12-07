@@ -39,6 +39,10 @@
 		B1A4C3AF2B18730800E3C2C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1A4C3AE2B18730800E3C2C2 /* Assets.xcassets */; };
 		B1A4C3B32B18730800E3C2C2 /* islandExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B1A4C3A22B18730600E3C2C2 /* islandExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B1D055F32B21B75700AF0604 /* CircleMeunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D055F22B21B75700AF0604 /* CircleMeunView.swift */; };
+		B1D055F52B21D3B000AF0604 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D055F42B21D3B000AF0604 /* PieChartView.swift */; };
+		B1D055F72B21DC0F00AF0604 /* PhotoInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D055F62B21DC0F00AF0604 /* PhotoInfoCell.swift */; };
+		B1D055F92B21E9AD00AF0604 /* PhotoNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D055F82B21E9AD00AF0604 /* PhotoNavViewController.swift */; };
+		B1D055FB2B21EA8E00AF0604 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D055FA2B21EA8E00AF0604 /* AboutViewController.swift */; };
 		B1D3DEAF2B197220000F516D /* IslandAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3DEAE2B197220000F516D /* IslandAttributes.swift */; };
 		B1D3DEB02B197220000F516D /* IslandAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3DEAE2B197220000F516D /* IslandAttributes.swift */; };
 /* End PBXBuildFile section */
@@ -107,6 +111,10 @@
 		B1A4C3B82B18868600E3C2C2 /* SurfTool.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SurfTool.entitlements; sourceTree = "<group>"; };
 		B1A4C3B92B18876200E3C2C2 /* islandExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = islandExtension.entitlements; sourceTree = "<group>"; };
 		B1D055F22B21B75700AF0604 /* CircleMeunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleMeunView.swift; sourceTree = "<group>"; };
+		B1D055F42B21D3B000AF0604 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
+		B1D055F62B21DC0F00AF0604 /* PhotoInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoInfoCell.swift; sourceTree = "<group>"; };
+		B1D055F82B21E9AD00AF0604 /* PhotoNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoNavViewController.swift; sourceTree = "<group>"; };
+		B1D055FA2B21EA8E00AF0604 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		B1D3DEAE2B197220000F516D /* IslandAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IslandAttributes.swift; sourceTree = "<group>"; };
 		B50FC2F7C750545CDB2F66CD /* Pods-SurfTool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfTool.debug.xcconfig"; path = "Target Support Files/Pods-SurfTool/Pods-SurfTool.debug.xcconfig"; sourceTree = "<group>"; };
 		BF3273B0BA11BAD2BC9EA2E3 /* Pods_SurfTool.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurfTool.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -212,6 +220,8 @@
 				B175BCF12B1DA0C5000B83A6 /* PhotoTextCell.swift */,
 				B175BCF52B1DC929000B83A6 /* PhotoStickerView.swift */,
 				B1D055F22B21B75700AF0604 /* CircleMeunView.swift */,
+				B1D055F42B21D3B000AF0604 /* PieChartView.swift */,
+				B1D055F62B21DC0F00AF0604 /* PhotoInfoCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -227,6 +237,8 @@
 				B175BD0C2B208FA0000B83A6 /* PhotoTabbarController.swift */,
 				B175BD0E2B2097DD000B83A6 /* MyViewController.swift */,
 				B175BD102B2098E6000B83A6 /* VideoListViewController.swift */,
+				B1D055F82B21E9AD00AF0604 /* PhotoNavViewController.swift */,
+				B1D055FA2B21EA8E00AF0604 /* AboutViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -418,11 +430,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1D055F92B21E9AD00AF0604 /* PhotoNavViewController.swift in Sources */,
 				B1D3DEAF2B197220000F516D /* IslandAttributes.swift in Sources */,
 				B175BD012B1EF930000B83A6 /* StickerView.m in Sources */,
 				B1A4C3872B1195B900E3C2C2 /* PhotoBlurHandler.swift in Sources */,
 				B1A4C3892B14381900E3C2C2 /* AlbumListViewController.swift in Sources */,
 				B175BD002B1EF930000B83A6 /* SingleHandGestureRecognizer.m in Sources */,
+				B1D055F52B21D3B000AF0604 /* PieChartView.swift in Sources */,
 				B1A4C3932B16065E00E3C2C2 /* PhotoDiamondViewController.swift in Sources */,
 				B171903E2B0F55F100518623 /* PhotoDBModel.swift in Sources */,
 				B171903A2B0DFF9200518623 /* PhotoListViewController.swift in Sources */,
@@ -437,8 +451,10 @@
 				B175BCF62B1DC929000B83A6 /* PhotoStickerView.swift in Sources */,
 				B1A4C38B2B143FC800E3C2C2 /* AlbumItemCell.swift in Sources */,
 				B175BCF82B1DCDDB000B83A6 /* PhotoFullViewController.swift in Sources */,
+				B1D055F72B21DC0F00AF0604 /* PhotoInfoCell.swift in Sources */,
 				B1A4C38F2B15FF5400E3C2C2 /* PhotoWebViewController.swift in Sources */,
 				B175BCF22B1DA0C5000B83A6 /* PhotoTextCell.swift in Sources */,
+				B1D055FB2B21EA8E00AF0604 /* AboutViewController.swift in Sources */,
 				B171903C2B0F52E100518623 /* PhotoItemCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -171,6 +171,25 @@ class PhotoDBHandler {
         }
     }
     
+    func queryPhotosInfo() -> [Int] {
+        var happys = 0
+        var sads = 0
+        
+        let albums = PhotoDBHandler.share.queryAlbums()
+        for album in albums {
+            let datas = PhotoDBHandler.share.queryPhotos(albumID: album.ID)
+            happys += datas.count
+        }
+        
+        let albums1 = PhotoDBHandler.share.queryAlbums(scheme: 1)
+        for album in albums1 {
+            let datas = PhotoDBHandler.share.queryPhotos(albumID: album.ID)
+            sads += datas.count
+        }
+        return [happys, sads]
+        
+    }
+    
     // MARK: Album增删改查
     func addAlbum(_ albumData: AlbumDBModel) {
         let albums = PhotoDBHandler.share.queryAlbums()

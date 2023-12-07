@@ -79,8 +79,8 @@ struct CircleMeunView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        CircleMeunView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CircleMeunView()
+//    }
+//}

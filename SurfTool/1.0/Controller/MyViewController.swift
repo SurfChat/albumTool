@@ -13,6 +13,7 @@ enum UserListType {
     case diamond
     case terms
     case policy
+    case about
 }
 
 class MyViewController: UIViewController {
@@ -40,6 +41,8 @@ class MyViewController: UIViewController {
         tableView.dataSource = self
         tableView.backgroundColor = .white
         tableView.register(UserListCell.self, forCellReuseIdentifier: "UserListCell")
+        tableView.register(PhotoInfoCell.self, forCellReuseIdentifier: "PhotoInfoCell")
+        tableView.separatorStyle = .none
         return tableView
     }()
     
@@ -57,7 +60,8 @@ class MyViewController: UIViewController {
                 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(navHeight)
+            make.leading.bottom.trailing.equalToSuperview()
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateData), name: NSNotification.Name("rechargeSucNoti"), object: nil)
@@ -67,30 +71,40 @@ class MyViewController: UIViewController {
         super.viewWillAppear(animated)
         
         navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
     }
 }
 
 
 extension MyViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.dataArr.count
+        viewModel.dataArr.count+1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UserListCell", for: indexPath) as! UserListCell
-        if viewModel.dataArr.count > indexPath.row {
-            cell.data = viewModel.dataArr[indexPath.row]
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoInfoCell", for: indexPath) as! PhotoInfoCell
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UserListCell", for: indexPath) as! UserListCell
+            if viewModel.dataArr.count > indexPath.row-1 {
+                cell.data = viewModel.dataArr[indexPath.row-1]
+            }
+            return cell
         }
-        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 120
+        }
         return 50
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if viewModel.dataArr.count > indexPath.row {
-            let data = viewModel.dataArr[indexPath.row]
+        if viewModel.dataArr.count > indexPath.row-1 {
+            let data = viewModel.dataArr[indexPath.row-1]
             switch data.type {
             case .vip: do {
                 let vip = PhotoDiamondViewController()
@@ -115,6 +129,10 @@ extension MyViewController: UITableViewDelegate, UITableViewDataSource {
                 navigationController?.pushViewController(webVc, animated: true)
             }
                
+            case .about: do {
+                let about = AboutViewController()
+                navigationController?.pushViewController(about, animated: true)
+            }
             default: break
             }
         }
@@ -221,15 +239,17 @@ class UserListViewModel {
         privacy.title = "Privacy Policy"
         privacy.type = .policy
         
-        let ver = UserListModel()
-        ver.title = "Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String)"
+        let about = UserListModel()
+        about.title = "About Us"
+        about.type = .about
+//        ver.title = "Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String)"
         
         
         dataArr.append(vip)
         dataArr.append(coin)
         dataArr.append(agreement)
         dataArr.append(privacy)
-        dataArr.append(ver)
+        dataArr.append(about)
     }
 }
 
