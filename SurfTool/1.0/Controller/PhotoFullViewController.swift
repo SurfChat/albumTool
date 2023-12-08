@@ -218,7 +218,9 @@ extension PhotoFullViewController: UITextViewDelegate {
         markImageView.enabledBorder = false
         markImageView.enabledControl = false
         
+        // 真实图片尺寸和展示尺寸的比例
         let scale = CGFloat(image.size.width/imageView.frame.size.width)
+        // 算出水印对应图片的真实尺寸
         let w = CGFloat(markImageView.frame.size.width*scale)
         
         let firstElement = MediaElement(view: markImageView)

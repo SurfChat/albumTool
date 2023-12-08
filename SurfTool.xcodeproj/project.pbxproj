@@ -43,6 +43,9 @@
 		B1D055F72B21DC0F00AF0604 /* PhotoInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D055F62B21DC0F00AF0604 /* PhotoInfoCell.swift */; };
 		B1D055F92B21E9AD00AF0604 /* PhotoNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D055F82B21E9AD00AF0604 /* PhotoNavViewController.swift */; };
 		B1D055FB2B21EA8E00AF0604 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D055FA2B21EA8E00AF0604 /* AboutViewController.swift */; };
+		B1D055FD2B22F28300AF0604 /* VideoListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D055FC2B22F28300AF0604 /* VideoListItem.swift */; };
+		B1D055FF2B23066800AF0604 /* VideoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D055FE2B23066800AF0604 /* VideoEditViewController.swift */; };
+		B1D056022B2329DB00AF0604 /* WMCWaterMarkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D056002B2329DB00AF0604 /* WMCWaterMarkManager.m */; };
 		B1D3DEAF2B197220000F516D /* IslandAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3DEAE2B197220000F516D /* IslandAttributes.swift */; };
 		B1D3DEB02B197220000F516D /* IslandAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3DEAE2B197220000F516D /* IslandAttributes.swift */; };
 /* End PBXBuildFile section */
@@ -115,6 +118,10 @@
 		B1D055F62B21DC0F00AF0604 /* PhotoInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoInfoCell.swift; sourceTree = "<group>"; };
 		B1D055F82B21E9AD00AF0604 /* PhotoNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoNavViewController.swift; sourceTree = "<group>"; };
 		B1D055FA2B21EA8E00AF0604 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		B1D055FC2B22F28300AF0604 /* VideoListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListItem.swift; sourceTree = "<group>"; };
+		B1D055FE2B23066800AF0604 /* VideoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEditViewController.swift; sourceTree = "<group>"; };
+		B1D056002B2329DB00AF0604 /* WMCWaterMarkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCWaterMarkManager.m; sourceTree = "<group>"; };
+		B1D056012B2329DB00AF0604 /* WMCWaterMarkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMCWaterMarkManager.h; sourceTree = "<group>"; };
 		B1D3DEAE2B197220000F516D /* IslandAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IslandAttributes.swift; sourceTree = "<group>"; };
 		B50FC2F7C750545CDB2F66CD /* Pods-SurfTool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfTool.debug.xcconfig"; path = "Target Support Files/Pods-SurfTool/Pods-SurfTool.debug.xcconfig"; sourceTree = "<group>"; };
 		BF3273B0BA11BAD2BC9EA2E3 /* Pods_SurfTool.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurfTool.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -222,6 +229,7 @@
 				B1D055F22B21B75700AF0604 /* CircleMeunView.swift */,
 				B1D055F42B21D3B000AF0604 /* PieChartView.swift */,
 				B1D055F62B21DC0F00AF0604 /* PhotoInfoCell.swift */,
+				B1D055FC2B22F28300AF0604 /* VideoListItem.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -239,6 +247,7 @@
 				B175BD102B2098E6000B83A6 /* VideoListViewController.swift */,
 				B1D055F82B21E9AD00AF0604 /* PhotoNavViewController.swift */,
 				B1D055FA2B21EA8E00AF0604 /* AboutViewController.swift */,
+				B1D055FE2B23066800AF0604 /* VideoEditViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -254,6 +263,8 @@
 		B1A4C3972B16083900E3C2C2 /* Handler */ = {
 			isa = PBXGroup;
 			children = (
+				B1D056012B2329DB00AF0604 /* WMCWaterMarkManager.h */,
+				B1D056002B2329DB00AF0604 /* WMCWaterMarkManager.m */,
 				B171903F2B0F58FC00518623 /* PhotoDBHandler.swift */,
 				B1A4C3862B1195B900E3C2C2 /* PhotoBlurHandler.swift */,
 				B1A4C3982B16086A00E3C2C2 /* PhotoPurchHandler.swift */,
@@ -430,6 +441,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1D055FF2B23066800AF0604 /* VideoEditViewController.swift in Sources */,
 				B1D055F92B21E9AD00AF0604 /* PhotoNavViewController.swift in Sources */,
 				B1D3DEAF2B197220000F516D /* IslandAttributes.swift in Sources */,
 				B175BD012B1EF930000B83A6 /* StickerView.m in Sources */,
@@ -437,11 +449,13 @@
 				B1A4C3892B14381900E3C2C2 /* AlbumListViewController.swift in Sources */,
 				B175BD002B1EF930000B83A6 /* SingleHandGestureRecognizer.m in Sources */,
 				B1D055F52B21D3B000AF0604 /* PieChartView.swift in Sources */,
+				B1D056022B2329DB00AF0604 /* WMCWaterMarkManager.m in Sources */,
 				B1A4C3932B16065E00E3C2C2 /* PhotoDiamondViewController.swift in Sources */,
 				B171903E2B0F55F100518623 /* PhotoDBModel.swift in Sources */,
 				B171903A2B0DFF9200518623 /* PhotoListViewController.swift in Sources */,
 				B17190402B0F58FC00518623 /* PhotoDBHandler.swift in Sources */,
 				B175BD112B2098E6000B83A6 /* VideoListViewController.swift in Sources */,
+				B1D055FD2B22F28300AF0604 /* VideoListItem.swift in Sources */,
 				B175BD0F2B2097DD000B83A6 /* MyViewController.swift in Sources */,
 				B1A4C39D2B17155800E3C2C2 /* PurchCell.swift in Sources */,
 				B17190252B0DDCA800518623 /* AppDelegate.swift in Sources */,

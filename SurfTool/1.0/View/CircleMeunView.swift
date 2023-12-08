@@ -26,7 +26,7 @@ struct CircleMeunView: View {
                 Button(action:editListClick){
                     Image(systemName: "trash").padding(.all,15)
                         .rotationEffect(.degrees(showButtons ? 0 : -90), anchor: .center)
-                }.background(Circle().fill(Color.white).shadow(radius: 8, x: 4, y: 4))
+                }.background(Circle().fill(Color.white).shadow(radius: 1, x: 0, y: 4))
                     .offset(x: 0, y: showButtons ? -110 : 0)
                     .opacity(showButtons ? 1 : 0 )
                     .foregroundColor(.black)
@@ -34,7 +34,7 @@ struct CircleMeunView: View {
                 Button(action: addAlbumClick){
                     Image(systemName: "rectangle.stack.badge.plus").padding(.all,15)
                         .rotationEffect(.degrees(showButtons ? 0 : 90), anchor: .center)
-                }.background(Circle().fill(Color.white).shadow(radius: 8, x: 4, y: 4))
+                }.background(Circle().fill(Color.white).shadow(radius: 1, x: 0, y: 4))
                     .offset(x: showButtons ? -70 : 0, y: showButtons ? -70 : 0)
                     .opacity(showButtons ? 1 : 0 )
                     .foregroundColor(.black)
@@ -42,7 +42,7 @@ struct CircleMeunView: View {
                 Button(action: endEditListClick){
                     Image(systemName: "trash.slash").padding(.all,15)
                         .rotationEffect(.degrees(showButtons ? 0 : 90), anchor: .center)
-                }.background(Circle().fill(Color.white).shadow(radius: 8, x: 4, y: 4))
+                }.background(Circle().fill(Color.white).shadow(radius: 1, x: 0, y: 4))
                     .offset(x: showButtons ? -110 : 0, y: 0)
                     .opacity(showButtons ? 1 : 0 )
                     .foregroundColor(.black)
@@ -50,7 +50,7 @@ struct CircleMeunView: View {
                 Button(action: menuClick){
                     Image(systemName: "plus").padding(.all,15)
                         .rotationEffect(.degrees(showButtons ? 45 : 0), anchor: .center)
-                }.background(Circle().fill(Color.white).shadow(radius: 8, x: 4, y: 4))
+                }.background(Circle().fill(Color.white).shadow(radius: 1, x: 0, y: 4))
                     .foregroundColor(.black)
                     .font(.title)
             }

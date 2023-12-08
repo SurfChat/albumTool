@@ -9,5 +9,6 @@
 #define SurfTool_Bridging_Header_h
 
 #import "StickerView.h"
+#import "WMCWaterMarkManager.h"
 
 #endif /* SurfTool_Bridging_Header_h */

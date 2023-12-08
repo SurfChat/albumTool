@@ -10,18 +10,6 @@ import SwiftUI
 
 class PhotoInfoCell: UITableViewCell {
         
-    private var meunView: UIHostingController = {
-        let pieView = PieChartView(
-            values: PhotoDBHandler.share.queryPhotosInfo(),
-            colors: [Color(UIColor.hexColor(0xFFECF6, alphaValue: 1)),Color(UIColor.hexColor(0xd7dfec, alphaValue: 1))],
-            backgroundColor: .white,
-            configuration: PieChartView.Configuration(space: 0.5, hole: 0.6)
-        )
-        let vc = UIHostingController(rootView: pieView)
-        vc.view.backgroundColor = .white
-        return vc
-    }()
-        
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
