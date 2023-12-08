@@ -7,7 +7,6 @@
 
 import UIKit
 import AVFoundation
-import MediaWatermark
 import Photos
 
 class VideoEditViewController: UIViewController {
@@ -176,43 +175,21 @@ extension VideoEditViewController {
         
         guard let videoURLAsset = videoURLAsset else { return }
         
-        
         markImageView.enabledBorder = false
         markImageView.enabledControl = false
         
-//        WMCWaterMarkManager.addWaterMarkType(withVideoAsset: videoURLAsset, mark: [markImageView], markBgViews: [markImageView], cameraBgView: videoView) { url in
-//            if let url = url {
-//                print(url)
-//            }
-//        }
-        
-        let item = MediaItem(asset: videoURLAsset)
-
-        let width = videoAsset.pixelWidth
-        let scale = videoView.frame.size.width / CGFloat(width)
-        let w = CGFloat(markImageView.frame.size.width*scale)
-        
-        
-        
-        let firstElement = MediaElement(view: markImageView)
-        firstElement.frame = CGRect(x: markImageView.frame.origin.x*scale, y: markImageView.frame.origin.y*scale, width: w, height: w)
-                            
-        item.add(element: firstElement)
+        WMCWaterMarkManager.addWaterMarkType(withVideoAsset: videoURLAsset, mark: [markImageView], markBgViews: [markImageView], cameraBgView: videoView) { url in
+            if let url = url {
+                print(url)
+                PHPhotoLibrary.shared().performChanges {
+                    let videoRequst = PHAssetCreationRequest.forAsset()
+                    let option = PHAssetResourceCreationOptions()
+                    option.shouldMoveFile = true
+                    videoRequst.addResource(with: .video, fileURL: url, options: option)
+                } completionHandler: { finish, error in
                 
-        let mediaProcessor = MediaProcessor()
-      
-        mediaProcessor.processElements(item: item) { [weak self] (result, error) in
-            
-            guard let self = self else { return }
-            
-//            if let resultImage = result. {
-//                self.markImageView.isHidden = true
-//                self.imageView.image = resultImage
-//                if let newImageData = resultImage.jpegData(compressionQuality: 0) {
-//                    self.data!.originalImage = newImageData
-//                    self.updatePhoto?(self.data!)
-//                }
-//            }
+                }
+            }
         }
     }
 }

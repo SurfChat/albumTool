@@ -178,7 +178,7 @@ class AlbumListViewController: UIViewController {
         
         let data = PhotoDBHandler.share.queryAlbums(scheme: scheme)
 
-        if data.isEmpty {
+        if data.isEmpty && scheme == 0 {
             
             let alertController = UIAlertController(title: "Create Your First Happy Album", message: nil, preferredStyle: .alert)
 
