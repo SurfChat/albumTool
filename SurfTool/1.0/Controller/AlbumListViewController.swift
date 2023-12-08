@@ -309,30 +309,31 @@ extension AlbumListViewController {
     
     @objc private func addAlbumBtnClick() {
         cancelBtnClick()
-//        let vip = UserDefaults.standard.double(forKey: "sadAlbumVipTill")
-//
-//        if vip == 0 && dataArr.count > 0 {
-//            // 付费拦截
-//            userListAction(.vip)
-//        } else {
+        let vip = UserDefaults.standard.double(forKey: "sadAlbumVipTill")
+        
+        if vip == 0 && dataArr.count > 0 {
+            // 付费拦截
+            let vip = PhotoDiamondViewController()
+            navigationController?.pushViewController(vip, animated: true)
+        } else {
             
-        let sheet = UIAlertController(title: "Choose Album Type", message: nil, preferredStyle: .actionSheet)
-        
-        let option1Action = UIAlertAction(title: "Happy Album", style: .default) { [weak self] (action) in
-            self?.createAlbum(albumType: 0)
-         }
-        sheet.addAction(option1Action)
-         
-         let option2Action = UIAlertAction(title: "Sad Album", style: .default) { [weak self] (action) in
-             self?.createAlbum(albumType: 1)
-         }
-        sheet.addAction(option2Action)
-         
-         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        sheet.addAction(cancelAction)
-        self.present(sheet, animated: true, completion: nil)
-        
-//        }
+            let sheet = UIAlertController(title: "Choose Album Type", message: nil, preferredStyle: .actionSheet)
+            
+            let option1Action = UIAlertAction(title: "Happy Album", style: .default) { [weak self] (action) in
+                self?.createAlbum(albumType: 0)
+            }
+            sheet.addAction(option1Action)
+            
+            let option2Action = UIAlertAction(title: "Sad Album", style: .default) { [weak self] (action) in
+                self?.createAlbum(albumType: 1)
+            }
+            sheet.addAction(option2Action)
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            sheet.addAction(cancelAction)
+            self.present(sheet, animated: true, completion: nil)
+            
+        }
 
     }
     

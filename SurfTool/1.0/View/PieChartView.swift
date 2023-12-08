@@ -26,8 +26,8 @@ struct PieChartView: View {
         GeometryReader { geometry in
             
             let totalValue = values.reduce(0, +)
-            let angles = values.reduce(into: [-180.0]) { (angles, value) in
-                angles.append(angles.last! + value / totalValue * 180)
+            let angles = values.reduce(into: [0.0]) { (angles, value) in
+                angles.append(angles.last! + value / totalValue * 360)
             }
             let shorterSideLength: CGFloat = min(geometry.size.width, geometry.size.height)
             let center: CGPoint = .init(x: geometry.size.width / 2, y: geometry.size.height / 2)
@@ -57,8 +57,8 @@ struct PieChartView: View {
                     path.move(to: center)
                     path.addArc(center: center,
                                 radius: holeRadius,
-                                startAngle: Angle(degrees: -180),
-                                endAngle: Angle(degrees: 0),
+                                startAngle: Angle(degrees: 0),
+                                endAngle: Angle(degrees: 360),
                                 clockwise: false)
                     path.closeSubpath()
                 }

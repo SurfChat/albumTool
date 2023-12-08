@@ -6,13 +6,13 @@
 //
 
 import UIKit
+import StoreKit
 
 enum UserListType {
     case none
     case vip
     case diamond
-    case terms
-    case policy
+    case rate
     case about
 }
 
@@ -72,7 +72,7 @@ class MyViewController: UIViewController {
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         
-        tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
+        tableView.reloadData()
     }
 }
 
@@ -97,7 +97,7 @@ extension MyViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 120
+            return 210
         }
         return 50
     }
@@ -116,23 +116,18 @@ extension MyViewController: UITableViewDelegate, UITableViewDataSource {
                 diamond.isDiamond = true
                 navigationController?.pushViewController(diamond, animated: true)
             }
-                
-            case .terms: do {
-                let webVc = PhotoWebViewController(url: "http://www.surf-chat.com/user-terms.html")
-                webVc.title = "Terms of Use"
-                navigationController?.pushViewController(webVc, animated: true)
-            }
-                
-            case .policy: do {
-                let webVc = PhotoWebViewController(url: "http://www.surf-chat.com/privacy-policy.html")
-                webVc.title = "Privacy Policy"
-                navigationController?.pushViewController(webVc, animated: true)
-            }
                
             case .about: do {
                 let about = AboutViewController()
                 navigationController?.pushViewController(about, animated: true)
             }
+                
+            case .rate: do {
+                if let windowScene = UIApplication.shared.windows.first?.windowScene {
+                    SKStoreReviewController.requestReview(in: windowScene)
+                }
+            }
+                
             default: break
             }
         }
@@ -184,8 +179,7 @@ class UserListCell: UITableViewCell {
     private lazy var lab: UILabel = {
         let lab = UILabel()
         lab.textColor = UIColor.hexColor(0x333333, alphaValue: 1)
-        lab.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        lab.numberOfLines = 2
+        lab.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         return lab
     }()
     
@@ -193,19 +187,18 @@ class UserListCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         selectionStyle = .none
+
+        contentView.backgroundColor = .white
         
-        backgroundColor = .clear
-        contentView.backgroundColor = .clear
+        contentView.addSubview(imgView)
+        imgView.snp.makeConstraints { make in
+            make.leading.top.equalTo(20)
+        }
         
-        let bgView = UIStackView(arrangedSubviews: [imgView, lab])
-        bgView.axis = .horizontal
-        bgView.spacing = 5
-        bgView.alignment = .leading
-        contentView.addSubview(bgView)
-        bgView.snp.makeConstraints { make in
-            make.leading.equalTo(15)
-            make.centerY.equalToSuperview()
-            make.trailing.lessThanOrEqualTo(-10)
+        contentView.addSubview(lab)
+        lab.snp.makeConstraints { make in
+            make.leading.equalTo(imgView.snp.trailing).offset(5)
+            make.centerY.equalTo(imgView)
         }
         
     }
@@ -231,24 +224,19 @@ class UserListViewModel {
         coin.icon = "diamond"
         coin.type = .diamond
         
-        let agreement = UserListModel()
-        agreement.title = "Terms of Use"
-        agreement.type = .terms
-        
-        let privacy = UserListModel()
-        privacy.title = "Privacy Policy"
-        privacy.type = .policy
+        let rate = UserListModel()
+        rate.title = "Rate us"
+        rate.icon = "rate"
+        rate.type = .rate
         
         let about = UserListModel()
         about.title = "About Us"
         about.type = .about
-//        ver.title = "Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String)"
-        
+        about.icon = "about"
         
         dataArr.append(vip)
         dataArr.append(coin)
-        dataArr.append(agreement)
-        dataArr.append(privacy)
+        dataArr.append(rate)
         dataArr.append(about)
     }
 }

@@ -49,7 +49,7 @@ struct CircleMeunView: View {
                 
                 Button(action: menuClick){
                     Image(systemName: "plus").padding(.all,15)
-                        .rotationEffect(.degrees(showButtons ? 0 : 90), anchor: .center)
+                        .rotationEffect(.degrees(showButtons ? 45 : 0), anchor: .center)
                 }.background(Circle().fill(Color.white).shadow(radius: 8, x: 4, y: 4))
                     .foregroundColor(.black)
                     .font(.title)

@@ -442,8 +442,8 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     private func photoDTap(index: IndexPath) {
-//        let diamonds = UserDefaults.standard.integer(forKey: "sadAlbumDiamondsBalance")
-//        if diamonds > 0 {
+        let diamonds = UserDefaults.standard.integer(forKey: "sadAlbumDiamondsBalance")
+        if diamonds > 0 {
             if dataArr.count > index.item {
                 let data = dataArr[index.item]
                 data.percent = data.percent*0.8
@@ -462,18 +462,18 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
                 
                 PhotoDBHandler.share.updatePhoto(data, albumID: albumData?.ID ?? 0, updateAlbum: updateAlbum)
                 
-//                UserDefaults.standard.setValue(diamonds-100, forKey: "sadAlbumDiamondsBalance")
-//                UserDefaults.standard.synchronize()
+                UserDefaults.standard.setValue(diamonds-100, forKey: "sadAlbumDiamondsBalance")
+                UserDefaults.standard.synchronize()
                 
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
                     self.listView.reloadItems(at: [index])
                 }
             }
-//        } else {
-//            let diamond = PhotoDiamondViewController()
-//            diamond.isDiamond = true
-//            navigationController?.pushViewController(diamond, animated: true)
-//        }
+        } else {
+            let diamond = PhotoDiamondViewController()
+            diamond.isDiamond = true
+            navigationController?.pushViewController(diamond, animated: true)
+        }
     }
     
     private func updatePhotoDesc(data: PhotoDBModel) {

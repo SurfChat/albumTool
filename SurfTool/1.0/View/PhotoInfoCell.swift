@@ -54,7 +54,7 @@ class PhotoInfoCell: UITableViewCell {
         contentView.addSubview(meunView.view)
         meunView.view.snp.makeConstraints { make in
             make.top.equalTo(-10)
-            make.centerX.equalToSuperview()
+            make.leading.equalTo(20)
             make.width.height.equalTo(200)
         }
         
@@ -62,7 +62,8 @@ class PhotoInfoCell: UITableViewCell {
         bgView.backgroundColor = .white
         contentView.addSubview(bgView)
         bgView.snp.makeConstraints { make in
-            make.centerX.bottom.equalToSuperview()
+            make.centerX.equalTo(meunView.view)
+            make.bottom.equalToSuperview()
             make.height.equalTo(30)
         }
         
@@ -103,6 +104,23 @@ class PhotoInfoCell: UITableViewCell {
             make.centerY.equalTo(happy)
             make.leading.equalTo(sad.snp.trailing).offset(5)
             make.trailing.equalToSuperview()
+        }
+        
+        let lab = UILabel()
+        lab.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        lab.textColor = UIColor.hexColor(0x333333, alphaValue: 1)
+        lab.text = "Congratulations, happiness surrounds you!"
+        lab.numberOfLines = 0
+        let arr: [Int] = PhotoDBHandler.share.queryPhotosInfo()
+        if arr.first ?? 0 < arr.last ?? 0 {
+            lab.text = "Come on, make your life better!"
+        }
+        
+        contentView.addSubview(lab)
+        lab.snp.makeConstraints { make in
+            make.centerY.equalTo(meunView.view)
+            make.leading.equalTo(meunView.view.snp.trailing).offset(10)
+            make.trailing.equalTo(-15)
         }
     }
     
