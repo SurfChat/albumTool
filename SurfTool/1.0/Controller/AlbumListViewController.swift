@@ -48,7 +48,11 @@ class AlbumListViewController: UIViewController {
         let titleLab = UILabel()
         titleLab.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         titleLab.textColor = UIColor.hexColor(0x333333, alphaValue: 1)
-        titleLab.text = "Memories Album"
+        if scheme == 1 {
+            titleLab.text = "Negative Memory"
+        } else {
+            titleLab.text = "Positive Memory"
+        }
         view.addSubview(titleLab)
         titleLab.snp.makeConstraints { make in
             make.leading.equalTo(15)
@@ -150,7 +154,7 @@ class AlbumListViewController: UIViewController {
         
         view.addSubview(meunView.view)
         meunView.view.snp.makeConstraints { make in
-            make.bottom.equalTo(-homeBarHeight-60)
+            make.bottom.equalTo(-homeBarHeight-90)
             make.trailing.equalTo(-15)
             make.width.height.equalTo(200)
         }

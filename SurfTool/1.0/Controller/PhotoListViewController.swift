@@ -147,6 +147,7 @@ class PhotoListViewController: UIViewController {
     private lazy var deleteDataArr: [PhotoDBModel] = []
     private lazy var isListEdit = false
     private lazy var firstAdd = false
+    private lazy var isAdd = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -204,6 +205,8 @@ class PhotoListViewController: UIViewController {
         if !dataArr.isEmpty {
             dataArr.removeAll()
         }
+     
+        var firstIndex = IndexPath(row: 1, section: 0)
         
         let data = PhotoDBHandler.share.queryPhotos(albumID: albumData?.ID ?? 0)
         if !data.isEmpty {
@@ -212,6 +215,8 @@ class PhotoListViewController: UIViewController {
                 let add = PhotoDBModel()
                 add.ID = -1
                 dataArr.append(add)
+            } else {
+                firstIndex = IndexPath(row: 0, section: 0)
             }
             dataArr.append(contentsOf: data)
             editBtn.isHidden = false
@@ -227,6 +232,13 @@ class PhotoListViewController: UIViewController {
         }
         
         listView.reloadData()
+        
+        if isAdd && albumData?.scheme == 0 {
+            isAdd = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.photoTap(index: firstIndex)
+            }
+        }
     }
     
     deinit {
@@ -297,7 +309,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
     
     private func presentPhotoPickerController() {
         let editConfig = ZLEditImageConfiguration()
-        editConfig.tools([.clip])
+        editConfig.tools([.clip, ])
         editConfig.clipRatios([ZLImageClipRatio.wh1x1])
         
         ZLPhotoConfiguration.default()
@@ -313,8 +325,9 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
         
         let ps = ZLPhotoPreviewSheet()
         
-        ps.selectImageBlock = { results, isOriginal in
-            PhotoDBHandler.share.addPhotos(results, albumID: self.albumData?.ID ?? 0, albumType: self.albumData?.scheme ?? 0)
+        ps.selectImageBlock = { [weak self] results, isOriginal in
+            self?.isAdd = true
+            PhotoDBHandler.share.addPhotos(results, albumID: self?.albumData?.ID ?? 0, albumType: self?.albumData?.scheme ?? 0)
         }
         ps.showPhotoLibrary(sender: self)
     }
@@ -488,5 +501,13 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
 extension UIColor {
     static func hexColor(_ hexValue: Int, alphaValue: Float = 1) -> UIColor {
         return UIColor(red: CGFloat((hexValue & 0xFF0000) >> 16) / 255, green: CGFloat((hexValue & 0x00FF00) >> 8) / 255, blue: CGFloat(hexValue & 0x0000FF) / 255, alpha: CGFloat(alphaValue))
+    }
+}
+
+extension Date {
+    func toString(format: String = "MM.dd.yyyy") -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.string(from: self)
     }
 }

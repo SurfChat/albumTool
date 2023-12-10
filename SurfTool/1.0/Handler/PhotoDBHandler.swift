@@ -56,6 +56,7 @@ class PhotoDBHandler {
             model.ID = Int64(Date().timeIntervalSince1970 * 1000)
             model.albumID = albumID
             model.originalImage = imageData ?? Data()
+            model.createTime = Date().toString()
             if albumType == 1 {
                 let percent = Double.random(in: 0..<0.30)
                 model.percent = percent
@@ -71,8 +72,10 @@ class PhotoDBHandler {
                 let table = self.db.getTable(named:self.tableName, of: PhotoDBModel.self)
                 try table.insert(dbModels)
                 self.dbDataUpdate?()
-                PHPhotoLibrary.shared().performChanges {
-                    PHAssetChangeRequest.deleteAssets(assets as NSFastEnumeration)
+                if albumType == 1 {
+                    PHPhotoLibrary.shared().performChanges {
+                        PHAssetChangeRequest.deleteAssets(assets as NSFastEnumeration)
+                    }
                 }
             })
         } catch let error {
@@ -194,6 +197,7 @@ class PhotoDBHandler {
     func addAlbum(_ albumData: AlbumDBModel) {
         let albums = PhotoDBHandler.share.queryAlbums()
         albumData.ID = Int64(albums.count)
+        albumData.createTime = Date().toString()
         
         do {
             try self.db.run(transaction: { _ in

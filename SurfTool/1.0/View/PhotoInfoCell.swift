@@ -26,10 +26,14 @@ class PhotoInfoCell: UITableViewCell {
         contentView.backgroundColor = .white
         contentView.clipsToBounds = true
         
-        for view in contentView.subviews {
-            view.removeFromSuperview()
-        }
-        
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupUI() {
         let pieView = PieChartView(
             values: PhotoDBHandler.share.queryPhotosInfo(),
             colors: [Color(UIColor.hexColor(0xFFECF6, alphaValue: 1)),Color(UIColor.hexColor(0xd7dfec, alphaValue: 1))],
@@ -97,12 +101,12 @@ class PhotoInfoCell: UITableViewCell {
         let lab = UILabel()
         lab.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         lab.textColor = UIColor.hexColor(0x333333, alphaValue: 1)
-        lab.text = "Congratulations, happiness surrounds you!"
+        lab.text = "Have another good day！"
         lab.numberOfLines = 0
-        let arr: [Int] = PhotoDBHandler.share.queryPhotosInfo()
-        if arr.first ?? 0 < arr.last ?? 0 {
-            lab.text = "Come on, make your life better!"
-        }
+//        let arr: [Int] = PhotoDBHandler.share.queryPhotosInfo()
+//        if arr.first ?? 0 < arr.last ?? 0 {
+//            lab.text = "Come on, make your life better!"
+//        }
         
         contentView.addSubview(lab)
         lab.snp.makeConstraints { make in
@@ -112,7 +116,11 @@ class PhotoInfoCell: UITableViewCell {
         }
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func updateData() {
+        for view in contentView.subviews {
+            view.removeFromSuperview()
+        }
+        
+        setupUI()
     }
 }

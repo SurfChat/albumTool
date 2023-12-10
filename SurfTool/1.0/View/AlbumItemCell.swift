@@ -12,6 +12,7 @@ class AlbumItemCell: UICollectionViewCell {
         didSet {
             imageView.image = UIImage(data: data?.coverImage ?? Data()) ?? UIImage()
             titleLab.text = data?.title
+            dateLab.text = data?.createTime
             if data?.scheme == 1 {
                 contentView.backgroundColor = UIColor.hexColor(0xd7dfec, alphaValue: 1)
             } else {
@@ -63,6 +64,13 @@ class AlbumItemCell: UICollectionViewCell {
         return btn
     }()
     
+    private lazy var dateLab: UILabel = {
+        let lab = UILabel()
+        lab.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        lab.textColor = UIColor.hexColor(0x999999, alphaValue: 1)
+        return lab
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -79,12 +87,21 @@ class AlbumItemCell: UICollectionViewCell {
             make.height.equalTo(imageView.snp.width).multipliedBy(1)
         }
         
+        contentView.addSubview(dateLab)
+        dateLab.snp.makeConstraints { make in
+            make.leading.equalTo(15)
+            make.bottom.equalTo(-5)
+            make.trailing.equalTo(-15)
+            make.height.equalTo(10)
+        }
+        
         let bgView = UIView()
         bgView.backgroundColor = .clear
         contentView.addSubview(bgView)
         bgView.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom)
-            make.leading.bottom.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(dateLab.snp.top)
         }
         
         contentView.addSubview(markBtn)
@@ -95,15 +112,15 @@ class AlbumItemCell: UICollectionViewCell {
         bgView.addSubview(editBtn)
         editBtn.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.trailing.equalTo(-15)
-            make.width.equalTo(30)
+            make.trailing.lessThanOrEqualTo(-15)
+            make.width.height.equalTo(15)
         }
         
         bgView.addSubview(titleLab)
         titleLab.snp.makeConstraints { make in
             make.leading.equalTo(15)
             make.centerY.equalTo(editBtn)
-            make.trailing.equalTo(editBtn.snp.leading).offset(-10)
+            make.trailing.equalTo(editBtn.snp.leading).offset(-5)
         }
     }
     

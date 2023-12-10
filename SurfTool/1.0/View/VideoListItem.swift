@@ -30,7 +30,7 @@ class VideoListItem: UICollectionViewCell {
         return imageView
     }()
     
-    private lazy var iconView = UIImageView(image: UIImage(named: "tabbar_video"))
+    private lazy var iconView = UIImageView(image: UIImage(named: "video_play"))
     
     override init(frame: CGRect) {
         super.init(frame: frame)

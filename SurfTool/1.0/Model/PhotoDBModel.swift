@@ -17,6 +17,7 @@ final class PhotoDBModel: TableCodable {
     var originalImage: Data = Data()
     var albumID: Int64 = 0
     var text: String = ""
+    var createTime: String = ""
     
     enum CodingKeys: String, CodingTableKey {
         typealias Root = PhotoDBModel
@@ -27,6 +28,7 @@ final class PhotoDBModel: TableCodable {
         case originalImage
         case albumID
         case text
+        case createTime
     }
     
 }
@@ -68,6 +70,7 @@ final class AlbumDBModel: TableCodable {
     var title: String = "Default"
     /// 主題0 happy 1 sad
     var scheme: Int = 0
+    var createTime: String = ""
     
     enum CodingKeys: String, CodingTableKey {
         typealias Root = AlbumDBModel
@@ -77,5 +80,6 @@ final class AlbumDBModel: TableCodable {
         case coverImage
         case title
         case scheme
+        case createTime
     }
 }

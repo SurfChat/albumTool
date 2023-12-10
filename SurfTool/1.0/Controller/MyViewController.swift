@@ -25,7 +25,7 @@ class MyViewController: UIViewController {
         let titleLab = UILabel()
         titleLab.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         titleLab.textColor = UIColor.hexColor(0x333333, alphaValue: 1)
-        titleLab.text = "Memories Album"
+        titleLab.text = "Memories"
         view.addSubview(titleLab)
         titleLab.snp.makeConstraints { make in
             make.leading.equalTo(15)
@@ -72,7 +72,9 @@ class MyViewController: UIViewController {
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         
-        tableView.reloadData()
+        if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? PhotoInfoCell {
+            cell.updateData()
+        }
     }
 }
 
@@ -230,7 +232,7 @@ class UserListViewModel {
         rate.type = .rate
         
         let about = UserListModel()
-        about.title = "About Us"
+        about.title = "About us"
         about.type = .about
         about.icon = "about"
         

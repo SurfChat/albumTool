@@ -24,6 +24,7 @@ class PhotoTextCell: UICollectionViewCell {
                     } else {
                         titleLab.text = ""
                     }
+                    dateLab.text = data.createTime
                 }
             }
         }
@@ -72,11 +73,17 @@ class PhotoTextCell: UICollectionViewCell {
     
     private lazy var titleLab: UILabel = {
         let lab = UILabel()
-        lab.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        lab.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         lab.textColor = UIColor.hexColor(0x666666, alphaValue: 1)
         lab.numberOfLines = 2
         lab.minimumScaleFactor = 0.5
-        lab.lineBreakMode = .byCharWrapping
+        return lab
+    }()
+    
+    private lazy var dateLab: UILabel = {
+        let lab = UILabel()
+        lab.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        lab.textColor = UIColor.hexColor(0x999999, alphaValue: 1)
         return lab
     }()
     
@@ -115,11 +122,19 @@ class PhotoTextCell: UICollectionViewCell {
             make.top.leading.equalTo(5)
         }
         
-        contentView.addSubview(titleLab)
-        titleLab.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(5)
+        contentView.addSubview(dateLab)
+        dateLab.snp.makeConstraints { make in
             make.leading.equalTo(15)
             make.bottom.equalTo(-5)
+            make.trailing.equalTo(-15)
+            make.height.equalTo(10)
+        }
+        
+        contentView.addSubview(titleLab)
+        titleLab.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(3)
+            make.leading.equalTo(15)
+            make.bottom.equalTo(dateLab.snp.top)
             make.trailing.equalTo(-15)
         }
     }

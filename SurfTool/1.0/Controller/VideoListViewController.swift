@@ -18,7 +18,7 @@ class VideoListViewController: UIViewController {
         let titleLab = UILabel()
         titleLab.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         titleLab.textColor = UIColor.hexColor(0x333333, alphaValue: 1)
-        titleLab.text = "Memories Album"
+        titleLab.text = "Emotional video"
         view.addSubview(titleLab)
         titleLab.snp.makeConstraints { make in
             make.leading.equalTo(15)

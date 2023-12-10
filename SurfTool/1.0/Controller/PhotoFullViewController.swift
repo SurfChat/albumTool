@@ -8,6 +8,7 @@
 import UIKit
 import RSKGrowingTextView
 import MediaWatermark
+import JFPopup
 
 class PhotoFullViewController: UIViewController {
     
@@ -207,6 +208,7 @@ extension PhotoFullViewController: UITextViewDelegate {
         if !textView.text.isEmpty {
             data?.text = textView.text
             updateTitle?(data!)
+            editBtnClick()
         }
         
         guard let imageData = data?.originalImage else { return }
@@ -242,6 +244,8 @@ extension PhotoFullViewController: UITextViewDelegate {
                 }
             }
         }
+        
+        JFPopupView.popup.toast(hit: "Save Successfully", icon: .success)
     }
 
 }
