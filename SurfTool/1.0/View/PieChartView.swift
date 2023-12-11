@@ -64,15 +64,15 @@ struct PieChartView: View {
                 }
                 .fill(backgroundColor)
                 
-                if let firstValue = values.first, let lastValue = values.last {
-                    let result = Int((firstValue / (firstValue + lastValue)) * 100)
-                    Text("\(result)%")
-                        .font(.system(size: 17, weight: .medium))
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(Color(UIColor.hexColor(0x333333)))
-                    // 使用 text 进行后续操作
+                if values.count > 0 {
+                    if let firstValue = values.first, let lastValue = values.last {
+                        let result = Int((firstValue / (firstValue + lastValue)) * 100)
+                        Text("\(result)%")
+                            .font(.system(size: 17, weight: .medium))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(Color(UIColor.hexColor(0x333333)))
+                    }
                 }
-                    
             }
             .background(backgroundColor)
             .clipped()

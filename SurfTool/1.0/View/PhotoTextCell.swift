@@ -16,6 +16,7 @@ class PhotoTextCell: UICollectionViewCell {
                     addBtn.isHidden = false
                     imageView.image = nil
                     titleLab.text = ""
+                    dateLab.text = ""
                 } else {
                     addBtn.isHidden = true
                     imageView.image = UIImage(data: data.originalImage)

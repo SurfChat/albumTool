@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         PhotoBlurHandler.updateBlur()
         PhotoPurchHandler.share.purchesComplete()
+        PhotoDBHandler.share.createExampleAlbum()
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white

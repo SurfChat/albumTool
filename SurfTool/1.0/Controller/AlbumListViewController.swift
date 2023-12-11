@@ -182,7 +182,9 @@ class AlbumListViewController: UIViewController {
         
         let data = PhotoDBHandler.share.queryAlbums(scheme: scheme)
 
-        if data.isEmpty && scheme == 0 {
+        if !data.isEmpty && PhotoDBHandler.share.showGuide == true {
+            dataArr.append(contentsOf: data)
+            collectionView.reloadData()
             
             let alertController = UIAlertController(title: "Create Your First Happy Album", message: nil, preferredStyle: .alert)
 
@@ -206,9 +208,32 @@ class AlbumListViewController: UIViewController {
 
             alertController.addAction(okAction)
             self.present(alertController, animated: true, completion: nil)
+            
+            PhotoDBHandler.share.showGuide = false
         } else {
-            dataArr.append(contentsOf: data)
-            collectionView.reloadData()
+            if data.isEmpty && scheme == 0  {
+                let alertController = UIAlertController(title: "Create Your First Happy Album", message: nil, preferredStyle: .alert)
+                alertController.addTextField { (textField) in
+                    textField.placeholder = "Album title"
+                }
+                let okAction = UIAlertAction(title: "Confirm", style: .default) { [weak self] (_) in
+                    // 当用户点击确定按钮时执行的操作
+                    if let textField = alertController.textFields?.first {
+                        if let text = textField.text {
+                            let album = AlbumDBModel()
+                            album.title = text
+                            album.scheme = 0
+                            PhotoDBHandler.share.addAlbum(album)
+                            self?.perform(#selector(self?.goAddPhoto), with: nil, afterDelay: 0.5)
+                        }
+                    }
+                }
+                alertController.addAction(okAction)
+                self.present(alertController, animated: true, completion: nil)
+            } else {
+                dataArr.append(contentsOf: data)
+                collectionView.reloadData()
+            }
         }
      }
     
@@ -321,21 +346,23 @@ extension AlbumListViewController {
             navigationController?.pushViewController(vip, animated: true)
         } else {
             
-            let sheet = UIAlertController(title: "Choose Album Type", message: nil, preferredStyle: .actionSheet)
-            
-            let option1Action = UIAlertAction(title: "Happy Album", style: .default) { [weak self] (action) in
-                self?.createAlbum(albumType: 0)
-            }
-            sheet.addAction(option1Action)
-            
-            let option2Action = UIAlertAction(title: "Sad Album", style: .default) { [weak self] (action) in
-                self?.createAlbum(albumType: 1)
-            }
-            sheet.addAction(option2Action)
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            sheet.addAction(cancelAction)
-            self.present(sheet, animated: true, completion: nil)
+            createAlbum(albumType: scheme)
+           
+//            let sheet = UIAlertController(title: "Choose Album Type", message: nil, preferredStyle: .actionSheet)
+//            
+//            let option1Action = UIAlertAction(title: "Happy Album", style: .default) { [weak self] (action) in
+//                
+//            }
+//            sheet.addAction(option1Action)
+//            
+//            let option2Action = UIAlertAction(title: "Sad Album", style: .default) { [weak self] (action) in
+//                self?.createAlbum(albumType: 1)
+//            }
+//            sheet.addAction(option2Action)
+//            
+//            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//            sheet.addAction(cancelAction)
+//            self.present(sheet, animated: true, completion: nil)
             
         }
 
