@@ -327,6 +327,9 @@ class PhotoDBHandler {
             model.albumID = album.ID
             model.originalImage = imageData ?? Data()
             model.createTime = Date().toString()
+            if i == 3 {
+                model.text = "A good place to have a party"
+            }
             dbModels.append(model)
         }
         
