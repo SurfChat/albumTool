@@ -75,6 +75,7 @@ class MyViewController: UIViewController {
         if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? PhotoInfoCell {
             cell.updateData()
         }
+        tableView.reloadData()
     }
 }
 
@@ -162,13 +163,15 @@ class UserListCell: UITableViewCell {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "MM-dd-yyyy"
                     let dateString = dateFormatter.string(from: date)
-                    lab.text = data.title + " Till\n" + dateString
+                    subtitle.text = " Till:" + dateString
                 }
             } else if data.type == .diamond {
                 let diamonds = Int(PhotoKeychainHandly.diamondsCount()) ?? 0
                 if diamonds > 0 {
-                    lab.text = data.title + "\n\(diamonds)"
+                    subtitle.text = "\(diamonds)"
                 }
+            } else {
+                subtitle.text = ""
             }
         }
     }
@@ -181,6 +184,13 @@ class UserListCell: UITableViewCell {
     private lazy var lab: UILabel = {
         let lab = UILabel()
         lab.textColor = UIColor.hexColor(0x333333, alphaValue: 1)
+        lab.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        return lab
+    }()
+    
+    private lazy var subtitle: UILabel = {
+        let lab = UILabel()
+        lab.textColor = UIColor.hexColor(0x666666, alphaValue: 1)
         lab.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         return lab
     }()
@@ -203,6 +213,11 @@ class UserListCell: UITableViewCell {
             make.centerY.equalTo(imgView)
         }
         
+        contentView.addSubview(subtitle)
+        subtitle.snp.makeConstraints { make in
+            make.centerY.equalTo(imgView)
+            make.trailing.equalTo(-20)
+        }
     }
     
     required init?(coder: NSCoder) {

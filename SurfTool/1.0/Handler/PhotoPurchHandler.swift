@@ -67,9 +67,12 @@ class PhotoPurchHandler {
                        
                         let tillTime = PhotoKeychainHandly.vipTillTime()
                             // 之前购买过 在之前的日期上延长
-                        currentDate = Date(timeIntervalSince1970: Double(tillTime) ?? 0)
-                        
-                      
+                        if let currentTill = Double(tillTime) {
+                            if currentTill > 0 {
+                                currentDate = Date(timeIntervalSince1970:currentTill)
+                            }
+                        }
+
                         if let futureDate = Calendar.current.date(byAdding: dateComponents, to: currentDate) {
                             let till = futureDate.timeIntervalSince1970
                             PhotoKeychainHandly.updateVipTillTime(timeInterva: "\(till)")
