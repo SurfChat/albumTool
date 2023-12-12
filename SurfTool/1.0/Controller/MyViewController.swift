@@ -156,16 +156,16 @@ class UserListCell: UITableViewCell {
             
             lab.text = data.title
             if data.type == .vip {
-                let vip = UserDefaults.standard.double(forKey: "sadAlbumVipTill")
-                if vip > 0 {
-                    let date = Date(timeIntervalSince1970: vip)
+                let vip = PhotoKeychainHandly.vipTillTime()
+                if Double(vip) ?? 0 > 0 {
+                    let date = Date(timeIntervalSince1970: Double(vip) ?? 0)
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "MM-dd-yyyy"
                     let dateString = dateFormatter.string(from: date)
                     lab.text = data.title + " Till\n" + dateString
                 }
             } else if data.type == .diamond {
-                let diamonds = UserDefaults.standard.integer(forKey: "sadAlbumDiamondsBalance")
+                let diamonds = Int(PhotoKeychainHandly.diamondsCount()) ?? 0
                 if diamonds > 0 {
                     lab.text = data.title + "\n\(diamonds)"
                 }

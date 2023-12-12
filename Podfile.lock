@@ -4,6 +4,7 @@ PODS:
     - JRBaseKit (~> 1.1.1)
   - JRBaseKit (1.1.2)
   - JXPhotoBrowser (3.1.4)
+  - KeychainAccess (4.2.2)
   - MediaWatermark (0.4.0)
   - RSKGrowingTextView (6.1.1):
     - RSKPlaceholderTextView (= 6.1.0)
@@ -24,6 +25,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - JFPopup (= 1.5.4)
   - JXPhotoBrowser
+  - KeychainAccess
   - MediaWatermark
   - RSKGrowingTextView
   - SnapKit
@@ -37,6 +39,7 @@ SPEC REPOS:
     - JFPopup
     - JRBaseKit
     - JXPhotoBrowser
+    - KeychainAccess
     - MediaWatermark
     - RSKGrowingTextView
     - RSKPlaceholderTextView
@@ -51,6 +54,7 @@ SPEC CHECKSUMS:
   JFPopup: c3ada13bbda3cfe85bd71228e20a0b622eab72af
   JRBaseKit: 825cca458a73990f6019deaaaaff75840dea477f
   JXPhotoBrowser: 41ffa41252c8d5264f97ab3c1936a5cf935a58d7
+  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   MediaWatermark: d67db91deaaa9403220899adfb59c80221a02a7d
   RSKGrowingTextView: 76303a23f9c987fcf1a909720aac27bb9747511d
   RSKPlaceholderTextView: 52f26e643b6f9bbf16f45cd2bbe2181b6dfe090c
@@ -60,6 +64,6 @@ SPEC CHECKSUMS:
   WCDBOptimizedSQLCipher: ef2be79fed278289a309ad0d4d707c55bf166d6d
   ZLPhotoBrowser: 8b3653a677a858e158fedf870f211b1219bb4c0f
 
-PODFILE CHECKSUM: f3a9e625d0b0f6cfd7e03d6e53b4961a0bcfa4da
+PODFILE CHECKSUM: 087011c10f4b8ae5162280544c8a76192afbcff4
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.13.0

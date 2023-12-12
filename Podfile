@@ -20,6 +20,8 @@ pod 'JFPopup', '1.5.4'
 pod 'RSKGrowingTextView'
 pod 'IQKeyboardManagerSwift'
 pod "MediaWatermark"
+pod 'KeychainAccess'
+
 end
 
 post_install do |installer|

@@ -62,19 +62,17 @@ class PhotoPurchHandler {
                 share.checkOrder(detail: product) {
                     if let count = model.productIdentifier.components(separatedBy: ".").last {
                         var currentDate = Date()
-                        let vip = UserDefaults.standard.double(forKey: "sadAlbumVipTill")
-                        if vip > 0 {
-                            // 之前购买过 在之前的日期上延长
-                            currentDate = Date(timeIntervalSince1970: vip)
-                        }
-                        
                         var dateComponents = DateComponents()
                         dateComponents.month = 1 * (Int(count) ?? 0)
                        
+                        let tillTime = PhotoKeychainHandly.vipTillTime()
+                            // 之前购买过 在之前的日期上延长
+                        currentDate = Date(timeIntervalSince1970: Double(tillTime) ?? 0)
+                        
+                      
                         if let futureDate = Calendar.current.date(byAdding: dateComponents, to: currentDate) {
                             let till = futureDate.timeIntervalSince1970
-                            UserDefaults.standard.setValue(till, forKey: "sadAlbumVipTill")
-                            UserDefaults.standard.synchronize()
+                            PhotoKeychainHandly.updateVipTillTime(timeInterva: "\(till)")
                             NotificationCenter.default.post(name: NSNotification.Name("rechargeSucNoti"), object: nil)
                         }
                     }
@@ -110,9 +108,10 @@ class PhotoPurchHandler {
                 // fetch content from your server, then:
                 share.checkOrder(detail: product) {
                     if let count = model.productIdentifier.components(separatedBy: ".").last {
-                        let diamonds = UserDefaults.standard.integer(forKey: "sadAlbumDiamondsBalance")
-                        UserDefaults.standard.setValue(diamonds+(Int(count) ?? 0), forKey: "sadAlbumDiamondsBalance")
-                        UserDefaults.standard.synchronize()
+                        let diamonds = Int(PhotoKeychainHandly.diamondsCount())
+
+                        PhotoKeychainHandly.updateDiamondsCount(countStr: "\((diamonds ?? 0)+(Int(count) ?? 0))")
+                       
                         NotificationCenter.default.post(name: NSNotification.Name("rechargeSucNoti"), object: nil)
                     }
                 }
@@ -176,6 +175,41 @@ class PhotoPurchHandler {
                         break
                     }
                 }
+            }
+        }
+    }
+    
+    static func restore() {
+        JFPopupView.popup.loading()
+        
+        SwiftyStoreKit.restorePurchases { results in
+            if results.restoreFailedPurchases.count > 0 {
+                JFPopupView.popup.hideLoading()
+                JFPopupView.popup.toast(hit: "Restore fail")
+                
+            } else if results.restoredPurchases.count > 0 {
+                for restorePurch in results.restoredPurchases {
+                    SwiftyStoreKit.fetchReceipt(forceRefresh: false) { result in
+                        if restorePurch.needsFinishTransaction {
+                            SwiftyStoreKit.finishTransaction(restorePurch.transaction)
+                        }
+                        DispatchQueue.main.async {
+                            JFPopupView.popup.hideLoading()
+                            switch result {
+                            case .success(_): do {
+                                JFPopupView.popup.toast(hit: "Recharged Successfully", icon: .success)
+                            }
+                            case .error(let error): do {
+                                JFPopupView.popup.toast(hit: "Recharge Failed", icon: .fail)
+                                print("receiptData Error \(error.localizedDescription)")
+                            }
+                            }
+                        }
+                    }
+                }
+            } else {
+                JFPopupView.popup.hideLoading()
+                JFPopupView.popup.toast(hit: "Nothing to restore")
             }
         }
     }

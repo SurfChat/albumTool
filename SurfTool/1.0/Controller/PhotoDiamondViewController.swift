@@ -35,6 +35,18 @@ class PhotoDiamondViewController: UIViewController {
             make.width.equalTo(view.snp.width).multipliedBy(0.35)
         }
         
+        let restoreBtn = UIButton(type: .custom)
+        restoreBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        restoreBtn.setTitleColor(UIColor.hexColor(0x333333, alphaValue: 1), for: .normal)
+        restoreBtn.setTitle("Restore", for: .normal)
+        restoreBtn.addTarget(self, action: #selector(restoreBtnClick), for: .touchUpInside)
+        view.addSubview(restoreBtn)
+        restoreBtn.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.trailing.equalTo(-15)
+            make.height.equalTo(44)
+        }
+        
         return view
     }()
     
@@ -235,5 +247,9 @@ extension PhotoDiamondViewController: UITableViewDelegate, UITableViewDataSource
         let view = UIView()
         view.backgroundColor = .clear
         return view
+    }
+    
+    @objc private func restoreBtnClick() {
+        PhotoPurchHandler.restore()
     }
 }

@@ -338,9 +338,9 @@ extension AlbumListViewController {
     
     @objc private func addAlbumBtnClick() {
         cancelBtnClick()
-        let vip = UserDefaults.standard.double(forKey: "sadAlbumVipTill")
+        let vip = PhotoKeychainHandly.vipTillTime()
         
-        if vip == 0 && dataArr.count > 0 {
+        if Double(vip) == 0 && dataArr.count > 0 {
             // 付费拦截
             let vip = PhotoDiamondViewController()
             navigationController?.pushViewController(vip, animated: true)

@@ -46,6 +46,7 @@
 		B1D055FD2B22F28300AF0604 /* VideoListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D055FC2B22F28300AF0604 /* VideoListItem.swift */; };
 		B1D055FF2B23066800AF0604 /* VideoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D055FE2B23066800AF0604 /* VideoEditViewController.swift */; };
 		B1D056022B2329DB00AF0604 /* WMCWaterMarkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D056002B2329DB00AF0604 /* WMCWaterMarkManager.m */; };
+		B1D056042B27FBC700AF0604 /* PhotoKeychainHandly.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D056032B27FBC700AF0604 /* PhotoKeychainHandly.swift */; };
 		B1D3DEAF2B197220000F516D /* IslandAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3DEAE2B197220000F516D /* IslandAttributes.swift */; };
 		B1D3DEB02B197220000F516D /* IslandAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3DEAE2B197220000F516D /* IslandAttributes.swift */; };
 /* End PBXBuildFile section */
@@ -122,6 +123,7 @@
 		B1D055FE2B23066800AF0604 /* VideoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEditViewController.swift; sourceTree = "<group>"; };
 		B1D056002B2329DB00AF0604 /* WMCWaterMarkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCWaterMarkManager.m; sourceTree = "<group>"; };
 		B1D056012B2329DB00AF0604 /* WMCWaterMarkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMCWaterMarkManager.h; sourceTree = "<group>"; };
+		B1D056032B27FBC700AF0604 /* PhotoKeychainHandly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoKeychainHandly.swift; sourceTree = "<group>"; };
 		B1D3DEAE2B197220000F516D /* IslandAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IslandAttributes.swift; sourceTree = "<group>"; };
 		B50FC2F7C750545CDB2F66CD /* Pods-SurfTool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfTool.debug.xcconfig"; path = "Target Support Files/Pods-SurfTool/Pods-SurfTool.debug.xcconfig"; sourceTree = "<group>"; };
 		BF3273B0BA11BAD2BC9EA2E3 /* Pods_SurfTool.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurfTool.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -268,6 +270,7 @@
 				B171903F2B0F58FC00518623 /* PhotoDBHandler.swift */,
 				B1A4C3862B1195B900E3C2C2 /* PhotoBlurHandler.swift */,
 				B1A4C3982B16086A00E3C2C2 /* PhotoPurchHandler.swift */,
+				B1D056032B27FBC700AF0604 /* PhotoKeychainHandly.swift */,
 			);
 			path = Handler;
 			sourceTree = "<group>";
@@ -453,6 +456,7 @@
 				B1A4C3932B16065E00E3C2C2 /* PhotoDiamondViewController.swift in Sources */,
 				B171903E2B0F55F100518623 /* PhotoDBModel.swift in Sources */,
 				B171903A2B0DFF9200518623 /* PhotoListViewController.swift in Sources */,
+				B1D056042B27FBC700AF0604 /* PhotoKeychainHandly.swift in Sources */,
 				B17190402B0F58FC00518623 /* PhotoDBHandler.swift in Sources */,
 				B175BD112B2098E6000B83A6 /* VideoListViewController.swift in Sources */,
 				B1D055FD2B22F28300AF0604 /* VideoListItem.swift in Sources */,

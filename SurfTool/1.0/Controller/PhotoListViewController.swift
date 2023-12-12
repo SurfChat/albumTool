@@ -455,7 +455,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     private func photoDTap(index: IndexPath) {
-        let diamonds = UserDefaults.standard.integer(forKey: "sadAlbumDiamondsBalance")
+        let diamonds = Int(PhotoKeychainHandly.diamondsCount()) ?? 0
         if diamonds > 0 {
             if dataArr.count > index.item {
                 let data = dataArr[index.item]
@@ -475,8 +475,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
                 
                 PhotoDBHandler.share.updatePhoto(data, albumID: albumData?.ID ?? 0, updateAlbum: updateAlbum)
                 
-                UserDefaults.standard.setValue(diamonds-100, forKey: "sadAlbumDiamondsBalance")
-                UserDefaults.standard.synchronize()
+                PhotoKeychainHandly.updateDiamondsCount(countStr: "\(diamonds-100)")
                 
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
                     self.listView.reloadItems(at: [index])
