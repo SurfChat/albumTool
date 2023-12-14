@@ -66,9 +66,10 @@ class AlbumListViewController: UIViewController {
         let editBtn = UIButton(type: .custom)
         editBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         editBtn.setTitleColor(UIColor.hexColor(0x333333, alphaValue: 1), for: .normal)
-        editBtn.setImage(UIImage(named: "delete"), for: .normal)
-        editBtn.setTitle("Delete", for: .normal)
+//        editBtn.setImage(UIImage(named: "delete"), for: .normal)
+        editBtn.setTitle("Continue", for: .normal)
         editBtn.addTarget(self, action: #selector(editBtnClick), for: .touchUpInside)
+        editBtn.isHidden = true
         return editBtn
     }()
     
@@ -128,7 +129,14 @@ class AlbumListViewController: UIViewController {
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(navHeight)
         }
-                
+            
+        navView.addSubview(editBtn)
+        editBtn.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.trailing.equalTo(-15)
+            make.height.equalTo(44)
+        }
+        
         view.addSubview(listView)
         listView.snp.makeConstraints { make in
             make.top.equalTo(navView.snp.bottom)
@@ -280,18 +288,18 @@ extension AlbumListViewController {
         if isListEdit == true {
             if deleteDataArr.count > 0 {
                 deletePhoto()
+                editBtn.isHidden = true
             }
         } else {
             isListEdit = true
             collectionView.reloadData()
-            cancelBtn.isHidden = false
+            editBtn.isHidden = false
         }
     }
     
     @objc private func cancelBtnClick() {
 
-        cancelBtn.isHidden = true
-        editBtn.isSelected = false
+        editBtn.isHidden = true
         isListEdit = false
         collectionView.reloadData()
         if deleteDataArr.count > 0 {
@@ -319,8 +327,8 @@ extension AlbumListViewController {
             self.cancelBtnClick()
         }
 
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
-
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { [weak self] (_) in
+            self?.cancelBtnClick()
         }
 
         alertController.addAction(okAction)
@@ -344,26 +352,8 @@ extension AlbumListViewController {
             // 付费拦截
             let vip = PhotoDiamondViewController()
             navigationController?.pushViewController(vip, animated: true)
-        } else {
-            
+        } else {            
             createAlbum(albumType: scheme)
-           
-//            let sheet = UIAlertController(title: "Choose Album Type", message: nil, preferredStyle: .actionSheet)
-//            
-//            let option1Action = UIAlertAction(title: "Happy Album", style: .default) { [weak self] (action) in
-//                
-//            }
-//            sheet.addAction(option1Action)
-//            
-//            let option2Action = UIAlertAction(title: "Sad Album", style: .default) { [weak self] (action) in
-//                self?.createAlbum(albumType: 1)
-//            }
-//            sheet.addAction(option2Action)
-//            
-//            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//            sheet.addAction(cancelAction)
-//            self.present(sheet, animated: true, completion: nil)
-            
         }
 
     }

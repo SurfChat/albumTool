@@ -96,7 +96,7 @@ class PhotoTextCell: UICollectionViewCell {
         contentView.layer.shadowOffset = CGSize(width: 1, height: 1)
         contentView.layer.shadowOpacity = 0.8
         let w = (UIScreen.main.bounds.width-40)/2.0
-        contentView.layer.shadowPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: w, height: w+35), cornerRadius: 0).cgPath
+        contentView.layer.shadowPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: w, height: w+38), cornerRadius: 0).cgPath
 
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(doubleTap))
         tap2.numberOfTapsRequired = 2
@@ -135,7 +135,7 @@ class PhotoTextCell: UICollectionViewCell {
         titleLab.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(3)
             make.leading.equalTo(15)
-            make.bottom.equalTo(dateLab.snp.top)
+            make.bottom.equalTo(dateLab.snp.top).offset(-3)
             make.trailing.equalTo(-15)
         }
     }

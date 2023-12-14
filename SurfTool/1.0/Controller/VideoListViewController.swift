@@ -79,6 +79,10 @@ class VideoListViewController: UIViewController {
     private func loadData() {
         let smartAlbum = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: nil)
         
+        if dataArr.count > 0 {
+            dataArr.removeAll()
+        }
+        
         smartAlbum.enumerateObjects { collection, index, _ in
             if collection.localizedTitle == "Videos" {
                 let videos = PHAsset.fetchAssets(in: collection, options: PHFetchOptions())
@@ -113,6 +117,9 @@ extension VideoListViewController: UICollectionViewDelegate, UICollectionViewDat
            let videoData = dataArr[indexPath.item]
             let videoEditVc = VideoEditViewController()
             videoEditVc.videoAsset = videoData
+            videoEditVc.updateVideoData = { [weak self] in
+                self?.loadData()
+            }
             navigationController?.pushViewController(videoEditVc, animated: true)
         }
     }

@@ -8,8 +8,11 @@
 import UIKit
 import AVFoundation
 import Photos
+import JFPopup
 
 class VideoEditViewController: UIViewController {
+    var updateVideoData: (() -> Void)?
+    
     var videoAsset: PHAsset! {
         didSet {
             let width = videoAsset.pixelWidth
@@ -175,10 +178,12 @@ extension VideoEditViewController {
         
         guard let videoURLAsset = videoURLAsset else { return }
         
+        JFPopupView.popup.loading()
         markImageView.enabledBorder = false
         markImageView.enabledControl = false
         
         WMCWaterMarkManager.addWaterMarkType(withVideoAsset: videoURLAsset, mark: [markImageView], markBgViews: [markImageView], cameraBgView: videoView) { url in
+            JFPopupView.popup.hideLoading()
             if let url = url {
                 print(url)
                 PHPhotoLibrary.shared().performChanges {
@@ -186,8 +191,13 @@ extension VideoEditViewController {
                     let option = PHAssetResourceCreationOptions()
                     option.shouldMoveFile = true
                     videoRequst.addResource(with: .video, fileURL: url, options: option)
-                } completionHandler: { finish, error in
-                
+                } completionHandler: {[weak self] finish, error in
+                    if error == nil {
+                        self?.updateVideoData?()
+                        JFPopupView.popup.toast(hit: "Save Successfully", icon: .success)
+                    } else {
+                        JFPopupView.popup.toast(hit: "Save Fail", icon: .fail)
+                    }
                 }
             }
         }

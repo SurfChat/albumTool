@@ -110,11 +110,12 @@ class PhotoDiamondViewController: UIViewController {
         
         if isDiamond {
             if PhotoPurchHandler.share.diamondDatas.count > 0 {
-                view.layoutIfNeeded()
-                let lastSectionIndex = tableView.numberOfSections - 1
-                let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
-                let lastIndexPath = IndexPath(row: lastRowIndex, section: lastSectionIndex)
-                tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: false)
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
+                    let lastSectionIndex = self.tableView.numberOfSections - 1
+                    let lastRowIndex = self.tableView.numberOfRows(inSection: lastSectionIndex) - 1
+                    let lastIndexPath = IndexPath(row: lastRowIndex, section: lastSectionIndex)
+                    self.tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
+                }
             }
         }
         

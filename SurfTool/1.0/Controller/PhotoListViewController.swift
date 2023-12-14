@@ -303,7 +303,7 @@ extension PhotoListViewController: UICollectionViewDelegate, UICollectionViewDat
          
         } else {
             let w = (UIScreen.main.bounds.width-40)/2.0
-            return CGSizeMake(w, w+35)
+            return CGSizeMake(w, w+38)
         }
     }
     
