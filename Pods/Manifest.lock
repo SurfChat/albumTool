@@ -1,4 +1,8 @@
 PODS:
+  - Adjust (4.33.6):
+    - Adjust/Core (= 4.33.6)
+  - Adjust/Core (4.33.6)
+  - Bugly (2.5.93)
   - IQKeyboardManagerSwift (6.5.16)
   - JFPopup (1.5.4):
     - JRBaseKit (~> 1.1.1)
@@ -22,6 +26,8 @@ PODS:
   - ZLPhotoBrowser/Core (4.4.6)
 
 DEPENDENCIES:
+  - Adjust (~> 4.33.4)
+  - Bugly
   - IQKeyboardManagerSwift
   - JFPopup (= 1.5.4)
   - JXPhotoBrowser
@@ -35,6 +41,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Adjust
+    - Bugly
     - IQKeyboardManagerSwift
     - JFPopup
     - JRBaseKit
@@ -50,6 +58,8 @@ SPEC REPOS:
     - ZLPhotoBrowser
 
 SPEC CHECKSUMS:
+  Adjust: c3b6c3734928a617fefce81dc223fd5f104162be
+  Bugly: b8715e6ec4004b7f7fbffab0643ba80545aee3da
   IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
   JFPopup: c3ada13bbda3cfe85bd71228e20a0b622eab72af
   JRBaseKit: 825cca458a73990f6019deaaaaff75840dea477f
@@ -64,6 +74,6 @@ SPEC CHECKSUMS:
   WCDBOptimizedSQLCipher: ef2be79fed278289a309ad0d4d707c55bf166d6d
   ZLPhotoBrowser: 8b3653a677a858e158fedf870f211b1219bb4c0f
 
-PODFILE CHECKSUM: 087011c10f4b8ae5162280544c8a76192afbcff4
+PODFILE CHECKSUM: 7e5cc5408963826919e51ca6bfe77c2f494163d2
 
 COCOAPODS: 1.14.2

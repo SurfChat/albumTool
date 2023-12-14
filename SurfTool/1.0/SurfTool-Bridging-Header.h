@@ -10,5 +10,6 @@
 
 #import "StickerView.h"
 #import "WMCWaterMarkManager.h"
+#import <Bugly/Bugly.h>
 
 #endif /* SurfTool_Bridging_Header_h */

@@ -8,6 +8,7 @@
 import UIKit
 import ActivityKit
 import IQKeyboardManagerSwift
+import Adjust
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -37,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enableAutoToolbar = false
         IQKeyboardManager.shared.reloadLayoutIfNeeded()
         
+        startAnalyticePods()
         return true
     }
 
@@ -69,6 +71,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
+    }
+
+    private func startAnalyticePods() {
+        Bugly.start(withAppId: "adf6047a9b")        
+#if DEBUG
+        let envi = ADJEnvironmentSandbox
+#else
+        let envi = ADJEnvironmentProduction
+#endif
+        let config = ADJConfig(appToken: "pj350203cqv4", environment: envi)
+        Adjust.appDidLaunch(config)
     }
 }
 

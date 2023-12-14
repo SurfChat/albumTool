@@ -21,7 +21,8 @@ pod 'RSKGrowingTextView'
 pod 'IQKeyboardManagerSwift'
 pod "MediaWatermark"
 pod 'KeychainAccess'
-
+pod 'Bugly'
+pod 'Adjust', '~> 4.33.4'
 end
 
 post_install do |installer|

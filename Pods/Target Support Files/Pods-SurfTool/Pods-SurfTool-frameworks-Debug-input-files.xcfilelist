@@ -1,4 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-SurfTool/Pods-SurfTool-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Adjust/Adjust.framework
 ${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework
 ${BUILT_PRODUCTS_DIR}/JFPopup/JFPopup.framework
 ${BUILT_PRODUCTS_DIR}/JRBaseKit/JRBaseKit.framework

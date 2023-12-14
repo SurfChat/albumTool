@@ -365,7 +365,7 @@ extension AlbumListViewController {
 //            self.present(sheet, animated: true, completion: nil)
             
         }
-
+    
     }
     
     private func createAlbum(albumType: Int) {
