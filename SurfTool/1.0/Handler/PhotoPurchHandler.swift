@@ -22,7 +22,7 @@ class PhotoPurchHandler {
         let vip = PhotoKeychainHandly.vipTillTime()
         if Double(vip) ?? 0 > 0 {
             if let currentTill = Double(vip) {
-                var tillDate = Date(timeIntervalSince1970:currentTill)
+                let tillDate = Date(timeIntervalSince1970:currentTill)
                 if tillDate < Date() {
                     // 已过期 清除vip信息
                     PhotoKeychainHandly.deleteVipInfo()

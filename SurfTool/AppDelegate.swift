@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func startAnalyticePods() {
-        Bugly.start(withAppId: "adf6047a9b")        
+        Bugly.start(withAppId: "adf6047a9b")
 #if DEBUG
         let envi = ADJEnvironmentSandbox
 #else
