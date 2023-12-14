@@ -43,4 +43,9 @@ class PhotoKeychainHandly {
             return "0"
         }
     }
+    
+    static func deleteVipInfo() {
+        let keychain = Keychain(service:KeychainService)
+        try? keychain.remove(VipTillTimeKey)
+    }
 }

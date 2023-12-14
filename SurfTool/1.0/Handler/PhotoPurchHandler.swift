@@ -17,6 +17,19 @@ class PhotoPurchHandler {
     var diamondDatas: [SKProduct] = []
     
     init() {
+        
+        // 检查vip有效期
+        let vip = PhotoKeychainHandly.vipTillTime()
+        if Double(vip) ?? 0 > 0 {
+            if let currentTill = Double(vip) {
+                var tillDate = Date(timeIntervalSince1970:currentTill)
+                if tillDate < Date() {
+                    // 已过期 清除vip信息
+                    PhotoKeychainHandly.deleteVipInfo()
+                }
+            }
+        }
+        
         let vipIds = ["surf.live.vip.1", "surf.live.vip.12"]
         
         SwiftyStoreKit.retrieveProductsInfo(Set(vipIds)) { result in
@@ -31,11 +44,11 @@ class PhotoPurchHandler {
         }
         
         let coinIds = ["surf.live.diamonds.500",
-                           "surf.live.diamonds.2000",
-                           "surf.live.diamonds.3500",
-                           "surf.live.diamonds.8500",
-                           "surf.live.diamonds.23500",
-                           "surf.live.diamonds.36000"]
+                       "surf.live.diamonds.2000",
+                       "surf.live.diamonds.3500",
+                       "surf.live.diamonds.8500",
+                       "surf.live.diamonds.23500",
+                       "surf.live.diamonds.36000"]
         
         SwiftyStoreKit.retrieveProductsInfo(Set(coinIds)) { result in
 //            print(result.invalidProductIDs,result.retrievedProducts)
